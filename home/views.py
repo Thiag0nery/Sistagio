@@ -6,3 +6,13 @@ class Home(View):
 
     def get(self, *args, **kwargs):
         return render(self.request, self.templates_name)
+
+class Login(View):
+    templates_name = 'home/login.html'
+    def get(self, *args, **kwargs):
+        return render(self.request, self.templates_name)
+
+class Cadastro(View):
+    templates_name = 'home/cadastro.html'
+    def get(self, *args, **kwargs):
+        return render(self.request, self.templates_name)
