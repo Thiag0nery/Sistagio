@@ -1,4 +1,20 @@
 {% extends 'base.html' %}
 {% block conteudo %}
-<h2>Thiago nery</h2>
+
+{% if user.tipo == 'A' %}
+    <h1>Aluno</h1>
+{% endif %}
+{% if user.tipo == 'D' %}
+    <h1>Docente</h1>
+{% endif %}
+
+{% if user.tipo == 'E' %}
+    <h1>Empresa</h1>
+{% endif %}
+
+{% if user.tipo == 'I' %}
+    <h1>Instituição</h1>
+{% endif %}
+{{ user.tipo }}
+
 {% endblock %}
