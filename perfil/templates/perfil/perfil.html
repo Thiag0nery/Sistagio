@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<form method="POST" action="">
+{% csrf_token %}
+    {{ perfil }}
+
+<button type="submit">Enviar</button>
+</form>
+{%endblock%}

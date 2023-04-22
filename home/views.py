@@ -53,6 +53,7 @@ class Cadastro(View):
             'usuario': forms.UserForms(
                 data=self.request.POST or None
             ),
+
         }
         self.usuarioForm = self.campo['usuario']
         self.pagina = render(self.request, self.templates_name, self.campo)
@@ -66,7 +67,6 @@ class CadastrarUsuario(Cadastro):
         usuario = self.usuarioForm.save(commit=False)
         usuario.set_password(senha)
         usuario.save()
-
         if senha:
             autentica = authenticate(
                 self.request,
