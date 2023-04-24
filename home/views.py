@@ -1,9 +1,10 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate,login,logout
 from django.views import View
 from . import forms
+from django.contrib import messages
 from django.contrib.auth.models import User
-
+from perfil.forms import PerfilForms
 class Home(View):
     templates_name = 'home/index.html'
 
@@ -53,20 +54,35 @@ class Cadastro(View):
             'usuario': forms.UserForms(
                 data=self.request.POST or None
             ),
-
+            'perfil': PerfilForms(
+                data=self.request.POST or None,
+            )
         }
         self.usuarioForm = self.campo['usuario']
+        self.perfilUser = self.campo['perfil']
         self.pagina = render(self.request, self.templates_name, self.campo)
     def get(self, *args, **kwargs):
         return self.pagina
 
 class CadastrarUsuario(Cadastro):
     def post(self, *args, **kwargs):
-        senha = self.usuarioForm.cleaned_data.get('password')
 
+        """
+            PRECISSA REPARO - DATA
+        """
+        if not self.usuarioForm.is_valid():
+
+            return self.pagina
+        senha = self.usuarioForm.cleaned_data.get('password')
         usuario = self.usuarioForm.save(commit=False)
         usuario.set_password(senha)
         usuario.save()
+
+        perfil = self.perfilUser.save(commit=False)
+        perfil.per_pessoa_fk = usuario
+        perfil.save()
+
+
         if senha:
             autentica = authenticate(
                 self.request,

@@ -1,6 +1,6 @@
 from django import forms
 from . import models
-
+from post_vagas.models import PostVagas
 class PerfilForms(forms.ModelForm):
     class Meta:
         model = models.PerfilUser
@@ -12,3 +12,14 @@ class PerfilForms(forms.ModelForm):
 
         self.per_cod = per_cod
 
+class CertificadoForms(forms.ModelForm):
+    class Meta:
+        model = models.Certificados
+        fields = '__all__'
+        exclude = ('cert_pessoa_fk',)
+
+class PostVagasForms(forms.ModelForm):
+    class Meta:
+        model = PostVagas
+        fields = '__all__'
+        exclude = ('vag_perfil_fk',)
