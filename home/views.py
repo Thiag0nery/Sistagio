@@ -17,7 +17,7 @@ class Login(View):
     def setup(self, *args, **kwargs):
         super().setup(*args, **kwargs)
         self.campo = {
-            'usuario': forms.UserForms(
+            'usuario': forms.LoginForms(
                 data=self.request.POST or None
             ),
         }
@@ -54,7 +54,7 @@ class Cadastro(View):
             'usuario': forms.UserForms(
                 data=self.request.POST or None
             ),
-            'perfil': PerfilForms(
+            'perfil': forms.PerfilForms(
                 data=self.request.POST or None,
             )
         }
@@ -66,7 +66,7 @@ class Cadastro(View):
 
 class CadastrarUsuario(Cadastro):
     def post(self, *args, **kwargs):
-
+        email_requisicao = self.request.POST.get('email')
         """
             PRECISSA REPARO - DATA
         """
@@ -75,6 +75,7 @@ class CadastrarUsuario(Cadastro):
             return self.pagina
         senha = self.usuarioForm.cleaned_data.get('password')
         usuario = self.usuarioForm.save(commit=False)
+        usuario.username = email_requisicao
         usuario.set_password(senha)
         usuario.save()
 

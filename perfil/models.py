@@ -6,6 +6,13 @@ class PerfilUser(models.Model):
     per_cod = models.BigAutoField(primary_key=True)
     per_nascimento = models.DateField(null=True,blank=True)
     per_pessoa_fk = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name='Usuario')
+    cpf_cnpj = models.CharField(max_length=15, blank=True)
+    tipo = models.CharField(max_length=1, blank=True, default='A', choices=(
+        ('A', 'Aluno'),
+        ('E', 'Empresa'),
+        ('I', 'Instituição'),
+        ('D', 'Docente'),
+    ))
 
 class Certificados(models.Model):
     cert_cod = models.BigAutoField(primary_key=True)

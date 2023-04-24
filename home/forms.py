@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from . models import models
-
+from perfil.models import PerfilUser
 class UserForms(forms.ModelForm):
     password = forms.CharField(
         required=False,
@@ -10,7 +10,7 @@ class UserForms(forms.ModelForm):
     )
     class Meta():
         model = User
-        fields = ('first_name', 'username', 'cpf_cnpj', 'tipo','password')
+        fields = ('first_name', 'email','password')
 
     def __init__(self, usuario=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -37,3 +37,40 @@ class UserForms(forms.ModelForm):
 
         if validation_error_msgs:
             raise(forms.ValidationError(validation_error_msgs))
+class LoginForms(forms.ModelForm):
+    password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(),
+        label='Senha',
+    )
+    class Meta():
+        model = User
+        fields = ('username','password')
+
+    def __init__(self, usuario=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.usuario = usuario
+
+    def clean(self, *args, **kwargs):
+        validation_error_msgs = {}
+        error_msg_password_short = 'Sua senha precisa de pelo menos 6 caracteres'
+        error_msg_required_field = 'Este campo é obrigatório.'
+
+        email = self.cleaned_data.get('username')
+        password_data =self.cleaned_data.get('password')
+        nome = self.cleaned_data.get('first_name')
+
+        usuario_db = User.objects.filter(username=email).first()
+        print(nome)
+
+class PerfilForms(forms.ModelForm):
+    class Meta:
+        model = PerfilUser
+        fields = ('cpf_cnpj','tipo')
+        exclude = ('per_pessoa_fk',)
+
+    def __init__(self, per_cod=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.per_cod = per_cod
