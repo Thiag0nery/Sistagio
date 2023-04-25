@@ -5,21 +5,29 @@ from . import forms
 from django.contrib import messages
 from django.contrib.auth.models import User
 from perfil.forms import PerfilForms
+from perfil.models import PerfilUser
 class Home(View):
     templates_name = 'home/index.html'
 
     def get(self, *args, **kwargs):
-        return render(self.request, self.templates_name)
+        pagina = {}
+        if self.request.user.is_authenticated:
+            self.perfil = get_object_or_404(PerfilUser, per_pessoa_fk=self.request.user)
+            pagina['perfilPessoa'] = self.perfil
+
+        return render(self.request, self.templates_name, pagina)
 
 class Login(View):
     templates_name = 'home/login.html'
 
     def setup(self, *args, **kwargs):
+
         super().setup(*args, **kwargs)
         self.campo = {
             'usuario': forms.LoginForms(
                 data=self.request.POST or None
             ),
+
         }
         self.usuarioForm = self.campo['usuario']
         self.pagina = render(self.request, self.templates_name, self.campo)
@@ -30,6 +38,7 @@ class Login(View):
 
 class LoginUser(Login):
     def post(self, *args,**kwargs):
+
         email = self.request.POST.get('username')
         senha = self.request.POST.get('password')
 

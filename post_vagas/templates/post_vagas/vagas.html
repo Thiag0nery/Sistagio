@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+{% for vaga in vagas %}
+<a href="{% url 'post_vagas:detalhe' vaga.vag_cod %}">{{ vaga.vag_nome}}</a>
+
+{% endfor %}
+{% endblock %}

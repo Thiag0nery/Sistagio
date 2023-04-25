@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 
-{% if user.tipo == 'A' %}
+{% if perfilPessoa.tipo == 'A' %}
     <h1>Aluno</h1>
 {% endif %}
 {% if user.tipo == 'D' %}
     <h1>Docente</h1>
 {% endif %}
 
-{% if user.tipo == 'E' %}
+{% if perfilUsuario.tipo == 'E' %}
     <h1>Empresa</h1>
 {% endif %}
 

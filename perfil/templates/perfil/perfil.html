@@ -1,19 +1,24 @@
 {% extends 'base.html' %}
 {% block conteudo %}
+
+{% if perfilPessoa.tipo == 'A' %}
+    <h1>Aluno</h1>
+{% endif %}
+
 <form method="POST" action="">
 {% csrf_token %}
     {{ perfil }}
-     <button type="submit">Enviar</button>
+     <button type="submit" name="botao-perfil">Enviar</button>
 </form>
-<!--
+
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ certificados }}
-    <button type="submit">Enviar</button>
-</form>-->
+    <button type="submit" name="botao-certificado">Enviar</button>
+</form>
 <form method="POST" action="">
 {% csrf_token %}
     {{ post }}
-     <button type="submit">Enviar</button>
+     <button type="submit" name="botao-vag">Enviar</button>
 </form>
 {%endblock%}
