@@ -21,8 +21,8 @@ class Login(View):
     templates_name = 'home/login.html'
 
     def setup(self, *args, **kwargs):
-
         super().setup(*args, **kwargs)
+
         self.campo = {
             'usuario': forms.LoginForms(
                 data=self.request.POST or None
@@ -35,9 +35,7 @@ class Login(View):
     def get(self, *args, **kwargs):
         return self.pagina
 
-
-class LoginUser(Login):
-    def post(self, *args,**kwargs):
+    def post(self, *args, **kwargs):
 
         email = self.request.POST.get('username')
         senha = self.request.POST.get('password')
@@ -55,6 +53,8 @@ class LoginUser(Login):
         login(self.request, user=usuario)
         print('certo')
         return redirect('home:inicial')
+
+
 class Cadastro(View):
     templates_name = 'home/cadastro.html'
     def setup(self, *args, **kwargs):
@@ -73,9 +73,9 @@ class Cadastro(View):
     def get(self, *args, **kwargs):
         return self.pagina
 
-class CadastrarUsuario(Cadastro):
     def post(self, *args, **kwargs):
         email_requisicao = self.request.POST.get('email')
+        tipo_requisicao = self.request.POST.get('tipo_usuario')
         """
             PRECISSA REPARO - DATA
         """
@@ -90,6 +90,7 @@ class CadastrarUsuario(Cadastro):
 
         perfil = self.perfilUser.save(commit=False)
         perfil.per_pessoa_fk = usuario
+        perfil.tipo = tipo_requisicao
         perfil.save()
 
 

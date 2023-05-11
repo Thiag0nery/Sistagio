@@ -4,7 +4,7 @@ from perfil.models import PerfilUser
 class UserForms(forms.ModelForm):
     password = forms.CharField(
         required=False,
-        widget=forms.PasswordInput(),
+        widget=forms.PasswordInput,
         label='Senha',
     )
     class Meta():
@@ -65,9 +65,18 @@ class LoginForms(forms.ModelForm):
 
 
 class PerfilForms(forms.ModelForm):
+    tipo_usuario = forms.ChoiceField(
+        widget=forms.RadioSelect,
+        choices=(
+            ('A', 'Aluno'),
+            ('E', 'Empresa'),
+            ('I', 'Instituição'),
+        )
+
+    )
     class Meta:
         model = PerfilUser
-        fields = ('cpf_cnpj','tipo')
+        fields = ('cpf_cnpj','tipo','tipo_usuario')
         exclude = ('per_pessoa_fk',)
 
     def __init__(self, per_cod=None, *args, **kwargs):

@@ -4,6 +4,8 @@ from . import forms
 from home.forms import UserForms
 from django.contrib.auth.models import User
 from . import models
+import csv
+import io
 
 class Perfil(View):
     templates_name = 'perfil/perfil.html'
@@ -31,12 +33,14 @@ class Perfil(View):
             'post': forms.PostVagasForms(
                 data=self.request.POST or None
             ),
-            'perfilPessoa': self.perfil
+            'perfilPessoa': self.perfil,
+            'aluno_csv': forms.Tabela_csv(data=self.request.POST or None)
         }
 
         self.usuarioForm = self.informacoes['usuario']
         self.usuarioPerfil = self.informacoes['perfil']
         self.certificado = self.informacoes['certificados']
+        self.aluno = self.informacoes['aluno_csv']
         self.postvaga = self.informacoes['post']
     def get(self, *args, **kwargs):
         return render(self.request, self.templates_name, self.informacoes)
@@ -46,6 +50,7 @@ class AtualizacaoPerfil(Perfil):
         botao_perfil = self.request.POST.get('botao-perfil')
         botao_certificado = self.request.POST.get('botao-certificado')
         botao_vag = self.request.POST.get('botao-vag')
+        botao_csv = self.request.POST.get('botao-csv')
 
         usuario = get_object_or_404(
             User, username=self.request.user.username)
@@ -77,6 +82,66 @@ class AtualizacaoPerfil(Perfil):
             post = self.postvaga.save(commit=False)
             post.vag_perfil_fk = self.perfil
             post.save()
+        print(bool(botao_csv))
+
+        def save_data(data):
+            aux = []
+            for item in data:
+                print(str(item.get('NOME')))
+                nome_aluno = item.get(';;;;CURSO:;Técnico em Desenvolvimento de Sistemas;;;;;;;')
+                numero_matricula = str(item.get('R.A.'))
+
+                obj = models.Aluno_Csv(
+                    alu_nome=nome_aluno,
+                    alu_matricula=numero_matricula,
+
+
+                )
+                aux.append(obj)
+
+            models.Aluno_Csv.objects.bulk_create(aux)
+
+        arquivo = self.request.FILES.get('arquivo')
+
+        file = arquivo.read().decode('ISO-8859-1')
+        reader = csv.DictReader(io.StringIO(file))
+
+        data = [line for line in reader]
+
+        save_data(data)
 
         return redirect('home:inicial')
+"""def csv_to_list(filename: str) -> list:
+    '''
+    Lê um csv e retorna um OrderedDict.
+    Créditos para Rafael Henrique
+    https://bit.ly/2FLDHsH
+    '''
+    with open(filename) as csv_file:
+        reader = csv.DictReader(csv_file, delimiter=',')
+        csv_data = [line for line in reader]
+    return csv_data
+
+
+def save_data(data):
+    '''
+    Salva os dados no banco.
+    '''
+    aux = []
+    for item in data:
+        nome_aluno = item.get('NOME')
+        numero_matricula = str(item.get('R.A.'))
+        turma = item.get('G79980')
+        obj = models.Aluno_Csv(
+            alu_nome=nome_aluno,
+            alu_matricula=numero_matricula,
+            alu_turma=turma,
+
+        )
+        aux.append(obj)
+    models.Aluno_Csv.objects.bulk_create(aux)
+
+
+data = csv_to_list('fix/produtos.csv')
+save_data(data)"""
 

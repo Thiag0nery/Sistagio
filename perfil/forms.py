@@ -2,10 +2,14 @@ from django import forms
 from . import models
 from post_vagas.models import PostVagas
 class PerfilForms(forms.ModelForm):
+
+
     class Meta:
         model = models.PerfilUser
         fields = '__all__'
         exclude = ('per_pessoa_fk',)
+
+
 
     def __init__(self, per_cod=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -23,3 +27,8 @@ class PostVagasForms(forms.ModelForm):
         model = PostVagas
         fields = '__all__'
         exclude = ('vag_perfil_fk',)
+class Tabela_csv(forms.ModelForm):
+    class Meta:
+        model = models.Aluno_Csv
+        fields = '__all__'
+

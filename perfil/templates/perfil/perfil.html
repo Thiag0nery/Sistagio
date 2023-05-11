@@ -7,18 +7,30 @@
 
 <form method="POST" action="">
 {% csrf_token %}
-    {{ perfil }}
+        {{ perfil }}
      <button type="submit" name="botao-perfil">Enviar</button>
 </form>
-
+{%if perfilPessoa.tipo == 'A'%}
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ certificados }}
     <button type="submit" name="botao-certificado">Enviar</button>
 </form>
+{%endif%}
+{% if  perfilPessoa.tipo == 'E' %}
 <form method="POST" action="">
 {% csrf_token %}
     {{ post }}
      <button type="submit" name="botao-vag">Enviar</button>
 </form>
+{%endif%}
+
+{% if  perfilPessoa.tipo == 'I' %}
+<form  method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="arquivo">
+    <button type="submit" name="botao-csv">Enviar</button>
+</form>
+{%endif%}
+
 {%endblock%}
