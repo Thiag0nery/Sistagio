@@ -26,11 +26,36 @@
 {%endif%}
 
 {% if  perfilPessoa.tipo == 'I' %}
+
+<form  method="POST"  name="form-docente">
+    {% csrf_token %}
+    <label for="nome_docente">Nome docente</label>
+    {{docente_formulario.nome_docente}}
+
+    <label for="email_docente">Email docente</label>
+    {{docente_formulario.email_docente}}
+
+    <label for="cpf_docente">CPF</label>
+    {{docente_formulario.cpf_docente}}
+
+    <label for="senha_docente">Senha </label>
+    {{docente_formulario.senha_docente}}
+
+    <label for="senha_docente">Confirmação de Senha </label>
+    {{docente_formulario.senha_docente2}}
+
+    <!--<input type="text" name="inp-nome-docente">
+    <input type="text" name="inp-email-docente">
+    <input type="text" name="inp-senha-docente">
+    <input type="text" name="inp-cpf-docente">-->
+    <button type="submit" name="btn-docente">Enviar</button>
+</form>
+
 <form  method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="file" name="arquivo">
     <button type="submit" name="botao-csv">Enviar</button>
 </form>
 {%endif%}
-
+{{docente_formulario}}
 {%endblock%}

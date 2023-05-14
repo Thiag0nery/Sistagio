@@ -2,8 +2,27 @@
 {% block conteudo %}
 <form method="POST" action="">
 {% csrf_token %}
-    {{ usuario }}
+
+    <label for="first_name">Nome completo</label>
+    {{ usuario.first_name }}
+    {{usuario.errors.first_name}}
+
+    <label for="email">Email</label>
+    {{ usuario.email }}
+    {{usuario.errors.email}}
+
+    <label for="password">Senha</label>
+    {{ usuario.password }}
+    {{usuario.errors.password}}
+    <label for="password2">Confirma senha</label>
+    {{ usuario.password2 }}
+    {{usuario.errors.password2}}
+
     {{ perfil.tipo_usuario }}
+
+  <label for="password2">Cpf</label>
+    {{ perfil.cpf_cnpj }}
+     {{perfil.errors.cpf_cnpj}}
 <button type="submit">Enviar</button>
 </form>
 {%endblock%}

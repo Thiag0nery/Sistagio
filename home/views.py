@@ -47,7 +47,10 @@ class Login(View):
             self.request, username=email, password=senha)
 
         if not usuario:
-            print('Erro 2')
+            messages.error(
+                self.request,
+                "Usuario ou senha incoretos!"
+            )
             return redirect('home:login')
 
         login(self.request, user=usuario)
@@ -80,7 +83,16 @@ class Cadastro(View):
             PRECISSA REPARO - DATA
         """
         if not self.usuarioForm.is_valid():
-
+            messages.error(
+                self.request,
+                self.usuarioForm.errors
+            )
+            return self.pagina
+        if not self.perfilUser.is_valid():
+            messages.error(
+                self.request,
+                self.perfilUser.errors
+            )
             return self.pagina
         senha = self.usuarioForm.cleaned_data.get('password')
         usuario = self.usuarioForm.save(commit=False)
@@ -94,7 +106,7 @@ class Cadastro(View):
         perfil.save()
 
 
-        if senha:
+        """if senha:
             autentica = authenticate(
                 self.request,
                 username=usuario,
@@ -102,7 +114,7 @@ class Cadastro(View):
             )
 
             if autentica:
-                login(self.request, user=usuario)
+                login(self.request, user=usuario)"""
 
         return redirect('home:login')
 

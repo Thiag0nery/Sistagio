@@ -4,8 +4,9 @@ from . import forms
 from home.forms import UserForms
 from django.contrib.auth.models import User
 from . import models
+from django.contrib import messages
 import csv
-import io
+import pandas as pd
 
 class Perfil(View):
     templates_name = 'perfil/perfil.html'
@@ -34,7 +35,8 @@ class Perfil(View):
                 data=self.request.POST or None
             ),
             'perfilPessoa': self.perfil,
-            'aluno_csv': forms.Tabela_csv(data=self.request.POST or None)
+            'aluno_csv': forms.Tabela_csv(data=self.request.POST or None),
+            'docente_formulario':forms.DocenteForm(data=self.request.POST or None)
         }
 
         self.usuarioForm = self.informacoes['usuario']
@@ -42,9 +44,11 @@ class Perfil(View):
         self.certificado = self.informacoes['certificados']
         self.aluno = self.informacoes['aluno_csv']
         self.postvaga = self.informacoes['post']
+        self.docenteFormulario = self.informacoes['docente_formulario']
     def get(self, *args, **kwargs):
         return render(self.request, self.templates_name, self.informacoes)
 class AtualizacaoPerfil(Perfil):
+
 
     def post(self, *args, **kwargs):
         botao_perfil = self.request.POST.get('botao-perfil')
@@ -84,64 +88,82 @@ class AtualizacaoPerfil(Perfil):
             post.save()
         print(bool(botao_csv))
 
-        def save_data(data):
+        if botao_csv:
+
+            def save_data(data):
+                aux = []
+                for item in data:
+                    print(str(item.get('NOME')))
+                    nome_aluno = item.get(';;;;CURSO:;Técnico em Desenvolvimento de Sistemas;;;;;;;')
+                    numero_matricula = str(item.get('R.A.'))
+
+                    obj = models.Aluno_Csv(
+                        alu_nome=nome_aluno,
+                        alu_matricula=numero_matricula,
+
+
+                    )
+                    aux.append(obj)
+
+                models.Aluno_Csv.objects.bulk_create(aux)
+
+            arquivo = self.request.FILES.get('arquivo')
+
+            file = arquivo.read().decode('latin-1').splitlines()
+
+            reader = csv.reader(file, delimiter=';')
+
             aux = []
-            for item in data:
-                print(str(item.get('NOME')))
-                nome_aluno = item.get(';;;;CURSO:;Técnico em Desenvolvimento de Sistemas;;;;;;;')
-                numero_matricula = str(item.get('R.A.'))
-
+            for linha,tabela in enumerate(reader):
+                if linha <= 2:
+                    continue
+                nome = tabela[1]
+                matricula = tabela[0]
                 obj = models.Aluno_Csv(
-                    alu_nome=nome_aluno,
-                    alu_matricula=numero_matricula,
-
+                    alu_nome=nome,
+                    alu_matricula=matricula,
 
                 )
                 aux.append(obj)
-
+                print(matricula,nome)
             models.Aluno_Csv.objects.bulk_create(aux)
 
-        arquivo = self.request.FILES.get('arquivo')
+        if 'btn-docente' in self.request.POST:
 
-        file = arquivo.read().decode('ISO-8859-1')
-        reader = csv.DictReader(io.StringIO(file))
 
-        data = [line for line in reader]
+            if not self.docenteFormulario.is_valid():
+                messages.error(
+                    self.request,
+                    self.docenteFormulario.errors
+                )
+                return redirect('perfil:perfil')
+            nome_docente = self.request.POST.get('nome_docente')
+            email_docente = self.request.POST.get('email_docente')
+            senha_docente = self.request.POST.get('senha_docente')
+            cpf_docente = self.request.POST.get('cpf_docente')
 
-        save_data(data)
 
+            docente = []
+            objeto = User(
+                username= email_docente,
+                password=senha_docente,
+                first_name = nome_docente,
+                email= email_docente
+            )
+            docente.append(objeto)
+            User.objects.bulk_create(docente)
+
+
+            perfil = models.PerfilUser(
+                per_pessoa_fk=objeto,
+                tipo='D',
+                cpf_cnpj= cpf_docente,
+
+            )
+            docente_perfil = []
+            docente_perfil.append(perfil)
+            models.PerfilUser.objects.bulk_create(docente_perfil)
         return redirect('home:inicial')
-"""def csv_to_list(filename: str) -> list:
-    '''
-    Lê um csv e retorna um OrderedDict.
-    Créditos para Rafael Henrique
-    https://bit.ly/2FLDHsH
-    '''
-    with open(filename) as csv_file:
-        reader = csv.DictReader(csv_file, delimiter=',')
-        csv_data = [line for line in reader]
-    return csv_data
 
 
-def save_data(data):
-    '''
-    Salva os dados no banco.
-    '''
-    aux = []
-    for item in data:
-        nome_aluno = item.get('NOME')
-        numero_matricula = str(item.get('R.A.'))
-        turma = item.get('G79980')
-        obj = models.Aluno_Csv(
-            alu_nome=nome_aluno,
-            alu_matricula=numero_matricula,
-            alu_turma=turma,
-
-        )
-        aux.append(obj)
-    models.Aluno_Csv.objects.bulk_create(aux)
-
-
-data = csv_to_list('fix/produtos.csv')
-save_data(data)"""
 
