@@ -18,8 +18,11 @@ class Certificados(models.Model):
 
 class Aluno_Csv(models.Model):
     alu_codigo = models.BigAutoField(primary_key=True)
-    alu_nome = models.CharField(max_length=50, null=True)
-    alu_matricula = models.CharField(max_length=20, null=True)
+    alu_nome = models.CharField(max_length=50, null=True, verbose_name='Aluno')
+    alu_matricula = models.CharField(max_length=20, null=True, verbose_name='Matricula')
     #alu_codigo = models.
-    alu_turma = models.CharField(max_length=20, null=True)
+    alu_turma = models.CharField(max_length=20, null=True, verbose_name='Turma')
+
+    def __str__(self):
+        return self.alu_nome,self.alu_turma
 

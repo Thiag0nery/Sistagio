@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from . import models
 from django.contrib import messages
 import csv
-import pandas as pd
+
 
 class Perfil(View):
     templates_name = 'perfil/perfil.html'
@@ -91,6 +91,15 @@ class AtualizacaoPerfil(Perfil):
         if 'botao-csv' in self.request.POST:
 
             arquivo = self.request.FILES.get('arquivo')
+            #arquivo_curso = self.request.FILES.get('arquivo_curso') or not arquivo_curso
+            arquivo_nome_turma = self.request.POST.get('arquivo_nome_turma')
+
+            if not arquivo or not arquivo_nome_turma:
+                messages.error(
+                    self.request,
+                    "Digite todos os campos para o envio"
+                )
+                return redirect('perfil:perfil')
 
             file = arquivo.read().decode('latin-1').splitlines()
 
@@ -104,6 +113,7 @@ class AtualizacaoPerfil(Perfil):
                 obj = models.Aluno_Csv(
                     alu_nome=nome,
                     alu_matricula=matricula,
+                    alu_turma=arquivo_nome_turma,
 
                 )
                 models.Aluno_Csv.objects.filter(alu_nome=nome, alu_matricula=matricula).delete()
