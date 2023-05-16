@@ -116,7 +116,7 @@ class AtualizacaoPerfil(Perfil):
                     alu_turma=arquivo_nome_turma,
 
                 )
-                models.Aluno_Csv.objects.filter(alu_nome=nome, alu_matricula=matricula).delete()
+                models.Aluno_Csv.objects.filter(alu_nome=nome, alu_matricula=matricula,alu_turma=matricula).delete()
 
                 aluno_lista.append(obj)
 
