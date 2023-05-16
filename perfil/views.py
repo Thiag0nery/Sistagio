@@ -88,32 +88,14 @@ class AtualizacaoPerfil(Perfil):
             post.save()
         print(bool(botao_csv))
 
-        if botao_csv:
-
-            def save_data(data):
-                aux = []
-                for item in data:
-                    print(str(item.get('NOME')))
-                    nome_aluno = item.get(';;;;CURSO:;Técnico em Desenvolvimento de Sistemas;;;;;;;')
-                    numero_matricula = str(item.get('R.A.'))
-
-                    obj = models.Aluno_Csv(
-                        alu_nome=nome_aluno,
-                        alu_matricula=numero_matricula,
-
-
-                    )
-                    aux.append(obj)
-
-                models.Aluno_Csv.objects.bulk_create(aux)
+        if 'botao-csv' in self.request.POST:
 
             arquivo = self.request.FILES.get('arquivo')
 
             file = arquivo.read().decode('latin-1').splitlines()
 
             reader = csv.reader(file, delimiter=';')
-
-            aux = []
+            aluno_lista = []
             for linha,tabela in enumerate(reader):
                 if linha <= 2:
                     continue
@@ -124,9 +106,12 @@ class AtualizacaoPerfil(Perfil):
                     alu_matricula=matricula,
 
                 )
-                aux.append(obj)
-                print(matricula,nome)
-            models.Aluno_Csv.objects.bulk_create(aux)
+                models.Aluno_Csv.objects.filter(alu_nome=nome, alu_matricula=matricula).delete()
+
+                aluno_lista.append(obj)
+
+            models.Aluno_Csv.objects.bulk_create(aluno_lista)
+
 
         if 'btn-docente' in self.request.POST:
 
