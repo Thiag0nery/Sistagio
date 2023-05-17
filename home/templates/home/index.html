@@ -10,20 +10,97 @@
     {% endfor %}
 </ul>
 {% endif %}
-{% if perfilPessoa.tipo == 'A' %}
-    <h1>Aluno</h1>
-{% endif %}
-{% if user.tipo == 'D' %}
-    <h1>Docente</h1>
-{% endif %}
+{% include 'parcias/_header.html'%}
+    <main class="main">
+        <section class="sessao1">
 
-{% if perfilUsuario.tipo == 'E' %}
-    <h1>Empresa</h1>
-{% endif %}
 
-{% if perfilPessoa.tipo == 'I' %}
-    <h1>Instituição</h1>
-{% endif %}
-{{ user.tipo }}
+            <div class="ladoEsquerdo">
+                <div class="texto">
+                    <h1> Dê o start no seu futuro com o <span style="color: rgb(10, 10, 180)"> SISTAGIO</span></h1>
+                </div>
 
+
+                <div class="subtexto">
+                    <h3 class="texto">Lorem ipsum dolor sit amet. Ut voluptas exercitationem et omnis sint in voluptatem
+                        facilis qui excepturi dolorem est quos earum eum omnis quis. Sit architecto quam qui explicabo
+
+                    </h3>
+                </div>
+                <button class="start">Start</button>
+            </div>
+            <div class="ladoDireito">
+                <div class="bola"></div>
+            </div>
+        </section>
+        <section class="sessao2">
+            <div class="ladoEsquerdo2">
+                <h3 class="titulo">Por que Acreditar no SISTAGIO?</h3>
+                <h2 class="conteudo">Lorem ipsum dolor sit amet. Ut voluptas exercitationem et omnis sint in voluptatem
+                </h2>
+                <h4 class="subtitulo">Lorem ipsum dolor sit amet. Ut voluptas exercitationem et omnis sint in voluptatem
+                    facilis qui excepturi dolorem est quos earum eum omnis quis. Sit architecto quam qui explicabo
+                </h4>
+            </div>
+            <div class="ladoDireito2">
+                <img src="static/imagens/apertodemao.jpeg" alt="aperto" id="imgaperto">
+            </div>
+        </section>
+        <section class="sessao4">
+            <div class="ladoEsquerdo4Img">
+                <img src="static/imagens/conexao.jpeg" alt="conexoes" id="conexoes">
+            </div>
+            <div class="ladoDireito4">
+                <h3 class="titulo">Por que Acreditar no SISTAGIO?</h3>
+                <h2 class="conteudo">Lorem ipsum dolor sit amet. Ut voluptas exercitationem et omnis sint in voluptatem
+                </h2>
+                <h4 class="subtitulo">Lorem ipsum dolor sit amet. Ut voluptas exercitationem et omnis sint in voluptatem
+                    facilis qui excepturi dolorem est quos earum eum omnis quis. Sit architecto quam qui explicabo
+                </h4>
+            </div>
+        </section>
+        <section class="sessao3">
+            <div class="titleSessao3">
+                <h1 class="textoTitle">Não é um Lorem Ipsum, mas seu Lorem Ipsum!</h1>
+            </div>
+            <div class="containerCards">
+                <div class="card">
+                    <h3 class="titleCard">Instituição</h3>
+                    <h4 class="subtile">Lorem ipsum dolor sit amet. Ut voluptas exercitationem et omnis sint in
+                        voluptatem
+                        facilis qui excepturi dolorem est quos earum eum omnis quis. </h4>
+                </div>
+                <div class="card">
+                    <h3 class="titleCard">Aluno</h3>
+                    <h4 class="subtitle">Lorem ipsum dolor sit amet. Ut voluptas exercitationem et omnis sint in
+                        voluptatem
+                        facilis qui excepturi dolorem est quos earum eum omnis quis. </h4>
+                </div>
+                <div class="card">
+                    <h3 class="titleCard">Empresa</h3>
+                    <h4 class="subtitle">Lorem ipsum dolor sit amet. Ut voluptas exercitationem et omnis sint in
+                        voluptatem
+                        facilis qui excepturi dolorem est quos earum eum omnis quis. </h4>
+                </div>
+            </div>
+        </section>
+
+
+        </div>
+        <footer>
+            <div class="containerFooter">
+                <div class="informacoes">
+                    <a href="#" id="links"> Home</a>
+                    <a href="#" id="links"> Vagas</a>
+                    <a href="#" id="links"> Contatos </a>
+                </div>
+                <h3 class="direitos"> Copyright © 2023 Sistagio</h3>
+                <div class="redesSociais">
+                    <a href="#" id="links">Instagram</a>
+                    <a href="#" id="links">GitHub</a>
+                    <a href="#"id="links">FaceBook</a>
+                </div>
+            </div>
+        </footer>
+    </main>
 {% endblock %}

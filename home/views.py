@@ -91,7 +91,7 @@ class Cadastro(View):
 
         # O Tipo de Usuario escolheu
         tipo_requisicao = self.request.POST.get('tipo_usuario')
-        
+
         # A matricula que o usuario digitou
         matricula = self.request.POST.get('tipo_usuario')
 
