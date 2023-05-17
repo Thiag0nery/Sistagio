@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from perfil.models import PerfilUser
+from perfil.models import Aluno_Csv
 class UserForms(forms.ModelForm):
     password = forms.CharField(
         required=False,
@@ -93,20 +94,28 @@ class PerfilForms(forms.ModelForm):
     def clean(self, *args, **kwargs):
         validation_error_msgs = {}
 
+        #Mensagens de erro
         error_msg_cpf_cnpj_exists = 'Já existe no sistema'
+        error_msg_not_matricula_exists = 'A matricula informada não existe no sistema'
         error_msg_required_field = 'Este campo é obrigatório.'
+
         tipo_usuario  = self.cleaned_data.get('tipo_usuario')
         cpf_cnpj = self.cleaned_data.get('cpf_cnpj')
         matricula =  self.cleaned_data.get('matricula')
+        matricula = matricula.replace('.','').replace(',','').replace('-','')
         cpf_cnpj_banco = PerfilUser.objects.filter(cpf_cnpj=cpf_cnpj).first()
-        print(tipo_usuario)
-        print(bool(tipo_usuario == "A"))
+
         # Verificação se o usuario preenceu todos os dados
         if not cpf_cnpj:
             validation_error_msgs['cpf_cnpj'] = error_msg_required_field
         if tipo_usuario == "A":
             if not matricula:
                 validation_error_msgs['matricula'] = error_msg_required_field
+
+            # Verificação se o aluno existe no sistema
+            matricula_banco = Aluno_Csv.objects.filter(alu_matricula=matricula).first()
+            if not matricula_banco:
+                validation_error_msgs['matricula'] = error_msg_not_matricula_exists
 
         # Verificação se existe cpf_cnpj ja existente no sistema
         if cpf_cnpj_banco:

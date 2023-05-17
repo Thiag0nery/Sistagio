@@ -24,5 +24,5 @@ class Aluno_Csv(models.Model):
     alu_turma = models.CharField(max_length=20, null=True, verbose_name='Turma')
 
     def __str__(self):
-        return self.alu_nome,self.alu_turma
+        return self.alu_nome
 

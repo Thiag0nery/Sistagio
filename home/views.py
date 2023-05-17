@@ -35,14 +35,22 @@ class Login(View):
     def get(self, *args, **kwargs):
         return self.pagina
 
+    # Pegara a requisição post vindo do formulario
     def post(self, *args, **kwargs):
-
+        #Email que o usuario digitou
         email = self.request.POST.get('username')
+
+        # Senha que o usuario digitou
         senha = self.request.POST.get('password')
 
+        # Verificação se o usuario todos os campos
         if not email or not senha:
-            print('Erro 1')
+
             return redirect('home:login')
+
+        #Autentica o usuario, se achar o usuario no sistema a variavel usuario vai receber True se não achar vai ser
+        #False
+
         usuario = authenticate(
             self.request, username=email, password=senha)
 
@@ -54,7 +62,7 @@ class Login(View):
             return redirect('home:login')
 
         login(self.request, user=usuario)
-        print('certo')
+
         return redirect('home:inicial')
 
 
@@ -77,11 +85,16 @@ class Cadastro(View):
         return self.pagina
 
     def post(self, *args, **kwargs):
+
+        # Email que o usuario digitou
         email_requisicao = self.request.POST.get('email')
+
+        # O Tipo de Usuario escolheu
         tipo_requisicao = self.request.POST.get('tipo_usuario')
-        """
-            PRECISSA REPARO - DATA
-        """
+        
+        # A matricula que o usuario digitou
+        matricula = self.request.POST.get('tipo_usuario')
+
         if not self.usuarioForm.is_valid():
             messages.error(
                 self.request,
@@ -94,18 +107,25 @@ class Cadastro(View):
                 self.perfilUser.errors
             )
             return self.pagina
-        """senha = self.usuarioForm.cleaned_data.get('password')
+        senha = self.usuarioForm.cleaned_data.get('password')
         usuario = self.usuarioForm.save(commit=False)
         usuario.username = email_requisicao
+        if matricula == "I":
+            usuario.is_active = False
         usuario.set_password(senha)
         usuario.save()
 
         perfil = self.perfilUser.save(commit=False)
         perfil.per_pessoa_fk = usuario
         perfil.tipo = tipo_requisicao
-        perfil.save()"""
+        perfil.save()
 
-
+        if matricula == "I":
+            messages.success(
+                self.request,
+                "Cadastro feito com sucesso, aguarde o periodo de verifição do sistema se a instituição e validada"
+            )
+            return redirect('home:inicial')
         """if senha:
             autentica = authenticate(
                 self.request,

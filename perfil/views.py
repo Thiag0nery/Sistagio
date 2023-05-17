@@ -82,7 +82,7 @@ class AtualizacaoPerfil(Perfil):
                 per_pessoa_fk=self.request.user
             ).first()
             #pk_perfil = get_object_or_404(models.PerfilUser, per_pessoa_fk=self.request.user.username)
-            print(self.perfil)
+
             post = self.postvaga.save(commit=False)
             post.vag_perfil_fk = self.perfil
             post.save()
@@ -109,14 +109,16 @@ class AtualizacaoPerfil(Perfil):
                 if linha <= 2:
                     continue
                 nome = tabela[1]
-                matricula = tabela[0]
+
+                matricula = tabela[0].replace('.','').replace(',','').replace('-','')
                 obj = models.Aluno_Csv(
                     alu_nome=nome,
                     alu_matricula=matricula,
                     alu_turma=arquivo_nome_turma,
 
                 )
-                models.Aluno_Csv.objects.filter(alu_nome=nome, alu_matricula=matricula,alu_turma=matricula).delete()
+                models.Aluno_Csv.objects.filter(alu_nome=nome, alu_matricula=matricula
+                                                ,alu_turma=arquivo_nome_turma).delete()
 
                 aluno_lista.append(obj)
 

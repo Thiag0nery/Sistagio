@@ -36,9 +36,10 @@
 var container_matricula = document.getElementById("container_matricula");
  var label = document.getElementById("cpf_cnpj_script");
 var radioButtons = document.getElementsByName("tipo_usuario");
+
  radioButtons.forEach(function(button) {
     button.addEventListener("change", function() {
-      var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
+    var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
       if (selectedValue === "A") {
       container_matricula.style.display = "block";
         console.log("Foi selecionado o aluno");
@@ -50,5 +51,17 @@ var radioButtons = document.getElementsByName("tipo_usuario");
     }
     });
   });
+ document.addEventListener("DOMContentLoaded", function() {
+ var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
+  if (selectedValue === "A") {
+      container_matricula.style.display = "block";
+        console.log("Foi selecionado o aluno");
+        label.textContent = "CPF";
+      } else if (selectedValue === "E" || selectedValue === "I") {
+      container_matricula.style.display = "none";
+        console.log("Foi selecionado o Empresa ou Instituição");
+        label.textContent = "CNPJ";
+    }
+});
 </script>
 {%endblock%}

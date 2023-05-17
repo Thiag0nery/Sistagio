@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block conteudo %}
-
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.success %} class="{{ message.success }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}{% endif %}
+        {{ message.success }}x
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% if perfilPessoa.tipo == 'A' %}
     <h1>Aluno</h1>
 {% endif %}
