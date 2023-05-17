@@ -94,7 +94,7 @@ class Cadastro(View):
                 self.perfilUser.errors
             )
             return self.pagina
-        senha = self.usuarioForm.cleaned_data.get('password')
+        """senha = self.usuarioForm.cleaned_data.get('password')
         usuario = self.usuarioForm.save(commit=False)
         usuario.username = email_requisicao
         usuario.set_password(senha)
@@ -103,7 +103,7 @@ class Cadastro(View):
         perfil = self.perfilUser.save(commit=False)
         perfil.per_pessoa_fk = usuario
         perfil.tipo = tipo_requisicao
-        perfil.save()
+        perfil.save()"""
 
 
         """if senha:

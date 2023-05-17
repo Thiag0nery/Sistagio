@@ -12,6 +12,7 @@ class UserForms(forms.ModelForm):
         widget=forms.PasswordInput,
         label='Confirma senha ',
     )
+
     class Meta():
         model = User
         fields = ('first_name', 'email','password','password2')
@@ -33,6 +34,8 @@ class UserForms(forms.ModelForm):
         password =self.cleaned_data.get('password')
         password2 = self.cleaned_data.get('password2')
         nome = self.cleaned_data.get('first_name')
+
+
 
         email_bool = User.objects.filter(username=email).first()
 
@@ -73,10 +76,14 @@ class PerfilForms(forms.ModelForm):
         )
 
     )
+    matricula = forms.CharField(
+        max_length=14,
+        required=False
+    )
 
     class Meta:
         model = PerfilUser
-        fields = ('cpf_cnpj', 'tipo_usuario')
+        fields = ('cpf_cnpj', 'tipo_usuario','matricula')
 
     def __init__(self, per_cod=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -88,18 +95,23 @@ class PerfilForms(forms.ModelForm):
 
         error_msg_cpf_cnpj_exists = 'Já existe no sistema'
         error_msg_required_field = 'Este campo é obrigatório.'
-
+        tipo_usuario  = self.cleaned_data.get('tipo_usuario')
         cpf_cnpj = self.cleaned_data.get('cpf_cnpj')
-        print(cpf_cnpj)
+        matricula =  self.cleaned_data.get('matricula')
         cpf_cnpj_banco = PerfilUser.objects.filter(cpf_cnpj=cpf_cnpj).first()
-
+        print(tipo_usuario)
+        print(bool(tipo_usuario == "A"))
         # Verificação se o usuario preenceu todos os dados
         if not cpf_cnpj:
             validation_error_msgs['cpf_cnpj'] = error_msg_required_field
+        if tipo_usuario == "A":
+            if not matricula:
+                validation_error_msgs['matricula'] = error_msg_required_field
 
         # Verificação se existe cpf_cnpj ja existente no sistema
         if cpf_cnpj_banco:
             validation_error_msgs['cpf_cnpj'] = error_msg_cpf_cnpj_exists
+
 
 
         if validation_error_msgs:

@@ -20,9 +20,35 @@
 
     {{ perfil.tipo_usuario }}
 
-  <label for="password2">Cpf</label>
+  <label for="cpf_cnpj" id="cpf_cnpj_script">CPF</label>
     {{ perfil.cpf_cnpj }}
      {{perfil.errors.cpf_cnpj}}
+
+    <div id="container_matricula">
+         <label for="matricula" id="matricula">R.A</label>
+        {{perfil.matricula}}
+         {{perfil.errors.matricula}}
+    </div>
+
 <button type="submit">Enviar</button>
 </form>
+<script>
+var container_matricula = document.getElementById("container_matricula");
+ var label = document.getElementById("cpf_cnpj_script");
+var radioButtons = document.getElementsByName("tipo_usuario");
+ radioButtons.forEach(function(button) {
+    button.addEventListener("change", function() {
+      var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
+      if (selectedValue === "A") {
+      container_matricula.style.display = "block";
+        console.log("Foi selecionado o aluno");
+        label.textContent = "CPF";
+      } else if (selectedValue === "E" || selectedValue === "I") {
+      container_matricula.style.display = "none";
+        console.log("Foi selecionado o Empresa ou Instituição");
+        label.textContent = "CNPJ";
+    }
+    });
+  });
+</script>
 {%endblock%}
