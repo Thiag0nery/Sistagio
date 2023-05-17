@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'style.css'%}">{% endblock %}
+
 {% block conteudo %}
 {% if messages %}
 <ul class="messages">
@@ -11,7 +15,7 @@
 </ul>
 {% endif %}
 {% include 'parcias/_header.html'%}
-    <main class="main">
+    <main >
         <section class="sessao1">
 
 

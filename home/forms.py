@@ -37,7 +37,7 @@ class UserForms(forms.ModelForm):
         nome = self.cleaned_data.get('first_name')
 
 
-
+        print(nome)
         email_bool = User.objects.filter(username=email).first()
 
 

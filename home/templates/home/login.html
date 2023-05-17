@@ -1,12 +1,40 @@
 {% extends 'base.html' %}
-{% block conteudo %}
-<form method="POST" action="">
-{% csrf_token %}
-    <p>Seu email</p>
-    {{ usuario.username }}
-    <p>Sua senha</p>
-    {{ usuario.password }}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'login.css'%}">{% endblock %}
 
-<button type="submit">Enviar</button>
-</form>
+{% block conteudo %}
+{% include 'parcias/_header.html' %}
+ <main class="main">
+        <div class="containerBox">
+            <div class="ladoEsquerdo">
+                <h1 class="titleBox">Faça o login no Sistagio e Venha fazer parte do nosso time. </h1>
+                <div class="logo2"><img src="/static/imagens/atronautaa-removebg-preview.png" alt="" class="logoo2"></div> <!-- logo-->
+            </div>
+            <div class="ladoDireito">
+                <form action="" class="containerLogin" method="POST">
+                    {% csrf_token %}
+                    <h1 class="titleLogin">LOGIN</h1>
+                    <div class="itens">
+                        <label for="">E-mail</label>
+                        <input type="email" placeholder="E-mail" class="inputs-default" name="{{ usuario.username.name }}" />
+                    </div>
+                    <div class="itens">
+                        <label for="">Senha</label>
+                        <input type="password" placeholder="Senha" class="inputs-default" name="{{ usuario.password.name }}"/>
+                    </div>
+                    <div class="recuperar_senha">
+                        <a href="">Esqueceu sua senha?</a>
+
+                    </div>
+                    <div class="classButton">
+                        <button type="submit" class="btnLogin">LOGIN</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+        </div>
+</main>
 {%endblock%}

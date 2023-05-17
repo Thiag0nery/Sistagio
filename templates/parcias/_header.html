@@ -1,10 +1,10 @@
 <header>
         <div class="centro">
-            <div class="logo"><img src="static/imagens/foguete-logo.png" width="90x" alt=""></div> <!-- logo-->
+            <div class="logo"><img src="/static/imagens/foguete-logo.png" width="90x" alt=""></div> <!-- logo-->
             <div class="menu">
-                <a href="#"> Home</a>
-                <a href="#"> Login</a>
-                <a href="#"> Cadastro </a>
+                <a href="{% url 'home:inicial' %}"> Home</a>
+                <a href="{% url 'home:login' %}"> Login</a>
+                <a href="{% url 'home:cadastro' %}"> Cadastro </a>
             </div>
             <!--menu-->
         </div>

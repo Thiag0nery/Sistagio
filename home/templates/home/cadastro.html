@@ -1,67 +1,124 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'cadastro.css'%}">{% endblock %}
 {% block conteudo %}
-<form method="POST" action="">
-{% csrf_token %}
+{% include 'parcias/_header.html' %}
+ <main class="main">
+        <div class="containerBox">
+            <div class="ladoEsquerdo">
+                <h1 class="titleBox">Faça seu Cadastro e venha Decolar com o Sistagio! </h1>
+                <div class="logo2"><img src="/static/imagens/imgCadastro-removebg-preview(1).png"  class="logoo2"  id="imgCadastro">
 
-    <label for="first_name">Nome completo</label>
-    {{ usuario.first_name }}
-    {{usuario.errors.first_name}}
 
-    <label for="email">Email</label>
-    {{ usuario.email }}
-    {{usuario.errors.email}}
+                </div> <!-- logo-->
+                </div>
+            <div class="ladoDireito">
+                <form action="" class="containerLogin" method="POST">
+                    {% csrf_token %}
+                    <h1 class="titleLogin">Cadastro</h1>
+                    <div class="itens">
+                        <h4 class="titleTipos">Deseja se cadastrar como: </h4>
+                        <div class="containerTipos">
 
-    <label for="password">Senha</label>
-    {{ usuario.password }}
-    {{usuario.errors.password}}
-    <label for="password2">Confirma senha</label>
-    {{ usuario.password2 }}
-    {{usuario.errors.password2}}
+                            <div class="tiposBox">
+                                <label for="id_tipo_usuario_0"><input type="radio" name="{{ perfil.tipo_usuario.name }}" value="A"
+                                        required id="id_tipo_usuario_0" class="nomeTipos"> Aluno</label>
 
-    {{ perfil.tipo_usuario }}
 
-  <label for="cpf_cnpj" id="cpf_cnpj_script">CPF</label>
-    {{ perfil.cpf_cnpj }}
-     {{perfil.errors.cpf_cnpj}}
+                            </div>
+                            <div class="tiposBox">
+                                <label for="id_tipo_usuario_1"><input type="radio" name="{{ perfil.tipo_usuario.name }}" value="E"
+                                        required id="id_tipo_usuario_1">Empresa</label>
 
-    <div id="container_matricula">
-         <label for="matricula" id="matricula">R.A</label>
-        {{perfil.matricula}}
-         {{perfil.errors.matricula}}
-    </div>
+                            </div>
+                            <div class="tiposBox">
+                                <label for="id_tipo_usuario_2"><input type="radio" name="{{ perfil.tipo_usuario.name }}" value="I"
+                                        required id="id_tipo_usuario_2" >Instituição</label>
+                            </div>
 
-<button type="submit">Enviar</button>
-</form>
+                        </div>
+                    </div>
+                    <div class="itens">
+                        <label for="" id="Nome_instituicao_empresa">Nome Completo</label>
+                        <input type="text" placeholder="Nome Completo" name="{{ usuario.first_name.name }}" class="inputs-default"  id="id_first_name">
+                     {{usuario.errors.first_name}}
+                    </div>
+                    <div class="itens">
+                        <label for="">E-mail</label>
+                        <input type="email" placeholder="E-mail" name="{{ usuario.email.name }}" class="inputs-default" />
+                        {{usuario.errors.email}}
+                    </div>
+                    <div class="itens">
+                        <label for="cpf_cnpj" id="cpf_cnpj_script">CPF</label>
+                        <input type="text"  name="{{ perfil.cpf_cnpj.name }}" placeholder="Digite o seu CPF" maxlength="15" id="id_cpf_cnpj" class ="inputs-default">
+                        {{perfil.errors.cpf_cnpj}}
+                    </div>
+                    <div class="itens">
+                        <div id="container_matricula">
+                            <label for="matricula" id="matricula">Numero de Matricula</label>
+                           <input type="text"  placeholder="Digite o seu numero de matricula"  name="{{ perfil.matricula.name }}" maxlength="14" id="id_matricula" class="inputs-default">
+                       {{perfil.errors.matricula}}
+                        </div>
+                    </div>
+                    <div class="itens">
+                        <label for="">Senha</label>
+                        <input type="password" placeholder="Senha" name="{{ usuario.password.name }}" class="inputs-default" >
+                    {{usuario.errors.password}}
+                    </div>
+                    <div class="itens">
+                        <label for="">Confirmar Senha</label>
+                        <input type="password" placeholder="Senha" name="{{ usuario.password2.name }}" class="inputs-default" >
+                   {{usuario.errors.password2}}
+                    </div>
+
+
+                        <div class="classButton">
+                            <button type="submit" class="btnLogin">CADASTRAR</button>
+                        </div>
+
+                </form>
+            </div>
+
+            </div>
+
+    </main>
 <script>
 var container_matricula = document.getElementById("container_matricula");
- var label = document.getElementById("cpf_cnpj_script");
-var radioButtons = document.getElementsByName("tipo_usuario");
-
- radioButtons.forEach(function(button) {
-    button.addEventListener("change", function() {
-    var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
-      if (selectedValue === "A") {
-      container_matricula.style.display = "block";
-        console.log("Foi selecionado o aluno");
-        label.textContent = "CPF";
-      } else if (selectedValue === "E" || selectedValue === "I") {
-      container_matricula.style.display = "none";
-        console.log("Foi selecionado o Empresa ou Instituição");
-        label.textContent = "CNPJ";
-    }
-    });
-  });
- document.addEventListener("DOMContentLoaded", function() {
- var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
-  if (selectedValue === "A") {
-      container_matricula.style.display = "block";
-        console.log("Foi selecionado o aluno");
-        label.textContent = "CPF";
-      } else if (selectedValue === "E" || selectedValue === "I") {
-      container_matricula.style.display = "none";
-        console.log("Foi selecionado o Empresa ou Instituição");
-        label.textContent = "CNPJ";
-    }
-});
+                         var label = document.getElementById("cpf_cnpj_script");
+                        var radioButtons = document.getElementsByName("tipo_usuario");
+                        var label_instituicao = document.getElementById("Nome_instituicao_empresa");
+                        var name_placeholder = document.getElementById("id_first_name");
+                         radioButtons.forEach(function(button) {
+                            button.addEventListener("change", function() {
+                            var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
+                              if (selectedValue === "A") {
+                              container_matricula.style.display = "block";
+                                console.log("Foi selecionado o aluno");
+                                label.textContent = "CPF";
+                                label_instituicao.textContent = "Nome Completo"
+                                name_placeholder.placeholder = 'Nome Completo'
+                              } else if (selectedValue === "E" || selectedValue === "I") {
+                              container_matricula.style.display = "none";
+                                console.log("Foi selecionado o Empresa ou Instituição");
+                                label.textContent = "CNPJ";
+                                label.placeholder = "Digite o seu CNPJ";
+                                label_instituicao.textContent = "Nome"
+                                name_placeholder.placeholder = 'Nome'
+                            }
+                            });
+                          });
+                         document.addEventListener("DOMContentLoaded", function() {
+                         var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
+                          if (selectedValue === "A") {
+                              container_matricula.style.display = "block";
+                                console.log("Foi selecionado o aluno");
+                                label.textContent = "CPF";
+                              } else if (selectedValue === "E" || selectedValue === "I") {
+                              container_matricula.style.display = "none";
+                                console.log("Foi selecionado o Empresa ou Instituição");
+                                label.textContent = "CNPJ";
+                            }
+                        });
 </script>
 {%endblock%}
