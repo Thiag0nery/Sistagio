@@ -14,7 +14,7 @@
                 </div> <!-- logo-->
                 </div>
             <div class="ladoDireito">
-                <form action="" class="containerLogin" method="POST">
+                <form  class="containerLogin" method="POST" >
                     {% csrf_token %}
                     <h1 class="titleLogin">Cadastro</h1>
                     <div class="itens">
@@ -41,35 +41,35 @@
                     </div>
                     <div class="itens">
                         <label for="" id="Nome_instituicao_empresa">Nome Completo</label>
-                        <input type="text" placeholder="Nome Completo" name="{{ usuario.first_name.name }}" class="inputs-default"  id="id_first_name">
+                        <input type="text" placeholder="Nome Completo" required name="{{ usuario.first_name.name }}" class="inputs-default"  id="id_first_name">
                      {{usuario.errors.first_name}}
                     </div>
                     <div class="itens">
                         <label for="">E-mail</label>
-                        <input type="email" placeholder="E-mail" name="{{ usuario.email.name }}" class="inputs-default" />
+                        <input type="email" placeholder="E-mail" required name="{{ usuario.email.name }}" class="inputs-default" />
                         {{usuario.errors.email}}
                     </div>
                     <div class="itens">
                         <label for="cpf_cnpj" id="cpf_cnpj_script">CPF</label>
-                        <input type="text"  name="{{ perfil.cpf_cnpj.name }}" placeholder="Digite o seu CPF" maxlength="15" id="id_cpf_cnpj" class ="inputs-default">
+                        <input type="text"  required name="{{ perfil.cpf_cnpj.name }}" placeholder="Digite o seu CPF" maxlength="15" id="id_cpf_cnpj" class ="inputs-default">
                         {{perfil.errors.cpf_cnpj}}
                        
                     </div>
                     <div class="itens">
                         <div id="container_matricula">
                             <label for="matricula" id="matricula">Numero de Matricula</label>
-                           <input type="text"  placeholder="Digite o seu numero de matricula"  name="{{ perfil.matricula.name }}" maxlength="14" id="id_matricula" class="inputs-default">
+                           <input type="text" required  placeholder="Digite o seu numero de matricula"  name="{{ perfil.matricula.name }}" maxlength="14" id="id_matricula" class="inputs-default">
                        {{perfil.errors.matricula}}
                         </div>
                     </div>
                     <div class="itens">
                         <label for="">Senha</label>
-                        <input type="password" placeholder="Senha" name="{{ usuario.password.name }}" class="inputs-default" >
+                        <input type="password" required placeholder="Senha" name="{{ usuario.password.name }}" class="inputs-default" >
                     {{usuario.errors.password}}
                     </div>
                     <div class="itens">
                         <label for="">Confirmar Senha</label>
-                        <input type="password" placeholder="Senha" name="{{ usuario.password2.name }}" class="inputs-default" >
+                        <input type="password" required placeholder="Senha" name="{{ usuario.password2.name }}" class="inputs-default" >
                    {{usuario.errors.password2}}
                     </div>
 
@@ -85,6 +85,7 @@
 
     </main>
 <script>
+var inp_matricula = document.getElementById("id_matricula");
 var container_matricula = document.getElementById("container_matricula");
                          var label = document.getElementById("cpf_cnpj_script");
                         var radioButtons = document.getElementsByName("tipo_usuario");
@@ -97,12 +98,14 @@ var container_matricula = document.getElementById("container_matricula");
                               container_matricula.style.display = "block";
                                 console.log("Foi selecionado o aluno");
                                 label.textContent = "CPF";
+                                inp_matricula.addAttribute("required");
                                 label_instituicao.textContent = "Nome Completo"
                                 name_placeholder.placeholder = 'Nome Completo'
                               } else if (selectedValue === "E" || selectedValue === "I") {
                               container_matricula.style.display = "none";
                                 console.log("Foi selecionado o Empresa ou Instituição");
                                 label.textContent = "CNPJ";
+                                inp_matricula.removeAttribute("required")
                                 label.placeholder = "Digite o seu CNPJ";
                                 label_instituicao.textContent = "Nome"
                                 name_placeholder.placeholder = 'Nome'
@@ -110,6 +113,10 @@ var container_matricula = document.getElementById("container_matricula");
                             });
                           });
                          document.addEventListener("DOMContentLoaded", function() {
+
+
+
+
                          var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
                           if (selectedValue === "A") {
                               container_matricula.style.display = "block";
@@ -122,4 +129,5 @@ var container_matricula = document.getElementById("container_matricula");
                             }
                         });
 </script>
+<script src="{% static 'Scripts/_header_script.js' %}"></script>
 {%endblock%}
