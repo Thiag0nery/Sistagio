@@ -26,3 +26,12 @@ class Aluno_Csv(models.Model):
     def __str__(self):
         return self.alu_nome
 
+class curso_instituicao(models.Model):
+    curs_codigo  = models.BigAutoField(primary_key=True)
+    curs_nome = models.CharField(max_length=45, null=True)
+    curs_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)
+
+class curso_aluno(models.Model):
+    curs_codigo  = models.BigAutoField(primary_key=True)
+    curs_insituicao = models.ForeignKey(curso_instituicao, on_delete=models.CASCADE)
+    curs_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)
