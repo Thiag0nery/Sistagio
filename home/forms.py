@@ -142,17 +142,7 @@ class LoginForms(forms.ModelForm):
 
     def clean(self, *args, **kwargs):
         validation_error_msgs = {}
-        error_not_username_exists = 'Usuario ou senha incoretos'
-        email = self.cleaned_data.get('username')
-        senha = self.cleaned_data.get('password')
-
-
-        usuario_busca = User.objects.filter(username=email,password=senha).first()
-        print(usuario_busca)
-        if not usuario_busca:
-            validation_error_msgs['username'] = error_not_username_exists
-
-        if validation_error_msgs:
-            raise (forms.ValidationError(validation_error_msgs))
+        validation_error_msgs['username'] = 'Usuario ou senha incoretos'
+        raise (forms.ValidationError(validation_error_msgs))
 
 

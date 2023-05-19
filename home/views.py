@@ -51,19 +51,15 @@ class Login(View):
 
         #Autentica o usuario, se achar o usuario no sistema a variavel usuario vai receber True se não achar vai ser
         #False
-
         usuario = authenticate(
             self.request, username=email, password=senha)
 
-        if not self.usuarioForm.is_valid():
+        if not usuario:
             messages.error(
                 self.request,
                 self.usuarioForm.errors
             )
             return self.pagina
-
-        usuario = authenticate(
-            self.request, username=email, password=senha)
 
         login(self.request, user=usuario)
 
