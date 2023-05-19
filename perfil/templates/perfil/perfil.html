@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block conteudo %}
 
 {% if messages %}
@@ -11,13 +12,84 @@
     {% endfor %}
 </ul>
 {% endif %}
-
+<!-- Usuario Fazendo a atualizações do perfil dele -->
 <form method="POST" action="">
 {% csrf_token %}
         {{ perfil }}
      <button type="submit" name="botao-perfil">Enviar</button>
 </form>
 {%if perfilPessoa.tipo == 'A'%}
+{% block style %}<link rel="stylesheet" href="{% static 'perfil_aluno2.css'%}">{% endblock %}
+<main>
+     <div class="container">
+        <header>
+            <div class="foto_perfil">
+                <img src="/perfil-aluno2.png" width="200px" class="img" alt="">
+
+            </div>
+            <div class="info_aluno">
+                <h3> Beatriz Rodrigues </h3>
+                <p>24 Anos, Desenvol. de Sistemas</p>
+                <p> Senai - Feira de Santana </p>
+            </div>
+           </header>
+
+        <div class="card card-1">
+
+            <!-- card header-->
+            <div class="card-header">
+                <img src="/vagas.png" alt="card-img">
+            </div> <!--card header-->
+
+            <!-- card-boyd-->
+            <div class="card-body">
+                <h3> VAGA - Desenvolvedor Mobile </h3>
+                <p> Descrição da vaga disponivel </p>
+            </div> <!--card body-->
+
+            <div class="card-footer">
+                <a href="#"> Ver Mais </a>
+            </div>
+        </div>
+
+        <div class="card card-2">
+
+            <!-- card header-->
+            <div class="card-header">
+                <img src="/vagas.png" alt="card-img">
+            </div> <!--card header-->
+
+            <!-- card-boyd-->
+            <div class="card-body">
+                <h3> VAGA - Desenvolvedor Mobile </h3>
+                <p> Descrição da vaga disponivel </p>
+            </div> <!--card body-->
+
+            <div class="card-footer">
+                <a href="#"> Ver Mais </a>
+            </div>
+        </div>
+
+        <div class="card card-3">
+
+            <!-- card header-->
+            <div class="card-header">
+                <img src="/vagas.png" alt="card-img">
+            </div> <!--card header-->
+
+            <!-- card-boyd-->
+            <div class="card-body">
+                <h3> VAGA - Desenvolvedor Mobile </h3>
+                <p> Descrição da vaga disponivel </p>
+            </div> <!--card body-->
+
+            <div class="card-footer">
+                <a href="#"> Ver Mais </a>
+            </div>
+        </div>
+
+    </div>
+</main>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ certificados }}
