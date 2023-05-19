@@ -14,7 +14,7 @@
                 </div> <!-- logo-->
                 </div>
             <div class="ladoDireito">
-                <form  class="containerLogin" method="POST" >
+                <form  class="containerLogin" method="POST" action="{% url 'home:cadastro' %}">
                     {% csrf_token %}
                     <h1 class="titleLogin">Cadastro</h1>
                     <div class="itens">
@@ -41,24 +41,24 @@
                     </div>
                     <div class="itens">
                         <label for="" id="Nome_instituicao_empresa">Nome Completo</label>
-                        <input type="text" placeholder="Nome Completo" required name="{{ usuario.first_name.name }}" class="inputs-default"  id="id_first_name">
+                        <input type="text" placeholder="Nome Completo" required name="{{ usuario.first_name.name }}" class="inputs-default"  {% if usuario.first_name.value != none %}  value="{{ usuario.first_name.value }}" {% endif %} id="id_first_name">
                      {{usuario.errors.first_name}}
                     </div>
                     <div class="itens">
                         <label for="">E-mail</label>
-                        <input type="email" placeholder="E-mail" required name="{{ usuario.email.name }}" class="inputs-default" />
+                        <input type="email" placeholder="E-mail" required name="{{ usuario.email.name }}" {% if  usuario.email.value != none %} value="{{ usuario.email.value }}" {% endif %} class="inputs-default" />
                         {{usuario.errors.email}}
                     </div>
                     <div class="itens">
                         <label for="cpf_cnpj" id="cpf_cnpj_script">CPF</label>
-                        <input type="text"  required name="{{ perfil.cpf_cnpj.name }}" placeholder="Digite o seu CPF" maxlength="15" id="id_cpf_cnpj" class ="inputs-default">
+                        <input type="text"  required name="{{ perfil.cpf_cnpj.name }}" {% if  perfil.cpf_cnpj.value != none %} value="{{ perfil.cpf_cnpj.value }}" {% endif %} placeholder="Digite o seu CPF" maxlength="15" id="id_cpf_cnpj" class ="inputs-default">
                         {{perfil.errors.cpf_cnpj}}
                        
                     </div>
                     <div class="itens">
                         <div id="container_matricula">
                             <label for="matricula" id="matricula">Numero de Matricula</label>
-                           <input type="text" required  placeholder="Digite o seu numero de matricula"  name="{{ perfil.matricula.name }}" maxlength="14" id="id_matricula" class="inputs-default">
+                           <input type="text" required  placeholder="Digite o seu numero de matricula" {% if  perfil.matricula.value != none %} value="{{ perfil.matricula.value }}"  {% endif %} name="{{ perfil.matricula.name }}" maxlength="14" id="id_matricula" class="inputs-default">
                        {{perfil.errors.matricula}}
                         </div>
                     </div>
@@ -98,7 +98,7 @@ var container_matricula = document.getElementById("container_matricula");
                               container_matricula.style.display = "block";
                                 console.log("Foi selecionado o aluno");
                                 label.textContent = "CPF";
-                                inp_matricula.addAttribute("required");
+                                inp_matricula.setAttribute('required', 'true');
                                 label_instituicao.textContent = "Nome Completo"
                                 name_placeholder.placeholder = 'Nome Completo'
                               } else if (selectedValue === "E" || selectedValue === "I") {

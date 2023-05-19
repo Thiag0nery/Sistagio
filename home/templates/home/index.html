@@ -7,10 +7,12 @@
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
+    {% if message.success %}
     <li {% if message.success %} class="{{ message.success }}"{% endif %}>
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}{% endif %}
-        {{ message.success }}x
+
+        {{ message.success }}
     </li>
+    {% endif %}
     {% endfor %}
 </ul>
 {% endif %}

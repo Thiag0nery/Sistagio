@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from perfil.forms import PerfilForms
 from perfil.models import PerfilUser
+
 class Home(View):
     templates_name = 'home/index.html'
 
@@ -100,7 +101,8 @@ class Cadastro(View):
                 self.request,
                 self.usuarioForm.errors
             )
-            self.campo['usuario'] = self.usuarioForm
+
+
             return self.pagina
         if not self.perfilUser.is_valid():
             messages.error(
