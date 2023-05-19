@@ -103,6 +103,8 @@ class PerfilForms(forms.ModelForm):
         cpf_cnpj = self.cleaned_data.get('cpf_cnpj')
         matricula =  self.cleaned_data.get('matricula')
         matricula = matricula.replace('.','').replace(',','').replace('-','')
+        matricula = int(matricula)
+        print(matricula)
         cpf_cnpj_banco = PerfilUser.objects.filter(cpf_cnpj=cpf_cnpj).first()
 
         # Verificação se o usuario preenceu todos os dados
@@ -137,8 +139,20 @@ class LoginForms(forms.ModelForm):
         model = User
         fields = ('username','password')
 
-    def __init__(self, usuario=None, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.usuario = usuario
+
+    def clean(self, *args, **kwargs):
+        validation_error_msgs = {}
+        error_not_username_exists = 'Usuario ou senha incoretos'
+        email = self.cleaned_data.get('username')
+        senha = self.cleaned_data.get('password')
+
+
+        usuario_busca = User.objects.filter(username=email,password=senha).first()
+        print(usuario_busca)
+        if not usuario_busca:
+            validation_error_msgs['username'] = error_not_username_exists
+
+        if validation_error_msgs:
+            raise (forms.ValidationError(validation_error_msgs))
 
 

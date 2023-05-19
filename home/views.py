@@ -55,12 +55,15 @@ class Login(View):
         usuario = authenticate(
             self.request, username=email, password=senha)
 
-        if not usuario:
+        if not self.usuarioForm.is_valid():
             messages.error(
                 self.request,
-                "Usuario ou senha incoretos!"
+                self.usuarioForm.errors
             )
-            return redirect('home:login')
+            return self.pagina
+
+        usuario = authenticate(
+            self.request, username=email, password=senha)
 
         login(self.request, user=usuario)
 
@@ -96,6 +99,7 @@ class Cadastro(View):
         # A matricula que o usuario digitou
         matricula = self.request.POST.get('tipo_usuario')
 
+
         if not self.usuarioForm.is_valid():
             messages.error(
                 self.request,
@@ -128,6 +132,7 @@ class Cadastro(View):
                 self.request,
                 "Cadastro feito com sucesso, aguarde o periodo de verifição do sistema se a instituição e validada"
             )
+
             return redirect('home:inicial')
         """if senha:
             autentica = authenticate(

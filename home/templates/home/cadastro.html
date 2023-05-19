@@ -3,6 +3,8 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'cadastro.css'%}">{% endblock %}
 {% block conteudo %}
+
+
 {% include 'parcias/_header.html' %}
  <main class="main">
         <div class="containerBox">
@@ -128,6 +130,9 @@ var container_matricula = document.getElementById("container_matricula");
                                 label.textContent = "CNPJ";
                             }
                         });
+
+
 </script>
+
 <script src="{% static 'Scripts/_header_script.js' %}"></script>
 {%endblock%}
