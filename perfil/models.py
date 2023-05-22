@@ -7,6 +7,7 @@ class PerfilUser(models.Model):
     per_nascimento = models.DateField(null=True,blank=True)
     per_pessoa_fk = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name='Usuario')
     cpf_cnpj = models.CharField(max_length=15, blank=True)
+    per_tell = models.CharField(max_length=14, blank=True)
     tipo = models.CharField(max_length=1, blank=True)
 
 class Certificados(models.Model):

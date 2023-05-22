@@ -62,7 +62,7 @@ section.sessao1{
 
 .bola{
 
-  width: 500px;
+  width: calc(100% + 5.9vw);
   height:500px;
   background-color: #0000CD;
   border-radius: 50% 50% 0 50% ;

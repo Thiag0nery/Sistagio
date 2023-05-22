@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block conteudo %}
-
+{% include 'parcias/_header.html' %}
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -13,83 +13,149 @@
 </ul>
 {% endif %}
 <!-- Usuario Fazendo a atualizações do perfil dele -->
+<!--
 <form method="POST" action="">
 {% csrf_token %}
         {{ perfil }}
      <button type="submit" name="botao-perfil">Enviar</button>
 </form>
+-->
 {%if perfilPessoa.tipo == 'A'%}
-{% block style %}<link rel="stylesheet" href="{% static 'perfil_aluno2.css'%}">{% endblock %}
-<main>
-     <div class="container">
-        <header>
-            <div class="foto_perfil">
-                <img src="/perfil-aluno2.png" width="200px" class="img" alt="">
+{% block style %}<link rel="stylesheet" href="{% static 'perfil.css'%}">{% endblock %}
+ <main class="main">
+        <div class="container-inicio">
+            <div class="foto-perfi">
+                <img src="/static/imagens/perfil-sem-foto.png" alt="" class="img-perfil">
 
             </div>
-            <div class="info_aluno">
-                <h3> Beatriz Rodrigues </h3>
-                <p>24 Anos, Desenvol. de Sistemas</p>
-                <p> Senai - Feira de Santana </p>
+
+            <div class="titulo">
+                <h3 class="text-titulo">{{user.first_name}}</h3>
             </div>
-           </header>
+        </div>
+        <input type="file" class="btnAlterar">
+        <div class="container-meio">
+            <div class="container-sobre" >
 
-        <div class="card card-1">
+                <form class="form-dados-sobre" id="form-alterar" style="display: none;">
+                    <div class="titulo-sobre">
+                        <h3 class="title-meio-h3">MEUS DADOS</h3>
+                        <button class="btn-alterar-sobre" id="btn-salvar">Salvar</button>
+                    </div>
 
-            <!-- card header-->
-            <div class="card-header">
-                <img src="/vagas.png" alt="card-img">
-            </div> <!--card header-->
+                    <div class="descricao">
+                        <h4 class="text-descricao">Conte um pouco sobre você:</h4>
+                        <textarea name="descricao" class="textarea-descricao" placeholder="O melhor aluno do Sistagio!"
+                            c></textarea>
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados">Nome completo:</label>
+                        <input type="text" class="input-dados" placeholder="Atualize seu nome">
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados">E-mail:</label>
+                        <input type="email" class="input-dados" placeholder="Atualize E-mail">
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados">Telefone:</label>
+                        <input type="tel" class="input-dados" placeholder="Atualize número de telefone">
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados">Senha:</label>
+                        <input type="password" class="input-dados" placeholder="Atualize sua senha">
+                    </div>
+                    <div class="descricao">
+                        <h4 class="text-descricao">Insira algumas de suas habilidades:</h4>
+                        <textarea name="descricao" class="textarea-descricao" placeholder="O melhor aluno do Sistagio!"
+                            c></textarea>
+                    </div>
 
-            <!-- card-boyd-->
-            <div class="card-body">
-                <h3> VAGA - Desenvolvedor Mobile </h3>
-                <p> Descrição da vaga disponivel </p>
-            </div> <!--card body-->
+                </form>
+                <div class="form-dados-sobre" id="form-dados-banco">
+                    <div class="titulo-sobre">
+                        <h3 class="title-meio-h3">MEUS DADOS</h3>
+                        <button class="btn-alterar-sobre" id="btn-alterar">Alterar</button>
+                    </div>
 
-            <div class="card-footer">
-                <a href="#"> Ver Mais </a>
+                    <div class="descricao">
+                        <h4 class="text-descricao">Conte um pouco sobre você:</h4>
+                        <p></p>
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados">Nome completo:</label>
+                        <p>{{user.first_name}}</p>
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados">E-mail:</label>
+                        <p>{{user.email}}</p>
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados ">Telefone:</label>
+                        <p class="{% if not perfilUsuario.per_tell%}null-tell{%endif%}">{% if not perfilUsuario.per_tell%}(00) 00000-0000{%endif%}
+                        {% if perfilUsuario.per_tell%} {{perfilUsuario.per_tell}} {%endif%}
+                        </p>
+                    </div>
+                    <div class="descricao">
+                        <h4 class="text-descricao">Habilidades:</h4>
+                        <p></p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="box-vagas">
+                <div class="container-vagas-cadastradas">
+                    <h3 class="title-meio-h3">VAGAS CADASTRADAS</h3>
+                    <div class="card-vagas">
+
+                        <div class="itens-card-vagas">
+                            <h4 class="title-card-vagas">Progamador JAVA</h4>
+                            <p class="descricao-vaga">Empresa Orbita</p>
+                            <div class="div-btn-ver-mais">
+                                <a href="" class="btn-ver-mais">
+                                    <p class="text-ver-mais"> Ver mais</p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="itens-card-vagas">
+                            <h4 class="title-card-vagas">Progamador JAVA</h4>
+                            <p class="descricao-vaga">Empresa Orbita</p>
+                            <div class="div-btn-ver-mais">
+                                <a href="" class="btn-ver-mais">
+                                    <p class="text-ver-mais"> Ver mais</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="itens-card-vagas">
+                            <h4 class="title-card-vagas">Progamador JAVA</h4>
+                            <p class="descricao-vaga">Empresa Orbita</p>
+                            <div class="div-btn-ver-mais">
+                                <a href="" class="btn-ver-mais">
+                                    <p class="text-ver-mais"> Ver mais</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-avaliacao">
+                    <h4 class="title-meio-h3">Avaliações do Docente</h4>
+                    <div class="box-avaliacao">
+                        <h5 class="text-docente">Professor Felipe</h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="container-certificados">
+            <div class="titulo-certificados">
+                <h3 class="title-meio-h3">Certificados</h3>
             </div>
         </div>
 
-        <div class="card card-2">
 
-            <!-- card header-->
-            <div class="card-header">
-                <img src="/vagas.png" alt="card-img">
-            </div> <!--card header-->
+    </main>
 
-            <!-- card-boyd-->
-            <div class="card-body">
-                <h3> VAGA - Desenvolvedor Mobile </h3>
-                <p> Descrição da vaga disponivel </p>
-            </div> <!--card body-->
-
-            <div class="card-footer">
-                <a href="#"> Ver Mais </a>
-            </div>
-        </div>
-
-        <div class="card card-3">
-
-            <!-- card header-->
-            <div class="card-header">
-                <img src="/vagas.png" alt="card-img">
-            </div> <!--card header-->
-
-            <!-- card-boyd-->
-            <div class="card-body">
-                <h3> VAGA - Desenvolvedor Mobile </h3>
-                <p> Descrição da vaga disponivel </p>
-            </div> <!--card body-->
-
-            <div class="card-footer">
-                <a href="#"> Ver Mais </a>
-            </div>
-        </div>
-
-    </div>
-</main>
+<script src="{% static 'Scripts/perfil_script.js' %}"></script>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ certificados }}

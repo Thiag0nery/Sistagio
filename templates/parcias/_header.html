@@ -6,9 +6,19 @@
             <div class="logo"><img src="/static/imagens/logoSistagio.png" width="32%" alt=""></div> <!-- logo-->
             <div class="menu">
 
+
+                {% if user.is_anonumous%}
                 <a href="{% url 'home:inicial' %}" id="home_header"> Home</a>
                 <a href="{% url 'home:login' %}" id="login_header"> Login</a>
+
+
                 <a href="{% url 'home:cadastro' %}" id="cadastro_header"> Cadastro </a>
+                {%endif%}
+
+                {% if user.is_authenticated%}
+                    <a href="{% url 'post_vagas:homepage' %}" id="vagas_header">Vagas</a>
+                  <a href="{% url 'perfil:perfil' %}" id="perfil_header"> Perfil </a>
+                {%endif%}
             </div>
             <!--menu-->
         </div>

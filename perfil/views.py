@@ -18,6 +18,7 @@ class Perfil(View):
         self.perfil = models.PerfilUser.objects.filter(
             per_pessoa_fk=self.request.user
         ).first()
+
         self.informacoes = {
             'perfil': forms.PerfilForms(
                 data=self.request.POST or None,
