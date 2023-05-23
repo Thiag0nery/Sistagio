@@ -12,12 +12,14 @@ class PerfilUser(models.Model):
     per_foto = models.FileField(upload_to='fotos_usuario/%Y/%m/', null=True, blank=True)
     per_detalhe = models.CharField(max_length=255, blank=True )
 
+    def __str__(self):
+        return self.per_pessoa_fk.username
 class Certificados(models.Model):
     cert_cod = models.BigAutoField(primary_key=True)
     cert_nome_curso = models.CharField(max_length=75)
     cert_instituicao = models.CharField(max_length=50)
     cert_arquivo = models.FileField(upload_to='certificados/%Y/%m/',null=True,blank=True)
-    cert_pessoa_fk = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name='Usuario')
+    cert_pessoa_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE,verbose_name='Usuario')
 
 class Aluno_Csv(models.Model):
     alu_codigo = models.BigAutoField(primary_key=True)

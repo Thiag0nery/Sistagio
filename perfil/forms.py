@@ -47,7 +47,7 @@ class PostVagasForms(forms.ModelForm):
     class Meta:
         model = PostVagas
         fields = '__all__'
-        exclude = ('vag_perfil_fk',)
+        exclude = ('vag_usuario_fk',)
 class Tabela_csv(forms.ModelForm):
     class Meta:
         model = models.Aluno_Csv

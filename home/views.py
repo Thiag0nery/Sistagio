@@ -142,3 +142,7 @@ class Cadastro(View):
 
         return redirect('home:login')
 
+class Logout(View):
+    def get(self, *args,**kwargs):
+        logout(self.request)
+        return redirect('home:inicial')

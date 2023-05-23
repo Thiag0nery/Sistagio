@@ -13,14 +13,6 @@
     {% endfor %}
 </ul>
 {% endif %}
-<!-- Usuario Fazendo a atualizações do perfil dele -->
-<!--
-<form method="POST" action="">
-{% csrf_token %}
-        {{ perfil }}
-     <button type="submit" name="botao-perfil">Enviar</button>
-</form>
--->
 
 {% block style %}<link rel="stylesheet" href="{% static 'perfil.css'%}">{% endblock %}
  <main class="main">
@@ -61,7 +53,7 @@
                     <div class="descricao">
                         <h4 class="text-descricao">Conte um pouco sobre você:</h4>
                         <textarea name="{{perfil.per_datlhe.name}}" class="textarea-descricao" placeholder="O melhor aluno do Sistagio!"
-                            c></textarea>
+                            ></textarea>
                     </div>
                     <div class="dados-pessoais">
                         <label for="" class="text-dados">Nome completo:</label>
@@ -113,63 +105,114 @@
                         {% if perfilPessoa.per_tell%} {{perfilPessoa.per_tell}} {%endif%}
                         </p>
                     </div>
+                      {% if perfilPessoa.tipo == 'A' %}
                     <div class="descricao">
                         <h4 class="text-descricao">Habilidades:</h4>
                         <p>{{perfilPessoa.per_detalhe}}</p>
                     </div>
+                    {%endif%}
 
                 </div>
             </div>
             <div class="box-vagas">
                 <div class="container-vagas-cadastradas">
-                    <h3 class="title-meio-h3">VAGAS CADASTRADAS</h3>
+                    <h3 class="title-meio-h3">{% if perfilPessoa.tipo == 'A' %}VAGAS CADASTRADAS{%endif%}
+                    {% if perfilPessoa.tipo == 'E' %}VAGAS LANÇADAS{%endif%}
+                    </h3>
                     <div class="card-vagas">
                         {% for Vaga in vaga_cadastradas%}
-                        <p>{{Vaga.vcad_perfil_fk.tipo}}</p>
-
+                        <div class="itens-card-vagas">
+                            <h4 class="title-card-vagas">{{Vaga.vcad_postVaga_fk.vag_nome}}</h4>
+                            <p class="descricao-vaga">{{Vaga.vcad_postVaga_fk.vag_usuario_fk.first_name}}</p>
+                            <div class="div-btn-ver-mais">
+                                <a href="" class="btn-ver-mais">
+                                    <p class="text-ver-mais"> Ver mais</p>
+                                </a>
+                            </div>
+                        </div>
                         {%endfor%}
-                        <div class="itens-card-vagas">
-                            <h4 class="title-card-vagas">Progamador JAVA</h4>
-                            <p class="descricao-vaga">Empresa Orbita</p>
-                            <div class="div-btn-ver-mais">
-                                <a href="" class="btn-ver-mais">
-                                    <p class="text-ver-mais"> Ver mais</p>
-                                </a>
-                            </div>
-                        </div>
 
-                        <div class="itens-card-vagas">
-                            <h4 class="title-card-vagas">Progamador JAVA</h4>
-                            <p class="descricao-vaga">Empresa Orbita</p>
-                            <div class="div-btn-ver-mais">
-                                <a href="" class="btn-ver-mais">
-                                    <p class="text-ver-mais"> Ver mais</p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="itens-card-vagas">
-                            <h4 class="title-card-vagas">Progamador JAVA</h4>
-                            <p class="descricao-vaga">Empresa Orbita</p>
-                            <div class="div-btn-ver-mais">
-                                <a href="" class="btn-ver-mais">
-                                    <p class="text-ver-mais"> Ver mais</p>
-                                </a>
-                            </div>
-                        </div>
+
+
+
                     </div>
                 </div>
+                {% if perfilPessoa.tipo == 'A' %}
                 <div class="container-avaliacao">
                     <h4 class="title-meio-h3">Avaliações do Docente</h4>
                     <div class="box-avaliacao">
                         <h5 class="text-docente">Professor Felipe</h5>
                     </div>
                 </div>
+                {%endif%}
 
             </div>
         </div>
         <div class="container-certificados">
             <div class="titulo-certificados">
+                {% if perfilPessoa.tipo == 'A' %}
                 <h3 class="title-meio-h3">Certificados</h3>
+                <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <label for="id_cert_nome_curso" class="text-dados">Nome do certificado</label>
+                    <input type="text" name="{{certificados.cert_nome_curso.name}}" class="input-dados" id="id_cert_nome_curso">
+                    <label for="id_cert_instituicao" class="text-dados" >Nome da instituição</label>
+                    <input type="text" name="{{certificados.cert_instituicao.name}}" id="id_cert_instituicao" class="input-dados">
+                    <input type="file" name="{{certificados.cert_arquivo.name}}" >
+
+               
+                <button type="submit" class="btn-alterar-sobre" name="botao-certificado">Enviar</button>
+                </form>
+                <div class="campo-certificados" style="margin-top: 28px;">
+
+                     {% for certificado in certificados_usuario%}
+                    <div class="style-certificado" style="display: flex;justify-content: center;align-items: center;margin-top: 20px;">
+
+                        <div class="certificado-informacao" style="width:50%;">
+                        <p>Nome do curso: {{certificado.cert_nome_curso}}</p>
+                    <p>Nome da instituição: {{certificado.cert_instituicao}}</p>
+                    </div>
+                    <img src="{{certificado.cert_arquivo.url}}" style="width:25%;">
+
+                    </div>
+
+                {%endfor%}
+
+                </div>
+
+                {%endif%}
+
+                {% if  perfilPessoa.tipo == 'E' %}
+                <h3 class="title-meio-h3">Postar vaga</h3>
+                <form method="POST" action="">
+                {% csrf_token %}
+
+                     <label for="id_vag_nome" class="text-dados">Nome da vaga</label>
+                    <input type="text" name="{{post.vag_nome.name}}" class="input-dados" id="id_vag_nome">
+
+                    <label for="id_vag_tell" class="text-dados">Telefone</label>
+                    <input type="text" name="{{post.vag_tell.name}}" class="input-dados" id="id_vag_tell" value="
+                        {% if perfilPessoa.per_tell%} {{perfilPessoa.per_tell}} {%endif%}">
+
+                    <label for="id_vag_email" class="text-dados">Email</label>
+                    <input type="email" name="{{post.vag_email.name}}" class="input-dados" id="id_vag_email">
+
+                    <label for="id_vag_endereco" class="text-dados">Endereço</label>
+                    <input type="text" name="{{post.vag_endereco.name}}" class="input-dados" id="id_vag_endereco">
+
+                    <label for="id_vag_descricao" class="text-dados">Descrição</label>
+                    <input type="text" name="{{post.vag_descricao.name}}" class="input-dados" id="id_vag_descricao">
+
+
+                    <label for="id_vag_funcao" class="text-dados">Função</label>
+                    <input type="text" name="{{post.vag_funcao.name}}" class="input-dados" id="id_vag_funcao">
+
+                    <label for="id_vag_beneficio" class="text-dados">Beneficio</label>
+                    <input type="text" name="{{post.vag_beneficio.name}}" class="input-dados" id="id_vag_beneficio">
+
+                <button type="submit" name="botao-vag" class="btn-alterar-sobre">Enviar</button>
+                </form>
+                {%endif%}
             </div>
         </div>
 
@@ -177,19 +220,9 @@
     </main>
 
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ certificados }}
-    <button type="submit" name="botao-certificado">Enviar</button>
-</form>
 
-{% if  perfilPessoa.tipo == 'E' %}
-<form method="POST" action="">
-{% csrf_token %}
-    {{ post }}
-     <button type="submit" name="botao-vag">Enviar</button>
-</form>
-{%endif%}
+
+
 
 {% if  perfilPessoa.tipo == 'I' %}
 
@@ -210,10 +243,7 @@
     <label for="senha_docente">Confirmação de Senha </label>
     {{docente_formulario.senha_docente2}}
 
-    <!--<input type="text" name="inp-nome-docente">
-    <input type="text" name="inp-email-docente">
-    <input type="text" name="inp-senha-docente">
-    <input type="text" name="inp-cpf-docente">-->
+
     <button type="submit" name="btn-docente">Enviar</button>
 </form>
 

@@ -14,14 +14,18 @@ class Perfil(View):
     def setup(self, *args, **kwargs):
         super().setup(*args, **kwargs)
 
-
+        # Essa variavel permite pega o perfil do usuario no banco
         self.perfil = models.PerfilUser.objects.filter(
             per_pessoa_fk=self.request.user
         ).first()
 
+        # Essa variavel permite pegar as vagas que o aluno se inscreveu
         self.vagaCadastradas = Vaga_cadastradas.objects.filter(vcad_perfil_fk=self.perfil)
+
+        self.certificado = models.Certificados.objects.filter(cert_pessoa_fk=self.perfil)
+
         print(self.perfil)
-        print(self.vagaCadastradas)
+
         self.informacoes = {
             'perfil': forms.PerfilForms(
                 data=self.request.POST or None,
@@ -35,6 +39,7 @@ class Perfil(View):
             'certificados': forms.CertificadoForms(
                 data=self.request.POST or None
             ),
+            'certificados_usuario':self.certificado,
             'post': forms.PostVagasForms(
                 data=self.request.POST or None
             ),
@@ -56,11 +61,6 @@ class AtualizacaoPerfil(Perfil):
 
 
     def post(self, *args, **kwargs):
-        botao_perfil = self.request.POST.get('botao-perfil')
-        botao_certificado = self.request.POST.get('botao-certificado')
-        botao_vag = self.request.POST.get('botao-vag')
-        botao_csv = self.request.POST.get('botao-csv')
-
         usuario = get_object_or_404(
             User, username=self.request.user.username)
 
@@ -88,25 +88,25 @@ class AtualizacaoPerfil(Perfil):
             usuario.save()
             return redirect('perfil:perfil')
 
-        if botao_certificado:
-            print(bool(self.usuarioPerfil.is_valid()))
-            """ PRECISSA REPARO - NULL NOS  CAMPOS"""
+        if 'botao-certificado' in self.request.POST:
             documento = self.request.FILES.get('cert_arquivo')
             arquivo = self.certificado.save(commit=False)
-            arquivo.cert_pessoa_fk = usuario
+            arquivo.cert_pessoa_fk = self.perfil
             arquivo.cert_arquivo = documento
             arquivo.save()
-            print(documento,"a")
-        if botao_vag:
-            self.perfil = models.PerfilUser.objects.filter(
-                per_pessoa_fk=self.request.user
-            ).first()
-            #pk_perfil = get_object_or_404(models.PerfilUser, per_pessoa_fk=self.request.user.username)
-
+            return redirect('perfil:perfil')
+        if 'botao-vag'  in self.request.POST:
             post = self.postvaga.save(commit=False)
-            post.vag_perfil_fk = self.perfil
+            post.vag_usuario_fk =  usuario
             post.save()
-        print(bool(botao_csv))
+
+            objeto = Vaga_cadastradas(
+                vcad_perfil_fk=self.perfil,
+                vcad_postVaga_fk=post
+            )
+            objeto.save()
+
+            return redirect('perfil:perfil')
 
         if 'botao-csv' in self.request.POST:
 

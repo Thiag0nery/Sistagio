@@ -102,8 +102,9 @@ class PerfilForms(forms.ModelForm):
         tipo_usuario  = self.cleaned_data.get('tipo_usuario')
         cpf_cnpj = self.cleaned_data.get('cpf_cnpj')
         matricula =  self.cleaned_data.get('matricula')
-        matricula = matricula.replace('.','').replace(',','').replace('-','')
-        matricula = int(matricula)
+        if matricula:
+            matricula = matricula.replace('.','').replace(',','').replace('-','')
+            matricula = int(matricula)
         print(matricula)
         cpf_cnpj_banco = PerfilUser.objects.filter(cpf_cnpj=cpf_cnpj).first()
 
