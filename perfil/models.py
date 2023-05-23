@@ -9,6 +9,8 @@ class PerfilUser(models.Model):
     cpf_cnpj = models.CharField(max_length=15, blank=True)
     per_tell = models.CharField(max_length=14, blank=True)
     tipo = models.CharField(max_length=1, blank=True)
+    per_foto = models.FileField(upload_to='fotos_usuario/%Y/%m/', null=True, blank=True)
+    per_detalhe = models.CharField(max_length=255, blank=True )
 
 class Certificados(models.Model):
     cert_cod = models.BigAutoField(primary_key=True)

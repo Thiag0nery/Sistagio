@@ -2,6 +2,7 @@
 {% load static %}
 {% block conteudo %}
 {% include 'parcias/_header.html' %}
+
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -20,12 +21,25 @@
      <button type="submit" name="botao-perfil">Enviar</button>
 </form>
 -->
-{%if perfilPessoa.tipo == 'A'%}
+
 {% block style %}<link rel="stylesheet" href="{% static 'perfil.css'%}">{% endblock %}
  <main class="main">
         <div class="container-inicio">
             <div class="foto-perfi">
-                <img src="/static/imagens/perfil-sem-foto.png" alt="" class="img-perfil">
+
+
+                {% if not perfilPessoa.per_foto %}
+                 <img src="/static/imagens/perfil-sem-foto.png" alt="" class="img-perfil">
+                {%endif%}
+                {% if perfilPessoa.per_foto %}
+
+                 <img src="{{perfilPessoa.per_foto.url}}" alt="" class="img-perfil">
+                {%endif%}
+            <form class="container-foto-form" method="POST" enctype="multipart/form-data">
+                 {% csrf_token %}
+                <input type="file" class="btn-foto-alterar" name="perfil_foto_usuario">
+                 <button class="btn-alterar-sobre" name="mudar-foto">Salvar foto</button>
+            </form>
 
             </div>
 
@@ -33,42 +47,46 @@
                 <h3 class="text-titulo">{{user.first_name}}</h3>
             </div>
         </div>
-        <input type="file" class="btnAlterar">
+
         <div class="container-meio">
             <div class="container-sobre" >
 
-                <form class="form-dados-sobre" id="form-alterar" style="display: none;">
+                <form class="form-dados-sobre" id="form-alterar" style="display: none;"  method="POST">
+                    {% csrf_token %}
                     <div class="titulo-sobre">
                         <h3 class="title-meio-h3">MEUS DADOS</h3>
-                        <button class="btn-alterar-sobre" id="btn-salvar">Salvar</button>
+                        <button class="btn-alterar-sobre" id="btn-salvar" name="dados-usuario">Salvar</button>
                     </div>
 
                     <div class="descricao">
                         <h4 class="text-descricao">Conte um pouco sobre você:</h4>
-                        <textarea name="descricao" class="textarea-descricao" placeholder="O melhor aluno do Sistagio!"
+                        <textarea name="{{perfil.per_datlhe.name}}" class="textarea-descricao" placeholder="O melhor aluno do Sistagio!"
                             c></textarea>
                     </div>
                     <div class="dados-pessoais">
                         <label for="" class="text-dados">Nome completo:</label>
-                        <input type="text" class="input-dados" placeholder="Atualize seu nome">
+                        <input type="text" name="{{usuario.first_name.name}}" value="{{user.first_name}}" class="input-dados">
                     </div>
                     <div class="dados-pessoais">
                         <label for="" class="text-dados">E-mail:</label>
-                        <input type="email" class="input-dados" placeholder="Atualize E-mail">
+                        <input type="email" class="input-dados" value="{{user.email}}" name="{{usuario.email.name}}">
                     </div>
                     <div class="dados-pessoais">
                         <label for="" class="text-dados">Telefone:</label>
-                        <input type="tel" class="input-dados" placeholder="Atualize número de telefone">
+                        <input type="tel" class="input-dados" name="{{perfil.per_tell.name}}" value="{{perfil.per_tell.value}}" placeholder="Atualize número de telefone">
                     </div>
                     <div class="dados-pessoais">
                         <label for="" class="text-dados">Senha:</label>
                         <input type="password" class="input-dados" placeholder="Atualize sua senha">
                     </div>
+
+                    {%if perfilPessoa.tipo == 'A'%}
                     <div class="descricao">
                         <h4 class="text-descricao">Insira algumas de suas habilidades:</h4>
-                        <textarea name="descricao" class="textarea-descricao" placeholder="O melhor aluno do Sistagio!"
-                            c></textarea>
+                        <textarea name="{{perfil.per_detalhe.name}}" class="textarea-descricao" placeholder="O melhor aluno do Sistagio!"
+                            >{{perfil.per_detalhe.value}}</textarea>
                     </div>
+                    {%endif%}
 
                 </form>
                 <div class="form-dados-sobre" id="form-dados-banco">
@@ -91,13 +109,13 @@
                     </div>
                     <div class="dados-pessoais">
                         <label for="" class="text-dados ">Telefone:</label>
-                        <p class="{% if not perfilUsuario.per_tell%}null-tell{%endif%}">{% if not perfilUsuario.per_tell%}(00) 00000-0000{%endif%}
-                        {% if perfilUsuario.per_tell%} {{perfilUsuario.per_tell}} {%endif%}
+                        <p class="{% if not perfilPessoa.per_tell%}null-tell{%endif%}">{% if not perfilPessoa.per_tell%}(00) 00000-0000{%endif%}
+                        {% if perfilPessoa.per_tell%} {{perfilPessoa.per_tell}} {%endif%}
                         </p>
                     </div>
                     <div class="descricao">
                         <h4 class="text-descricao">Habilidades:</h4>
-                        <p></p>
+                        <p>{{perfilPessoa.per_detalhe}}</p>
                     </div>
 
                 </div>
@@ -106,7 +124,10 @@
                 <div class="container-vagas-cadastradas">
                     <h3 class="title-meio-h3">VAGAS CADASTRADAS</h3>
                     <div class="card-vagas">
+                        {% for Vaga in vaga_cadastradas%}
+                        <p>{{Vaga.vcad_perfil_fk.tipo}}</p>
 
+                        {%endfor%}
                         <div class="itens-card-vagas">
                             <h4 class="title-card-vagas">Progamador JAVA</h4>
                             <p class="descricao-vaga">Empresa Orbita</p>
@@ -155,13 +176,13 @@
 
     </main>
 
-<script src="{% static 'Scripts/perfil_script.js' %}"></script>
+
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ certificados }}
     <button type="submit" name="botao-certificado">Enviar</button>
 </form>
-{%endif%}
+
 {% if  perfilPessoa.tipo == 'E' %}
 <form method="POST" action="">
 {% csrf_token %}
@@ -209,4 +230,6 @@
 </form>
 {%endif%}
 
+
+<script src="{% static 'Scripts/perfil_script.js' %}"></script>
 {%endblock%}

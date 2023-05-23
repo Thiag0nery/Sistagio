@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from django.views import View
 from . import forms
-from home.forms import UserForms
 from django.contrib.auth.models import User
 from . import models
+from post_vagas.models import Vaga_cadastradas
 from django.contrib import messages
 import csv
 
@@ -19,15 +19,18 @@ class Perfil(View):
             per_pessoa_fk=self.request.user
         ).first()
 
+        self.vagaCadastradas = Vaga_cadastradas.objects.filter(vcad_perfil_fk=self.perfil)
+        print(self.perfil)
+        print(self.vagaCadastradas)
         self.informacoes = {
             'perfil': forms.PerfilForms(
                 data=self.request.POST or None,
-                per_cod=self.request.user,
                 instance=self.perfil
             ),
-            'usuario': UserForms(
-                data=self.request.POST or None
-
+            'usuario': forms.UsuarioAtualizar(
+                data=self.request.POST or None,
+                usuario=self.request.user,
+                instance=self.request.user
             ),
             'certificados': forms.CertificadoForms(
                 data=self.request.POST or None
@@ -36,6 +39,7 @@ class Perfil(View):
                 data=self.request.POST or None
             ),
             'perfilPessoa': self.perfil,
+            'vaga_cadastradas':self.vagaCadastradas,
             'aluno_csv': forms.Tabela_csv(data=self.request.POST or None),
             'docente_formulario':forms.DocenteForm(data=self.request.POST or None)
         }
@@ -59,15 +63,30 @@ class AtualizacaoPerfil(Perfil):
 
         usuario = get_object_or_404(
             User, username=self.request.user.username)
+
+
+        if 'mudar-foto' in self.request.POST:
+            foto_pessoa =  self.request.FILES.get('perfil_foto_usuario')
+
+            self.perfil.per_foto = foto_pessoa
+            self.perfil.save()
+            return redirect('perfil:perfil')
         """ PRECISSA REPARO - DATA  """
-        if botao_perfil:
+        if 'dados-usuario' in self.request.POST:
+            print('Entrou')
+            #password = self.usuarioForm.cleaned_data.get('password')
+            #email = self.usuarioForm.data.get('email')
+            first_name = self.usuarioForm.data.get('first_name')
             if self.usuarioPerfil.is_valid():
-                data = self.request.POST.get('per_nascimento')
-                print(data)
-                perfil = self.usuarioPerfil.save(commit=False)
-                perfil.per_pessoa_fk = usuario
-                perfil.per_nascimento = data
-                perfil.save()
+
+                perfilUsuario = self.usuarioPerfil.save(commit=False)
+                perfilUsuario.per_pessoa_pk = usuario
+                perfilUsuario.save()
+
+            if first_name:
+                usuario.first_name = first_name
+            usuario.save()
+            return redirect('perfil:perfil')
 
         if botao_certificado:
             print(bool(self.usuarioPerfil.is_valid()))

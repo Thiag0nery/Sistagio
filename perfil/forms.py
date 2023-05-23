@@ -7,8 +7,8 @@ class PerfilForms(forms.ModelForm):
 
     class Meta:
         model = models.PerfilUser
-        fields = '__all__'
-        exclude = ('per_pessoa_fk',)
+        fields = ('cpf_cnpj','per_tell','per_detalhe',)
+
 
 
 
@@ -16,6 +16,26 @@ class PerfilForms(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.per_cod = per_cod
+class UsuarioAtualizar(forms.ModelForm):
+    password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput,
+        label='Senha',
+    )
+    password2 = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput,
+        label='Confirma senha ',
+    )
+
+    class Meta():
+        model = User
+        fields = ('first_name', 'email', 'password', 'password2')
+    def __init__(self, usuario=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.usuario = usuario
+
+
 
 class CertificadoForms(forms.ModelForm):
     class Meta:
