@@ -216,7 +216,7 @@ footer{
 
 .containerFooter{
     display: flex;
-
+    align-items: center;
 
 }
 .direitos{
