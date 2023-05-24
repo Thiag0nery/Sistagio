@@ -146,6 +146,28 @@
                 </div>
                 {%endif%}
 
+                 {% if perfilPessoa.tipo == 'I' %}
+                <h4 class="title-meio-h3">Cadastra curso</h4>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                         <label for="id_curs_nome" class="text-dados">Nome do curso</label>
+                        <input type="text" name="{{curso_instituicao.curs_nome.name}}" class="input-dados" id="id_curs_nome" placeholder="Digite o nome do curso">
+                         <button type="submit" name="botao-curso-instituicao" class="btn-alterar-sobre">Salvar</button>
+                    </form>
+                   <h4 class="title-meio-h3" style="margin-top:15px;">Cursos cadastrados</h4>
+                <div class="container-avaliacao">
+
+                    {% for curso in curso_vinculado%}
+                        <div class="itens-card-vagas">
+                            <h4 class="title-card-vagas">{{curso.curs_nome}}</h4>
+
+
+                        </div>
+                        {%endfor%}
+
+                </div>
+                {%endif%}
+
             </div>
         </div>
         <div class="container-certificados">
@@ -213,6 +235,40 @@
                 <button type="submit" name="botao-vag" class="btn-alterar-sobre">Enviar</button>
                 </form>
                 {%endif%}
+
+                {% if  perfilPessoa.tipo == 'I' %}
+
+                <form  method="POST"  name="form-docente">
+                    {% csrf_token %}
+
+
+                    <label for="id_nome_docente" class="text-dados">Nome docente</label>
+                    <input type="text" name="{{docente_formulario.nome_docente.name}}" class="input-dados" id="id_nome_docente">
+
+
+                    <label for="id_email_docente" class="text-dados">Email docentee</label>
+                    <input type="text" name="{{docente_formulario.email_docente.name}}" class="input-dados" id="id_email_docente">
+
+
+                    <label for="id_cpf_docente" class="text-dados">CPF</label>
+                    <input type="text" name="{{docente_formulario.cpf_docente.name}}" class="input-dados" id="id_cpf_docente">
+
+
+                    <label for="id_senha_docente" class="text-dados">Senha</label>
+                    <input type="text" name="{{docente_formulario.senha_docente.name}}" class="input-dados" id="id_senha_docente">
+
+
+                    <label for="id_senha_docente2" class="text-dados">Confirmação de Senha</label>
+                    <input type="text" name="{{docente_formulario.senha_docente2.name}}" class="input-dados" id="id_senha_docente2">
+
+
+                    <button type="submit" class="btn-alterar-sobre" name="btn-docente">Enviar</button>
+                </form>
+
+                {%for docente in docente_vinculado%}
+                <p>{{docente.doce_perfil_pk.per_pessoa_fk.first_name}}</p>
+                {%endfor%}
+                {%endif%}
             </div>
         </div>
 
@@ -225,27 +281,6 @@
 
 
 {% if  perfilPessoa.tipo == 'I' %}
-
-<form  method="POST"  name="form-docente">
-    {% csrf_token %}
-    <label for="nome_docente">Nome docente</label>
-    {{docente_formulario.nome_docente}}
-
-    <label for="email_docente">Email docente</label>
-    {{docente_formulario.email_docente}}
-
-    <label for="cpf_docente">CPF</label>
-    {{docente_formulario.cpf_docente}}
-
-    <label for="senha_docente">Senha </label>
-    {{docente_formulario.senha_docente}}
-
-    <label for="senha_docente">Confirmação de Senha </label>
-    {{docente_formulario.senha_docente2}}
-
-
-    <button type="submit" name="btn-docente">Enviar</button>
-</form>
 
 <form  method="POST" enctype="multipart/form-data">
     {% csrf_token %}

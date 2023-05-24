@@ -116,3 +116,8 @@ class DocenteForm(forms.ModelForm):
 
         if validation_error_msgs:
             raise (forms.ValidationError(validation_error_msgs))
+class Curso_instituicao(forms.ModelForm):
+
+    class Meta():
+        model = models.curso_instituicao
+        fields = ('curs_nome',)

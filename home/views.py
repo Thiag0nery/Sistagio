@@ -129,16 +129,9 @@ class Cadastro(View):
                 "Cadastro feito com sucesso, aguarde o periodo de verifição do sistema se a instituição e validada"
             )
 
-            return redirect('home:inicial')
-        """if senha:
-            autentica = authenticate(
-                self.request,
-                username=usuario,
-                password=senha
-            )
 
-            if autentica:
-                login(self.request, user=usuario)"""
+            return redirect('home:inicial')
+
 
         return redirect('home:login')
 

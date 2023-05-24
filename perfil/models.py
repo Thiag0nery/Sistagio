@@ -40,3 +40,8 @@ class curso_aluno(models.Model):
     curs_codigo  = models.BigAutoField(primary_key=True)
     curs_insituicao = models.ForeignKey(curso_instituicao, on_delete=models.CASCADE)
     curs_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)
+
+class Docente(models.Model):
+    doce_codigo  = models.BigAutoField(primary_key=True)
+    doce_perfil_pk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE,null=True)
+    doce_instituicao_fk  = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

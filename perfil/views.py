@@ -21,8 +21,10 @@ class Perfil(View):
 
         # Essa variavel permite pegar as vagas que o aluno se inscreveu
         self.vagaCadastradas = Vaga_cadastradas.objects.filter(vcad_perfil_fk=self.perfil)
-
+        self.cursoVinculado = models.curso_instituicao.objects.filter(curs_perfil_fk=self.perfil)
         self.certificado = models.Certificados.objects.filter(cert_pessoa_fk=self.perfil)
+        self.docenteVinculados = models.Docente.objects.filter(doce_instituicao_fk=self.request.user)
+        print(self.docenteVinculados)
 
         print(self.perfil)
 
@@ -43,6 +45,9 @@ class Perfil(View):
             'post': forms.PostVagasForms(
                 data=self.request.POST or None
             ),
+            'curso_instituicao':forms.Curso_instituicao(data=self.request.POST or None),
+            'curso_vinculado': self.cursoVinculado,
+            'docente_vinculado': self.docenteVinculados,
             'perfilPessoa': self.perfil,
             'vaga_cadastradas':self.vagaCadastradas,
             'aluno_csv': forms.Tabela_csv(data=self.request.POST or None),
@@ -50,6 +55,7 @@ class Perfil(View):
         }
 
         self.usuarioForm = self.informacoes['usuario']
+        self.cursoform = self.informacoes['curso_instituicao']
         self.usuarioPerfil = self.informacoes['perfil']
         self.certificado = self.informacoes['certificados']
         self.aluno = self.informacoes['aluno_csv']
@@ -180,6 +186,14 @@ class AtualizacaoPerfil(Perfil):
             docente_perfil = []
             docente_perfil.append(perfil)
             models.PerfilUser.objects.bulk_create(docente_perfil)
+
+            instituicao_docente = models.Docente(doce_perfil_pk=perfil, doce_instituicao_fk=usuario)
+            instituicao_docente.save()
+
+        if 'botao-curso-instituicao' in self.request.POST:
+            curso = self.cursoform.save(commit=False)
+            curso.curs_perfil_fk = self.perfil
+            curso.save()
         return redirect('home:inicial')
 
 
