@@ -6,4 +6,5 @@ admin.site.register(models.PerfilUser)
 admin.site.register(models.Certificados)
 admin.site.register(models.Docente)
 admin.site.register(models.Aluno_Csv, AlunoCsvAdmin)
+admin.site.register(models.curso_instituicao)
 # Register your models here.

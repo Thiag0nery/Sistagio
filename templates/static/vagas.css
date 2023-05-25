@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@font-face {
+    font-family: 'Poppins-Black';
+    src: url(fontes/Poppins-Black.ttf) format
+    ('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Poppins' , sans-serif;
+}
+.titulo-carrosel {
+    margin: 2%;
+    width: 50%;
+}
+.titulo-carrosel h2{
+    font-size: 30px;
+    font-weight: 200;
+}
+.titulo-carrosel h5{
+    color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+    font-weight: bold;
+}
+.box-carrosel{
+    background-color: #0000CD;
+    display: flex;
+    padding: 2%;
+    height: 65vh;
+}
+.img-box-carrossel{
+
+}
+.img-carrossel{
+
+}
+.itens-carrossel{
+    background-color: black;
+    width: 60%;
+    height: 60vh;
+    border-radius: 25px;
+}
+form.busca{
+width: 100%;
+text-align: center;
+margin-top: 5%;
+
+}
+.divBusca {
+    text-align: center;
+   height: 10vh;
+
+}
+.divBusca h1{
+    font-size: 40px;
+    margin-bottom: 3%;
+}
+.itensBusca{
+    margin-top: 2%;
+}
+.itensBusca input{
+    font-size: 25px;
+    width: 45%;
+    height: 7vh;
+    border-radius: 10px;
+    border: solid 2px #0000CD;
+}
+.itensBusca button{
+    font-size: 20px;
+    height: 7vh;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: #0000CD;
+}
+.itensBusca button:hover{
+    background-color: white;
+    transition: .3s;
+    color: #0000CD;
+
+}
+.vagas{
+   display: block;
+   padding: 10%;
+   text-align: center;
+   padding: 10% 5% 10% 5%;
+
+}
+.title-container-vagas{
+    font-size: 50px;
+}
+
+.card-vagas{
+    box-shadow: 0px 6px 10px 10px rgba(0, 0, 0, 0.1);
+    padding: 9%;
+    width: 57%;
+}
+.containerVagas{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.box-vagas {
+    margin-top: 5%;
+    display: flex;
+    width: 33.3%;
+    justify-content: space-around;
+    flex-direction: row;
+}
+.itens-btn{
+    margin-top: 20%;
+
+}
+.itens-vagas h2{
+    margin-bottom: 5%;
+}
+.itens-vagas h5{
+    margin-top: 2%;
+}
+.btn-ver-mais{
+    text-decoration: none;
+    color: #0000CD;
+    font-size: 20px;
+}
+.link-vaga{
+    text-decoration:none;
+    color:black;
+}

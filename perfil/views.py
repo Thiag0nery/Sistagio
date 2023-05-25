@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from . import models
 from post_vagas.models import Vaga_cadastradas
 from django.contrib import messages
+from django.http import JsonResponse
 import csv
 
 
@@ -48,6 +49,7 @@ class Perfil(View):
             'curso_instituicao':forms.Curso_instituicao(data=self.request.POST or None),
             'curso_vinculado': self.cursoVinculado,
             'docente_vinculado': self.docenteVinculados,
+            'curso_oferecer':models.curso_instituicao.objects.all(),
             'perfilPessoa': self.perfil,
             'vaga_cadastradas':self.vagaCadastradas,
             'aluno_csv': forms.Tabela_csv(data=self.request.POST or None),
@@ -197,4 +199,6 @@ class AtualizacaoPerfil(Perfil):
         return redirect('home:inicial')
 
 
-
+class load_second_options(Perfil):
+    def get(self, request):
+        pass

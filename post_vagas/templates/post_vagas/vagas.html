@@ -1,7 +1,69 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block style %}<link rel="stylesheet" href="{% static 'vagas.css'%}">{% endblock %}
 {% block conteudo %}
+{% include 'parcias/_header.html' %}
+<main class="main">
+
+        <section class="container-carrossel">
+            <!-- <div class="titulo-carrosel">
+                <h2 title="carrossel">Olá {{user.first_name}}, Bem vindo ao Sistagio</h2>
+                <h5 class="subtitulo-carrosel">No sistagio você encontra tudo que você mais deseja</h5>
+            </div> -->
+            <div class="box-carrosel">
+                <div class="itens-carrossel">
+
+                </div>
+                <div class="img-box-carrossel">
+                    <img src="astronauta-foguete-removebg-preview.png" alt="" class="img-carrossel">
+                </div>
+            </div>
+        </section>
+
+        <form class="busca"  method="GET" action="{% url 'post_vagas:busca' %}">
+
+            <div class="divBusca">
+                <h1 class="titleBusca">Busque por novos estagiários!</h1>
+                <div class="itensBusca">
+                    <input type="text" id="txtBusca" placeholder="Buscar..." name="busca" />
+                    <button id="btnBusca">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        <section class="vagas">
+            <h1 class="title-container-vagas">Vagas Disponíveis</h1>
+            <div class="containerVagas">
+
 {% for vaga in vagas %}
-<a href="{% url 'post_vagas:detalhe' vaga.vag_cod %}">{{ vaga.vag_nome}}</a>
+                <div class="box-vagas">
+
+
+                    <div class="card-vagas">
+                        <a href="{% url 'post_vagas:detalhe' vaga.vag_cod %}" class="link-vaga">
+                        <div class="itens-vagas">
+                            <h2 class="nome-vaga">{{ vaga.vag_nome}}</h2>
+                            <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
+                            <!-- <h5 class="subtitulo-empresa">Uma empresa de micro-serviços</h5> -->
+                            <h5 class="endereco">Endereço: {{ vaga.vag_endereco}}</h5>
+                        </div>
+                        <div class="itens-btn">
+                            <a href="" class="btn-ver-mais">Ver Mais</a>
+                        </div>
+                         </a>
+                    </div>
+
+
+
+
+                </div>
 
 {% endfor %}
+            </div>
+        </section>
+
+        </div>
+
+    </main>
+
 {% endblock %}

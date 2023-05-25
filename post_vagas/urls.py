@@ -4,4 +4,5 @@ app_name = 'post_vagas'
 urlpatterns = [
     path('',views.ListaVagas.as_view(),name='homepage'),
     path('vagadetalhe/<int:vag_cod>', views.DetalheVaga.as_view(), name='detalhe'),
+    path('busca/', views.Busca.as_view(), name='busca')
 ]

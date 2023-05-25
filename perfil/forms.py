@@ -121,3 +121,8 @@ class Curso_instituicao(forms.ModelForm):
     class Meta():
         model = models.curso_instituicao
         fields = ('curs_nome',)
+class Curso_aluno(forms.ModelForm):
+
+    class Meta():
+        model: models.curso_aluno
+        fields = ('curs_insituicao',)
