@@ -12,10 +12,20 @@
             </div> -->
             <div class="box-carrosel">
                 <div class="itens-carrossel">
+                    <div class="carousel">
+                        <div class="carousel-container">
+                          <div class="carousel-slide">
+                            <img src="/static/imagens/carrosel1.jpg" alt="Imagem 1">
+                            <img src="/static/imagens/carrosel2.jpg" alt="Imagem 2">
+                            <img src="/static/imagens/carrosel3.jpg" alt="Imagem 3">
+                              <img src="/static/imagens/estudantes.jpg" alt="Imagem 4">
 
+                          </div>
+                        </div>
+                      </div>
                 </div>
                 <div class="img-box-carrossel">
-                    <img src="astronauta-foguete-removebg-preview.png" alt="" class="img-carrossel">
+                    <img src="/static/imagens/atronautaa-removebg-preview.png" alt="" class="img-carrossel">
                 </div>
             </div>
         </section>
@@ -57,8 +67,10 @@
                 <div class="modal-container">
                     <div class="modal">
                         <p>
-                          <h3> Empresa: </h3>
+                          <h3> Empresa: {{ vaga.vag_nome}}</h3>
                         </p>
+                         <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
+                        <h5 class="endereco">Endereço: {{ vaga.vag_endereco}}</h5>
                     </div>
                 </div>
 
@@ -74,24 +86,77 @@
 
     </main>
  <script>
-              const  getElement = (...queries) => document.querySelector(...queries);
+             const  getElement = (...queries) => document.querySelector(...queries);
 
-                 const button = getElement('.btn-ver-mais');
-                const container = getElement('.modal-container');
-                  const modal = getElement('.modal');
+                 button = document.querySelectorAll('.btn-ver-mais');
+
+container = getElement('.modal-container');
+
 
                  activeModalClass = 'modal-show';
 
-               const  openModal = () => container.classList.add(activeModalClass);
+const  openModal = () => container.classList.add(activeModalClass);
               const  closeModal = () => container.classList.remove(activeModalClass);
-                button.forEach(function() {
-                  button.addEventListener('click', openModal);
+                button.forEach(function(button) {
+
+
+                button.addEventListener('click', function(){
+                console.log(button)
+                container.classList.add(activeModalClass);});
+                 })
+
+
                 container.addEventListener('click', (event) => {
+                const modal = getElement('.modal');
                     if (modal.contains(event.target)) return;
 
                     closeModal();
-                });
-                 )}
+                })
+            </script>
+            <script>
+                 var carouselSlide = document.querySelector('.carousel-slide');
+  var carouselImages = document.querySelectorAll('.carousel-slide img');
+
+  var counter = 0;
+  var slideWidth = carouselImages[0].clientWidth;
+
+  // Configurar o slide inicial
+  carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
+
+  // Função para avançar o slide
+  function nextSlide() {
+    if (counter >= carouselImages.length - 1) return;
+    counter++;
+    carouselSlide.style.transition = 'transform 0.3s ease-in-out';
+    carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
+  }
+
+  // Definir intervalo de tempo para avançar automaticamente
+  var interval = setInterval(nextSlide, 2000);
+
+  // Reiniciar o slide no final
+  carouselSlide.addEventListener('transitionend', function() {
+    if (carouselImages[counter].id === 'last-clone') {
+      carouselSlide.style.transition = 'none';
+      counter = carouselImages.length - 3;
+      carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
+    }
+    if (carouselImages[counter].id === 'first-clone') {
+      carouselSlide.style.transition = 'none';
+      counter = carouselImages.length - counter;
+      carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
+    }
+  });
+
+  // Pausar o carrossel ao passar o mouse
+  carouselSlide.addEventListener('mouseenter', function() {
+    clearInterval(interval);
+  });
+
+  // Retomar o carrossel ao remover o mouse
+  carouselSlide.addEventListener('mouseleave', function() {
+    interval = setInterval(nextSlide, 3000);
+  });
 
             </script>
 {% endblock %}
