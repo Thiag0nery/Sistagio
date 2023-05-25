@@ -40,7 +40,7 @@
 
 
                     <div class="card-vagas">
-                        <a href="{% url 'post_vagas:detalhe' vaga.vag_cod %}" class="link-vaga">
+
                         <div class="itens-vagas">
                             <h2 class="nome-vaga">{{ vaga.vag_nome}}</h2>
                             <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
@@ -48,11 +48,19 @@
                             <h5 class="endereco">Endereço: {{ vaga.vag_endereco}}</h5>
                         </div>
                         <div class="itens-btn">
-                            <a href="" class="btn-ver-mais">Ver Mais</a>
+                            <a  class=" btn-ver-mais {{vaga.vag_nome}}">Ver Mais</a>
                         </div>
-                         </a>
+
                     </div>
 
+
+                <div class="modal-container">
+                    <div class="modal">
+                        <p>
+                          <h3> Empresa: </h3>
+                        </p>
+                    </div>
+                </div>
 
 
 
@@ -65,5 +73,25 @@
         </div>
 
     </main>
+ <script>
+              const  getElement = (...queries) => document.querySelector(...queries);
 
+                 const button = getElement('.btn-ver-mais');
+                const container = getElement('.modal-container');
+                  const modal = getElement('.modal');
+
+                 activeModalClass = 'modal-show';
+
+               const  openModal = () => container.classList.add(activeModalClass);
+              const  closeModal = () => container.classList.remove(activeModalClass);
+                button.forEach(function() {
+                  button.addEventListener('click', openModal);
+                container.addEventListener('click', (event) => {
+                    if (modal.contains(event.target)) return;
+
+                    closeModal();
+                });
+                 )}
+
+            </script>
 {% endblock %}
