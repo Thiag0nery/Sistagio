@@ -5,11 +5,11 @@
 {% include 'parcias/_header.html' %}
 <main class="main">
 
-        <section class="container-carrossel">
-            <!-- <div class="titulo-carrosel">
+        <!-- <section class="container-carrossel">
+            aaaa<div class="titulo-carrosel">
                 <h2 title="carrossel">Olá {{user.first_name}}, Bem vindo ao Sistagio</h2>
                 <h5 class="subtitulo-carrosel">No sistagio você encontra tudo que você mais deseja</h5>
-            </div> -->
+            </div> aaa
             <div class="box-carrosel">
                 <div class="itens-carrossel">
                     <div class="carousel">
@@ -28,7 +28,7 @@
                     <img src="/static/imagens/atronautaa-removebg-preview.png" alt="" class="img-carrossel">
                 </div>
             </div>
-        </section>
+        </section>-->
 
         <form class="busca"  method="GET" action="{% url 'post_vagas:busca' %}">
 
@@ -64,53 +64,63 @@
                     </div>
 
 
-                <div class="modal-container">
-                    <div class="modal">
-                        <p>
-                          <h3> Empresa: {{ vaga.vag_nome}}</h3>
-                        </p>
-                         <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
-                        <h5 class="endereco">Endereço: {{ vaga.vag_endereco}}</h5>
-                    </div>
-                </div>
+
 
 
 
                 </div>
 
 {% endfor %}
+
+
             </div>
         </section>
 
-        </div>
-
+ <div class="modal-container">
+                    <div class="modal">
+                        <h3 id="empresa-nome"> Empresa: a</h3>
+                        </p>
+                         <h3 id="empresa-fist_name">a</h3>
+                        <h5 id="empresa_endereco">Endereço: a</h5>
+                    </div>
+                </div>
     </main>
  <script>
              const  getElement = (...queries) => document.querySelector(...queries);
 
-                 button = document.querySelectorAll('.btn-ver-mais');
+                 elemento = document.querySelectorAll('.card-vagas');
 
-container = getElement('.modal-container');
+
+var modal = getElement(".modal-container");
 
 
                  activeModalClass = 'modal-show';
 
-const  openModal = () => container.classList.add(activeModalClass);
-              const  closeModal = () => container.classList.remove(activeModalClass);
-                button.forEach(function(button) {
+                elemento.forEach(function(elements) {
 
 
-                button.addEventListener('click', function(){
-                console.log(button)
-                container.classList.add(activeModalClass);});
+                elements.addEventListener('click', function(){
+
+                 showModal(elements);
+                });
                  })
 
+                  function showModal(element) {
+        var nome = element.querySelector("h2");
+        var nome_empresa = element.querySelector("h3");
+        var endereco = element.querySelector("h5");
 
-                container.addEventListener('click', (event) => {
-                const modal = getElement('.modal');
-                    if (modal.contains(event.target)) return;
 
-                    closeModal();
+         document.getElementById("empresa-nome").innerHTML = nome.innerHTML;
+        document.getElementById("empresa-fist_name").innerHTML = nome_empresa.innerHTML;
+        document.getElementById("empresa_endereco").innerHTML = endereco.innerHTML;
+
+        modal.classList.add(activeModalClass)
+    }
+
+
+                modal.addEventListener('click', (event) => {
+                    modal.classList.remove(activeModalClass)
                 })
             </script>
             <script>
