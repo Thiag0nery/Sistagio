@@ -16,7 +16,6 @@ header {
 }
 
 .logo {
-    width: 50%;
     margin-top: 2%;
 }
 
@@ -36,4 +35,7 @@ header {
     text-decoration: none;
     font-weight: bold;
     margin-right: 15px;
+}
+#logout_header{
+    visibility: hidden;
 }

@@ -33,7 +33,7 @@ parceria entre empresas e alunos. Faça parte deste time.
 
                     </h3>
                 </div>
-                <button class="start">Start</button>
+                <a class="start" href="{% url 'home:login' %}">Start</a> 
             </div>
             <div class="ladoDireito">
                 <div class="bola"></div>
@@ -94,5 +94,5 @@ como conquista uma maior contratação de alunos pelas empresas, tornando sua in
 
 {% include 'parcias/_footer.html'%}
     </main>
-<script src="{% static 'Scripts/_header_script.js' %}"></script>
+
 {% endblock %}

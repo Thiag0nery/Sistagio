@@ -63,7 +63,7 @@ class Login(View):
 
         login(self.request, user=usuario)
 
-        return redirect('home:inicial')
+        return redirect('post_vagas:homepage')
 
 
 class Cadastro(View):

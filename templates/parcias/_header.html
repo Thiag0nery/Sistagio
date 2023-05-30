@@ -3,7 +3,8 @@
 
 <header>
         <div class="centro">
-            <div class="logo"><img src="/static/imagens/logoSistagio.png" width="32%" alt=""></div> <!-- logo-->
+            <a href=" {% if not request.user.is_authenticated %}{% url 'home:inicial' %} {%endif%} {% if request.user.is_authenticated %}{% url 'post_vagas:homepage' %} {%endif%}" style="width:50%;"><div class="logo"><img src="/static/imagens/logoSistagio.png" width="32%" alt=""></div> </a>
+            <!-- logo-->
             <div class="menu">
 
 
@@ -18,7 +19,7 @@
                 {% if request.user.is_authenticated%}
                     <a href="{% url 'post_vagas:homepage' %}" id="vagas_header">Vagas</a>
                     <a href="{% url 'perfil:perfil' %}" id="perfil_header"> Perfil </a>
-                    <a href="{% url 'home:logout' %}">Sair</a>
+                    <a href="{% url 'home:logout' %}"  id="logout_header">Sair</a>
                 {%endif%}
             </div>
             <!--menu-->
