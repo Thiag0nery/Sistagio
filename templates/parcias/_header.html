@@ -1,6 +1,6 @@
 {% load static %}
 <link rel="stylesheet" href="{% static '_header.css'%}">
-
+<link rel="icon" href="/templates/static/imagens/SISTAGIO LOGO PAGE.png" type="image/x-icon">
 <header>
         <div class="centro">
             <a href=" {% if not request.user.is_authenticated %}{% url 'home:inicial' %} {%endif%} {% if request.user.is_authenticated %}{% url 'post_vagas:homepage' %} {%endif%}" style="width:50%;"><div class="logo"><img src="/static/imagens/logoSistagio.png" width="32%" alt=""></div> </a>
@@ -19,7 +19,7 @@
                 {% if request.user.is_authenticated%}
                     <a href="{% url 'post_vagas:homepage' %}" id="vagas_header">Vagas</a>
                     <a href="{% url 'perfil:perfil' %}" id="perfil_header"> Perfil </a>
-                    <a href="{% url 'home:logout' %}"  id="logout_header">Sair</a>
+                    <a  href="#" id="logout_header" >Sair</a>
                 {%endif%}
             </div>
             <!--menu-->

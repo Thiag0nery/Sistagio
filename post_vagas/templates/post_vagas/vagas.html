@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block style %}<link rel="stylesheet" href="{% static 'vagas.css'%}">{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'vagas.css'%}">{% endblock %}
 {% block conteudo %}
 {% include 'parcias/_header.html' %}
 <main class="main">
 
-        <!-- <section class="container-carrossel">
+    <!-- <section class="container-carrossel">
             aaaa<div class="titulo-carrosel">
                 <h2 title="carrossel">Olá {{user.first_name}}, Bem vindo ao Sistagio</h2>
                 <h5 class="subtitulo-carrosel">No sistagio você encontra tudo que você mais deseja</h5>
@@ -30,143 +31,156 @@
             </div>
         </section>-->
 
-        <form class="busca"  method="GET" action="{% url 'post_vagas:busca' %}">
+    <form class="busca" method="GET" action="{% url 'post_vagas:busca' %}">
 
-            <div class="divBusca">
-                <h1 class="titleBusca">Busque por novos estagiários!</h1>
-                <div class="itensBusca">
-                    <input type="text" id="txtBusca" placeholder="Buscar..." name="busca" />
-                    <button id="btnBusca">Buscar</button>
-                </div>
+        <div class="divBusca">
+            <h1 class="titleBusca">Busque por novos estagiários!</h1>
+            <div class="itensBusca">
+                <input type="text" id="txtBusca" placeholder="Buscar..." name="busca" />
+                <button id="btnBusca">Buscar</button>
             </div>
-        </form>
+        </div>
+    </form>
 
-        <section class="vagas">
-            <h1 class="title-container-vagas">Vagas Disponíveis</h1>
-            <div class="containerVagas">
+    <section class="vagas">
+        <h1 class="title-container-vagas">Vagas Disponíveis</h1>
+        <div class="containerVagas">
 
-{% for vaga in vagas %}
-                <div class="box-vagas">
+            {% for vaga in vagas %}
+            <div class="box-vagas">
 
 
-                    <div class="card-vagas">
+                <div class="card-vagas">
 
-                        <div class="itens-vagas">
-                            <h2 class="nome-vaga">{{ vaga.vag_nome}}</h2>
-                            <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
-                            <!-- <h5 class="subtitulo-empresa">Uma empresa de micro-serviços</h5> -->
-                            <h5 class="endereco">Endereço: {{ vaga.vag_endereco}}</h5>
-                        </div>
-                        <div class="itens-btn">
-                            <a  class=" btn-ver-mais {{vaga.vag_nome}}">Ver Mais</a>
-                        </div>
-
+                    <div class="itens-vagas">
+                        <h2 class="nome-vaga">{{ vaga.vag_nome}}</h2>
+                        <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
+                        <!-- <h5 class="subtitulo-empresa">Uma empresa de micro-serviços</h5> -->
+                        <h5 class="endereco">Endereço: {{ vaga.vag_endereco}}</h5>
+                    </div>
+                    <div class="itens-btn">
+                        <a class=" btn-ver-mais {{vaga.vag_nome}}">Ver Mais</a>
                     </div>
 
-
-
-
-
-
                 </div>
 
-{% endfor %}
+
+
+
 
 
             </div>
-        </section>
 
- <div class="modal-container">
-                    <div class="modal">
-                        <h3 id="empresa-nome"> Empresa: a</h3>
-                        </p>
-                         <h3 id="empresa-fist_name">a</h3>
-                        <h5 id="empresa_endereco">Endereço: a</h5>
-                    </div>
-                </div>
-    </main>
- <script>
-             const  getElement = (...queries) => document.querySelector(...queries);
-
-                 elemento = document.querySelectorAll('.card-vagas');
+            {% endfor %}
 
 
-var modal = getElement(".modal-container");
+        </div>
+    </section>
+
+    <div class="modal-container">
+
+        <div class="modal">
+
+            <h3 id="vaga-nome"></h3>
+
+            <h3 id="empresa-nome"></h3>
+            <div class="requisitos-vaga">
+
+            </div>
+            <div class="descricao-vaga">
+
+            </div>
+            <div class="dados-vaga">
+                <h5 id="empresa_endereco"></h5>
+            </div>
+            <div class="dados-empresa">
+
+            </div>
+            <form  class="button-candidatar"> <p>Inscreva-se</p></form>
+        </div>
+    </div>
+</main>
+<script>
+    const getElement = (...queries) => document.querySelector(...queries);
+
+    elemento = document.querySelectorAll('.card-vagas');
 
 
-                 activeModalClass = 'modal-show';
-
-                elemento.forEach(function(elements) {
+    var modal = getElement(".modal-container");
 
 
-                elements.addEventListener('click', function(){
+    activeModalClass = 'modal-show';
 
-                 showModal(elements);
-                });
-                 })
+    elemento.forEach(function (elements) {
 
-                  function showModal(element) {
+
+        elements.addEventListener('click', function () {
+
+            showModal(elements);
+        });
+    })
+
+    function showModal(element) {
         var nome = element.querySelector("h2");
         var nome_empresa = element.querySelector("h3");
         var endereco = element.querySelector("h5");
 
 
-         document.getElementById("empresa-nome").innerHTML = nome.innerHTML;
-        document.getElementById("empresa-fist_name").innerHTML = nome_empresa.innerHTML;
+        document.getElementById("vaga-nome").innerHTML = nome.innerHTML;
+        document.getElementById("empresa-nome").innerHTML = nome_empresa.innerHTML;
         document.getElementById("empresa_endereco").innerHTML = endereco.innerHTML;
 
         modal.classList.add(activeModalClass)
     }
 
 
-                modal.addEventListener('click', (event) => {
-                    modal.classList.remove(activeModalClass)
-                })
-            </script>
-            <script>
-                 var carouselSlide = document.querySelector('.carousel-slide');
-  var carouselImages = document.querySelectorAll('.carousel-slide img');
+    modal.addEventListener('click', (event) => {
+        modal.classList.remove(activeModalClass)
+    })
+</script>
+<script>
+    var carouselSlide = document.querySelector('.carousel-slide');
+    var carouselImages = document.querySelectorAll('.carousel-slide img');
 
-  var counter = 0;
-  var slideWidth = carouselImages[0].clientWidth;
+    var counter = 0;
+    var slideWidth = carouselImages[0].clientWidth;
 
-  // Configurar o slide inicial
-  carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
-
-  // Função para avançar o slide
-  function nextSlide() {
-    if (counter >= carouselImages.length - 1) return;
-    counter++;
-    carouselSlide.style.transition = 'transform 0.3s ease-in-out';
+    // Configurar o slide inicial
     carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
-  }
 
-  // Definir intervalo de tempo para avançar automaticamente
-  var interval = setInterval(nextSlide, 2000);
-
-  // Reiniciar o slide no final
-  carouselSlide.addEventListener('transitionend', function() {
-    if (carouselImages[counter].id === 'last-clone') {
-      carouselSlide.style.transition = 'none';
-      counter = carouselImages.length - 3;
-      carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
+    // Função para avançar o slide
+    function nextSlide() {
+        if (counter >= carouselImages.length - 1) return;
+        counter++;
+        carouselSlide.style.transition = 'transform 0.3s ease-in-out';
+        carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
     }
-    if (carouselImages[counter].id === 'first-clone') {
-      carouselSlide.style.transition = 'none';
-      counter = carouselImages.length - counter;
-      carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
-    }
-  });
 
-  // Pausar o carrossel ao passar o mouse
-  carouselSlide.addEventListener('mouseenter', function() {
-    clearInterval(interval);
-  });
+    // Definir intervalo de tempo para avançar automaticamente
+    var interval = setInterval(nextSlide, 2000);
 
-  // Retomar o carrossel ao remover o mouse
-  carouselSlide.addEventListener('mouseleave', function() {
-    interval = setInterval(nextSlide, 3000);
-  });
+    // Reiniciar o slide no final
+    carouselSlide.addEventListener('transitionend', function () {
+        if (carouselImages[counter].id === 'last-clone') {
+            carouselSlide.style.transition = 'none';
+            counter = carouselImages.length - 3;
+            carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
+        }
+        if (carouselImages[counter].id === 'first-clone') {
+            carouselSlide.style.transition = 'none';
+            counter = carouselImages.length - counter;
+            carouselSlide.style.transform = 'translateX(' + (-slideWidth * counter) + 'px)';
+        }
+    });
 
-            </script>
+    // Pausar o carrossel ao passar o mouse
+    carouselSlide.addEventListener('mouseenter', function () {
+        clearInterval(interval);
+    });
+
+    // Retomar o carrossel ao remover o mouse
+    carouselSlide.addEventListener('mouseleave', function () {
+        interval = setInterval(nextSlide, 3000);
+    });
+</script>
 {% endblock %}

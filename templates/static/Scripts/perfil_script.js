@@ -8,3 +8,11 @@ document.getElementById('btn-salvar').addEventListener('click', function(){
     form_alterar.style.display = 'none'
     form_fisico.style.display = 'block'
 });
+
+document.getElementById('logout_header').addEventListener('click', function(){
+    var saida = confirm('Dejesa sair do sistema?')
+    console.log(saida)
+    if (saida == true) {
+        window.location.href = "/logout"
+    }
+});

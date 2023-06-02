@@ -35,10 +35,9 @@
 .img-box-carrossel{
 
 }
-.img-carrossel{
 
-}
-}
+
+
 .itens-carrossel{
     background-color: black;
     width: 100%;
@@ -162,7 +161,7 @@ margin-top: 5%;
 
     width: 100%;
     height: 100vh;
-
+    
     position: fixed;
     left: 0;
     top: 0;
@@ -175,22 +174,56 @@ margin-top: 5%;
 
     transition: opacity 0.15s;
   }
-
+  .title-vaga{
+    display: flex;
+    justify-content: center; 
+    
+  }
+  .sair{
+    margin-left: 15%;
+  }
   .modal {
     background: #fff;
-
-    width: 0;
+    width: 100%;
     height: 0;
-
+    text-align: center;
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 0 10px 0 #00000070;
-
     overflow: hidden;
-
     transition: width 0.15s, height 0.15s;
   }
-
+  .button-candidatar{
+    cursor: pointer;
+    background-color: #0000CD;
+    color: white;
+    margin: 0 auto;
+    width: 20%;
+    height: 50px;
+    border-radius: 25px;
+  }
+  .button-candidatar p{
+    text-align: center;
+    padding: 8%;
+  }
+  #vaga-nome{
+    font-size: 40px;
+    }
+    #empresa-nome{
+        font-size: 30px;
+    }
+    .dados-vaga h5{
+        font-size: 15px;
+         
+    }
+    .dados-vaga {
+        text-align: left;
+        padding: 2%;
+     
+    }
+    #empresa-endereco{
+        font-size: 25px;
+    }
   .modal-show > .modal {
      width: 50%;
     height: 65vh;
