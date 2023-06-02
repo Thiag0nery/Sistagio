@@ -12,6 +12,9 @@ class PostVagas(models.Model):
     vag_descricao = models.CharField(max_length=100,null=True,blank=True)
     vag_funcao = models.CharField(max_length=50,null=True,blank=True)
     vag_beneficio = models.CharField(max_length=100,null=True,blank=True)
+
+    def __repr__(self):
+        return self.vag_nome
 class Vaga_cadastradas(models.Model):
     vcad_codigo = models.BigAutoField(primary_key=True)
     vcad_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)

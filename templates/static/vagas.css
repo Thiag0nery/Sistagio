@@ -197,9 +197,14 @@ margin-top: 5%;
     cursor: pointer;
     background-color: #0000CD;
     color: white;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     width: 20%;
+    position: absolute;
+    bottom: 0;
     height: 50px;
+    bottom: 15px;
+        right: 39.8%;
+    left: 39.8%;
     border-radius: 25px;
   }
   .button-candidatar p{
@@ -225,9 +230,11 @@ margin-top: 5%;
         font-size: 25px;
     }
   .modal-show > .modal {
-     width: 50%;
+    width: 50%;
     height: 65vh;
-  }
+    position: absolute;
+}
+
 
   .modal-show {
     opacity: 1;

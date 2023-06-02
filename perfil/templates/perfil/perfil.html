@@ -145,21 +145,7 @@
                     </div>
                 </div>
 
-                <div class="container-avaliacao">
-                    <h4 class="title-meio-h3">Cursos</h4>
-                     <select id="firstOption">
-                    <option value="">Selecione o Curso</option>
-                        {% for opcao in curso_oferecer %}
-                            <option value="{{ opcao.curs_codigo }}">{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}</option>
-                        {% endfor %}
 
-
-                    </select>
-
-                     <select id="secondOption">
-                        <option value="">Select an option</option>
-                    </select>
-                </div>
                 {%endif%}
 
                  {% if perfilPessoa.tipo == 'I' %}
@@ -313,13 +299,28 @@
 
 
 <script src="{% static 'Scripts/perfil_script.js' %}"></script>
+  <div class="container-avaliacao">
+                    <h4 class="title-meio-h3">Cursos</h4>
+                     <select id="firstOption">
+                    <option value="">Selecione o Curso</option>
+                        {% for opcao in curso_oferecer %}
+                            <option value="{{ opcao.curs_codigo }}">{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}</option>
+                        {% endfor %}
+
+
+                    </select>
+
+                     <select id="secondOption">
+                        <option value="">Selecione a opção</option>
+                    </select>
+                </div>
 <script>
         $(document).ready(function() {
             $('#firstOption').change(function() {
                 var firstOptionId = $(this).val();
                 $.ajax({
 
-                    url: 's',
+                    url: 'load_second_options/',
                     data: {
                         'curs_codigo': 1
                     },

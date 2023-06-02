@@ -199,6 +199,5 @@ class AtualizacaoPerfil(Perfil):
         return redirect('home:inicial')
 
 
-class load_second_options(Perfil):
-    def get(self, request):
-        pass
+class load_second_options(View):
+    pass
