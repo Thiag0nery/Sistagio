@@ -37,7 +37,7 @@ class UserForms(forms.ModelForm):
         nome = self.cleaned_data.get('first_name')
 
 
-        print(nome)
+
         email_bool = User.objects.filter(username=email).first()
 
 
@@ -105,7 +105,7 @@ class PerfilForms(forms.ModelForm):
         if matricula:
             matricula = matricula.replace('.','').replace(',','').replace('-','')
             matricula = int(matricula)
-        print(matricula)
+
         cpf_cnpj_banco = PerfilUser.objects.filter(cpf_cnpj=cpf_cnpj).first()
 
         # Verificação se o usuario preenceu todos os dados

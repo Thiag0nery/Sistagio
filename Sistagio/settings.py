@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'perfil.apps.PerfilConfig',
     'post_vagas.apps.PostVagasConfig',
+    'cursos.apps.CursosConfig',
 ]
 
 MIDDLEWARE = [

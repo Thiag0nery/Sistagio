@@ -299,12 +299,15 @@
 
 
 <script src="{% static 'Scripts/perfil_script.js' %}"></script>
-  <div class="container-avaliacao">
+
+      <form action="" method="POST" name="curso_escolhido">
+          {% csrf_token %}
+          <div class="container-avaliacao">
                     <h4 class="title-meio-h3">Cursos</h4>
-                     <select id="firstOption">
+          <select id="firstOption">
                     <option value="">Selecione o Curso</option>
                         {% for opcao in curso_oferecer %}
-                            <option value="{{ opcao.curs_codigo }}">{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}</option>
+                            <option name="instituicao" value="{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}">{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}</option>
                         {% endfor %}
 
 
@@ -313,21 +316,28 @@
                      <select id="secondOption">
                         <option value="">Selecione a opção</option>
                     </select>
+              <button type="submit" name="curso_escolhido" class="btn-alterar-sobre">Enviar</button>
                 </div>
+
+      </form>
+
 <script>
         $(document).ready(function() {
             $('#firstOption').change(function() {
                 var firstOptionId = $(this).val();
                 $.ajax({
 
-                    url: 'load_second_options/',
+                    url: '/cursos/',
                     data: {
-                        'curs_codigo': 1
+                        'curs_codigo': firstOptionId
                     },
                     success: function(data) {
+
                         var options = '';
-                        for (var i = 0; i < data.length; i++) {
-                            options += '<option value="' + data[i].nome_curso + '">' + data[i].nome_curso + '</option>';
+                        for (var i = 0; i < Object.keys(data).length; i++) {
+                            console.log(data.options[i].name)
+                            options += '<option name="curso" value="' + data.options[i].id + '">' + data.options[i].name + '</option>';
+
                         }
                         $('#secondOption').html(options);
                     }

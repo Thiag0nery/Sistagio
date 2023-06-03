@@ -196,8 +196,20 @@ class AtualizacaoPerfil(Perfil):
             curso = self.cursoform.save(commit=False)
             curso.curs_perfil_fk = self.perfil
             curso.save()
+
+        if 'curso_escolhido' in self.request.POST:
+            nome_instituicao = self.request.POST.get('instituicao')
+            nome_curso = self.request.GET.get('curso')
+            print(nome_curso)
+            """ 
+            usuario = get_object_or_404(User, first_name=nome_instituicao)
+            perfil = models.PerfilUser.objects.filter(per_pessoa_fk=usuario).first()
+            curso_institui = models.curso_instituicao.objects.filter(curs_perfil_fk=perfil, curs_nome=nome_curso)
+            print(curso_institui, 'Aqui')"""
+            """aluno_curso = models.curso_aluno()"""
+
+            return redirect('perfil:perfil')
+
         return redirect('home:inicial')
 
 
-class load_second_options(View):
-    pass
