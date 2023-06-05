@@ -25,9 +25,7 @@ class Perfil(View):
         self.cursoVinculado = models.curso_instituicao.objects.filter(curs_perfil_fk=self.perfil)
         self.certificado = models.Certificados.objects.filter(cert_pessoa_fk=self.perfil)
         self.docenteVinculados = models.Docente.objects.filter(doce_instituicao_fk=self.request.user)
-        print(self.docenteVinculados)
-
-        print(self.perfil)
+        self.curso_aluno = models.curso_aluno.objects.filter(curs_perfil_fk=self.perfil)
 
         self.informacoes = {
             'perfil': forms.PerfilForms(
@@ -51,6 +49,7 @@ class Perfil(View):
             'docente_vinculado': self.docenteVinculados,
             'curso_oferecer':models.curso_instituicao.objects.all(),
             'perfilPessoa': self.perfil,
+            'curso_aluno_vinculado': self.curso_aluno,
             'vaga_cadastradas':self.vagaCadastradas,
             'aluno_csv': forms.Tabela_csv(data=self.request.POST or None),
             'docente_formulario':forms.DocenteForm(data=self.request.POST or None)
@@ -199,14 +198,16 @@ class AtualizacaoPerfil(Perfil):
 
         if 'curso_escolhido' in self.request.POST:
             nome_instituicao = self.request.POST.get('instituicao')
-            nome_curso = self.request.GET.get('curso')
-            print(nome_curso)
-            """ 
+            nome_curso = self.request.POST.get('curso')
             usuario = get_object_or_404(User, first_name=nome_instituicao)
+
             perfil = models.PerfilUser.objects.filter(per_pessoa_fk=usuario).first()
-            curso_institui = models.curso_instituicao.objects.filter(curs_perfil_fk=perfil, curs_nome=nome_curso)
-            print(curso_institui, 'Aqui')"""
-            """aluno_curso = models.curso_aluno()"""
+
+            curso_institui = get_object_or_404(models.curso_instituicao, curs_perfil_fk=perfil, curs_nome=nome_curso)
+
+            print(curso_institui, 'Aqui')
+            aluno_curso = models.curso_aluno(curs_insituicao=curso_institui, curs_perfil_fk=self.perfil)
+            aluno_curso.save()
 
             return redirect('perfil:perfil')
 

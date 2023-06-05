@@ -145,6 +145,33 @@
                     </div>
                 </div>
 
+                 <h4 class="title-meio-h3">Cursos</h4>
+
+
+                {% for curso in  curso_aluno_vinculado%}
+                    <h1>Nome: {{curso.curs_insituicao.curs_nome}}</h1>
+                {%endfor%}
+
+                <form action="" method="POST" name="curso_escolhido">
+          {% csrf_token %}
+          <div class="container-avaliacao">
+
+          <select id="firstOption" name="instituicao">
+                    <option value="">Selecione o Curso</option>
+                        {% for opcao in curso_oferecer %}
+                            <option  value="{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}">{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}</option>
+                        {% endfor %}
+
+
+                    </select>
+
+                     <select id="secondOption" name="curso">
+                        <option value="">Selecione a opção</option>
+                    </select>
+              <button type="submit" name="curso_escolhido" class="btn-alterar-sobre">Enviar</button>
+                </div>
+
+      </form>
 
                 {%endif%}
 
@@ -299,50 +326,5 @@
 
 
 <script src="{% static 'Scripts/perfil_script.js' %}"></script>
-
-      <form action="" method="POST" name="curso_escolhido">
-          {% csrf_token %}
-          <div class="container-avaliacao">
-                    <h4 class="title-meio-h3">Cursos</h4>
-          <select id="firstOption">
-                    <option value="">Selecione o Curso</option>
-                        {% for opcao in curso_oferecer %}
-                            <option name="instituicao" value="{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}">{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}</option>
-                        {% endfor %}
-
-
-                    </select>
-
-                     <select id="secondOption">
-                        <option value="">Selecione a opção</option>
-                    </select>
-              <button type="submit" name="curso_escolhido" class="btn-alterar-sobre">Enviar</button>
-                </div>
-
-      </form>
-
-<script>
-        $(document).ready(function() {
-            $('#firstOption').change(function() {
-                var firstOptionId = $(this).val();
-                $.ajax({
-
-                    url: '/cursos/',
-                    data: {
-                        'curs_codigo': firstOptionId
-                    },
-                    success: function(data) {
-
-                        var options = '';
-                        for (var i = 0; i < Object.keys(data).length; i++) {
-                            console.log(data.options[i].name)
-                            options += '<option name="curso" value="' + data.options[i].id + '">' + data.options[i].name + '</option>';
-
-                        }
-                        $('#secondOption').html(options);
-                    }
-                });
-            });
-        });
-    </script>
+<script src="{% static 'Scripts/ajax_curso.js' %}"></script>
 {%endblock%}

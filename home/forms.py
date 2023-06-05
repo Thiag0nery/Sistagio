@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from perfil.models import PerfilUser
 from perfil.models import Aluno_Csv
+from validate_docbr import CPF
+from validate_docbr import CNPJ
 class UserForms(forms.ModelForm):
     password = forms.CharField(
         required=False,
@@ -36,7 +38,7 @@ class UserForms(forms.ModelForm):
         password2 = self.cleaned_data.get('password2')
         nome = self.cleaned_data.get('first_name')
 
-
+        print(password)
 
         email_bool = User.objects.filter(username=email).first()
 
@@ -98,6 +100,9 @@ class PerfilForms(forms.ModelForm):
         error_msg_cpf_cnpj_exists = 'Já existe no sistema'
         error_msg_not_matricula_exists = 'A matricula informada não existe no sistema'
         error_msg_required_field = 'Este campo é obrigatório.'
+        error_msg_matricula_vinculada = 'Matricula ja usada no sistema'
+        error_cpf_invalid = 'CPF invalido'
+        error_cnpj_invalid = 'CNPJ invalido'
 
         tipo_usuario  = self.cleaned_data.get('tipo_usuario')
         cpf_cnpj = self.cleaned_data.get('cpf_cnpj')
@@ -105,6 +110,8 @@ class PerfilForms(forms.ModelForm):
         if matricula:
             matricula = matricula.replace('.','').replace(',','').replace('-','')
             matricula = int(matricula)
+
+        cpf_cnpj = cpf_cnpj.replace('.', '').replace(',', '').replace('-', '').replace('/', '')
 
         cpf_cnpj_banco = PerfilUser.objects.filter(cpf_cnpj=cpf_cnpj).first()
 
@@ -119,6 +126,24 @@ class PerfilForms(forms.ModelForm):
             matricula_banco = Aluno_Csv.objects.filter(alu_matricula=matricula).first()
             if not matricula_banco:
                 validation_error_msgs['matricula'] = error_msg_not_matricula_exists
+
+            # Verificação se a matricula ja foi vinculada
+            if matricula_banco.alu_vinculado:
+                validation_error_msgs['matricula'] = error_msg_matricula_vinculada
+            cpf = CPF()
+            is_valid = cpf.validate(cpf_cnpj)
+
+            if not is_valid:
+                validation_error_msgs['cpf_cnpj'] = error_cpf_invalid
+
+        if tipo_usuario != "A":
+            cnpj = CNPJ()
+            is_valid = cnpj.validate(cpf_cnpj)
+
+            if not is_valid:
+                validation_error_msgs['cpf_cnpj'] = error_cnpj_invalid
+
+
 
         # Verificação se existe cpf_cnpj ja existente no sistema
         if cpf_cnpj_banco:

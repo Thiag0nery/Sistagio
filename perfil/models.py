@@ -6,7 +6,7 @@ class PerfilUser(models.Model):
     per_cod = models.BigAutoField(primary_key=True)
     per_nascimento = models.DateField(null=True,blank=True)
     per_pessoa_fk = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name='Usuario')
-    cpf_cnpj = models.CharField(max_length=15, blank=True)
+    cpf_cnpj = models.CharField(max_length=18, blank=True)
     per_tell = models.CharField(max_length=14, blank=True)
     tipo = models.CharField(max_length=1, blank=True)
     per_foto = models.FileField(upload_to='fotos_usuario/%Y/%m/', null=True, blank=True)
@@ -26,7 +26,7 @@ class Aluno_Csv(models.Model):
     alu_matricula = models.CharField(max_length=20, null=True, verbose_name='Matricula')
     #alu_codigo = models.
     alu_turma = models.CharField(max_length=20, null=True, verbose_name='Turma')
-
+    alu_vinculado = models.BooleanField(default=False)
     def __str__(self):
         return self.alu_nome
 

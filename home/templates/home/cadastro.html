@@ -53,7 +53,7 @@
                     </div>
                     <div class="itens">
                         <label for="cpf_cnpj" id="cpf_cnpj_script">CPF</label>
-                        <input type="text"  required name="{{ perfil.cpf_cnpj.name }}" {% if  perfil.cpf_cnpj.value != none %} value="{{ perfil.cpf_cnpj.value }}" {% endif %} placeholder="Digite o seu CPF" maxlength="15" id="id_cpf_cnpj" class ="inputs-default">
+                        <input type="text"  required name="{{ perfil.cpf_cnpj.name }}" {% if  perfil.cpf_cnpj.value != none %} value="{{ perfil.cpf_cnpj.value }}" {% endif %} placeholder="Digite o seu CPF" maxlength="18" id="id_cpf_cnpj" class ="inputs-default">
                         {{perfil.errors.cpf_cnpj}}
                        
                     </div>
@@ -63,6 +63,22 @@
                            <input type="text" required  placeholder="Digite o seu numero de matricula" {% if  perfil.matricula.value != none %} value="{{ perfil.matricula.value }}"  {% endif %} name="{{ perfil.matricula.name }}" maxlength="14" id="id_matricula" class="inputs-default">
                        {{perfil.errors.matricula}}
                         </div>
+                    </div>
+                    <div class="itens">
+                       <div id="container_curso">
+                            <select id="firstOption" name="instituicao" required class="inputs-default">
+                    <option value="">Selecione o Curso</option>
+                        {% for opcao in curso_oferecer %}
+                            <option class="inputs-default"  value="{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}">{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}</option>
+                        {% endfor %}
+
+
+                    </select>
+
+                     <select id="secondOption" name="curso" class="inputs-default" required>
+                        <option value="">Selecione a opção</option>
+                     </select>
+                       </div>
                     </div>
                     <div class="itens">
                         <label for="">Senha</label>
@@ -86,9 +102,13 @@
             </div>
 
     </main>
+
 <script>
 var inp_matricula = document.getElementById("id_matricula");
-var container_matricula = document.getElementById("container_matricula");
+var nome_instituicao = document.getElementById("firstOption");
+var nome_curso = document.getElementById("secondOption");
+var container_matricula = document.getElementById("container_matricula");container_curso
+var container_curso = document.getElementById("container_curso");
                          var label = document.getElementById("cpf_cnpj_script");
                         var radioButtons = document.getElementsByName("tipo_usuario");
                         var label_instituicao = document.getElementById("Nome_instituicao_empresa");
@@ -98,15 +118,21 @@ var container_matricula = document.getElementById("container_matricula");
                             var selectedValue = document.querySelector('input[name="tipo_usuario"]:checked').value;
                               if (selectedValue === "A") {
                               container_matricula.style.display = "block";
+                              container_curso.style.display = "block";
                                 console.log("Foi selecionado o aluno");
                                 label.textContent = "CPF";
                                 inp_matricula.setAttribute('required', true);
+                                nome_instituicao.setAttribute('required', true);
+                                nome_curso.setAttribute('required', true);
                                 label_instituicao.textContent = "Nome Completo"
                                 name_placeholder.placeholder = 'Nome Completo'
                               } else if (selectedValue === "E" || selectedValue === "I") {
                               container_matricula.style.display = "none";
+                              container_curso.style.display = "none";
                                 console.log("Foi selecionado o Empresa ou Instituição");
                                 label.textContent = "CNPJ";
+                                nome_instituicao.removeAttribute("required")
+                                nome_curso.removeAttribute("required")
                                 inp_matricula.removeAttribute("required")
                                 label.placeholder = "Digite o seu CNPJ";
                                 label_instituicao.textContent = "Nome"
@@ -133,6 +159,6 @@ var container_matricula = document.getElementById("container_matricula");
 
 
 </script>
-
+<script src="{% static 'Scripts/ajax_curso.js' %}"></script>
 <script src="{% static 'Scripts/_header_script.js' %}"></script>
 {%endblock%}
