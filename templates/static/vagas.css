@@ -216,34 +216,24 @@ margin-top: 5%;
     }
     #empresa-nome{
         font-size: 30px;
-        
-    }
-    .dados-vaga h5{
-        font-size: 2.2vh;
-        
-        text-align: center;
-         
-    }
-    .dados-vaga {
-        padding: 2%;
-         
-    }
-    #empresa-endereco{
-        font-size: 25px;
-         
-    }
-    #vaga-funcao{
-        font-size: 2.0vh;
-         
-    }
-    #vaga-beneficio{
-        font-size: 2.5vh;
-        
-
     }
     .modal-texts{
-        padding: 7% 0 7% 0;
-        
+        padding:5%;
+        text-align: left;
+        overflow: auto ;
+        font-size: 14pt;
+        height: 30vh;
+        overflow-x: hidden;
+    }
+    .itens-vaga{
+        margin-top: 2%;
+    }
+    .title-texts{
+        font-size: 14pt;
+        font-weight: 600;
+    }
+    #vaga-descricao{
+        font-size: 12pt;
     }
   .modal-show > .modal {
     width: 50%;

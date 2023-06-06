@@ -157,9 +157,9 @@ class Cadastro(View):
 
 
         if tipo_requisicao == "A":
-            matricula_banco = Aluno_Csv.objects.filter(alu_matricula=matricula).first()
-            matricula_banco.alu_vinculado = True
-            matricula_banco.save()
+            # matricula_banco = Aluno_Csv.objects.filter(alu_matricula=matricula).first()
+            # matricula_banco.alu_vinculado = True
+            # matricula_banco.save()
             nome_instituicao = self.request.POST.get('instituicao')
             nome_curso = self.request.POST.get('curso')
             usuario_instituicao = get_object_or_404(User, first_name=nome_instituicao)

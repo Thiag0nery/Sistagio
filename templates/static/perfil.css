@@ -248,10 +248,11 @@ body {
 }
 
 .rating input:checked ~ label {
-  color: #ffca08;
+  color: #0000CD;
 }
 
 .rating label:hover,
 .rating label:hover ~ label {
-  color: #ffca08;
+  color: #0000CD;
 }
+
