@@ -224,3 +224,34 @@ body {
 .null-tell{
     color:red;
 }
+
+.text-docente{
+    font-size: 2.5vh;
+}
+/*A partir daqui é o CSS das estrelas*/
+.rating {
+  display: inline-block;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  float: right;
+  color: #777777;
+}
+
+.rating label:before {
+  content: '\2605';
+  font-size: 35px;
+}
+
+.rating input:checked ~ label {
+  color: #ffca08;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #ffca08;
+}
