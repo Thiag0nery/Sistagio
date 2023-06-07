@@ -30,8 +30,9 @@
                 {%endif%}
             <form class="container-foto-form" method="POST" enctype="multipart/form-data">
                  {% csrf_token %}
-                <input type="file" class="btn-foto-alterar" name="perfil_foto_usuario"  accept=".jpg, .jpeg, .png">
-                 <button class="btn-alterar-sobre" name="mudar-foto">Salvar foto</button>
+                 <label for="btn-foto-alterar" id="label-file">Enviar Arquivo</label>
+                <input type="file" id="btn-foto-alterar" name="perfil_foto_usuario"  accept=".jpg, .jpeg, .png">
+                 <button class="btn-alterar-sobre1" name="mudar-foto">Salvar foto</button>
             </form>
 
             </div>
