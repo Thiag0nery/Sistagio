@@ -246,11 +246,12 @@
                 <div class="campo-certificados" style="margin-top: 28px;">
 
                      {% for certificado in certificados_usuario%}
-                    <div class="style-certificado" style="display: flex;justify-content: center;align-items: center;margin-top: 20px;">
+                    <div class="style-certificado">
 
                         <div class="certificado-informacao" style="width:50%;">
                         <p>Nome do curso: {{certificado.cert_nome_curso}}</p>
                     <p>Nome da instituição: {{certificado.cert_instituicao}}</p>
+                    <hr>
                     </div>
                     <img src="{{certificado.cert_arquivo.url}}" style="width:25%;">
 
