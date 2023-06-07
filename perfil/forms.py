@@ -2,16 +2,12 @@ from django import forms
 from . import models
 from post_vagas.models import PostVagas
 from django.contrib.auth.models import User
+from perfil.models import PerfilUser
+from validate_docbr import CPF
 class PerfilForms(forms.ModelForm):
-
-
     class Meta:
         model = models.PerfilUser
         fields = ('cpf_cnpj','per_tell','per_detalhe',)
-
-
-
-
     def __init__(self, per_cod=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -78,18 +74,23 @@ class DocenteForm(forms.ModelForm):
 
     def clean(self, *args, **kwargs):
         validation_error_msgs = {}
-        error_msg_email_exists = 'E-mail já existe'
+        error_msg_cpf_cnpj_exists = 'Já existe no sistema'
         error_msg_password_match = 'As duas senhas não conferem'
         error_msg_password_short = 'Sua senha precisa de pelo menos 6 caracteres'
         error_msg_required_field = 'Este campo é obrigatório.'
+        error_cpf_invalid = 'CPF invalido'
 
-        email_docente = self.cleaned_data.get('email_docente')
+        email_docente = self.cleaned_data.get('email_docente').lower()
         cpf_docente = self.cleaned_data.get('cpf_docente')
         nome_docente = self.cleaned_data.get('nome_docente')
         senha_docente = self.cleaned_data.get('senha_docente')
         senha_docente2 = self.cleaned_data.get('senha_docente2')
 
         email_bool = User.objects.filter(username=email_docente).first()
+        if cpf_docente:
+            cpf_docente = cpf_docente.replace('.', '').replace(',', '').replace('-', '').replace('/', '')
+
+        cpf_cnpj_banco = PerfilUser.objects.filter(cpf_cnpj=cpf_docente).first()
 
         # Verificação se o usuario preenceu todos os dados
         if not nome_docente:
@@ -105,7 +106,15 @@ class DocenteForm(forms.ModelForm):
 
         # Verificação se existe email ja existente no sistema
         if email_bool:
-            validation_error_msgs['email_docente'] = error_msg_email_exists
+            validation_error_msgs['email_docente'] = error_msg_cpf_cnpj_exists
+
+        if cpf_cnpj_banco:
+            validation_error_msgs['cpf_docente'] = error_msg_cpf_cnpj_exists
+        cpf = CPF()
+        is_valid = cpf.validate(cpf_docente)
+
+        if not is_valid:
+            validation_error_msgs['cpf_cnpj'] = error_cpf_invalid
 
         # Verificação das senhas
         if senha_docente2 != senha_docente:

@@ -210,6 +210,15 @@
                 </div>
                 {%endif%}
 
+                {% if perfilPessoa.tipo == 'D' %}
+                <h4 class="title-meio-h3">Curso vinculados</h4>
+
+                    {% for curso in docente_curso%}
+                        <h1>{{curso.doce_curso_instituicao_fk.curs_nome}}</h1>
+                        {%endfor%}
+
+                {%endif%}
+
             </div>
         </div>
         <div class="container-certificados">
@@ -304,13 +313,18 @@
                     <input type="text" name="{{docente_formulario.senha_docente2.name}}" class="input-dados" id="id_senha_docente2">
 
 
+                        {% for opcao in curso_vinculado %}
+
+                            <input type="checkbox" id="scales" name="curso_docente" value="{{ opcao.curs_codigo }}">
+                            <label for="scales">{{ opcao.curs_nome }}</label>
+
+                        {% endfor %}
+
+
                     <button type="submit" class="btn-alterar-sobre" name="btn-docente">Enviar</button>
                 </form>
 
-                {%for docente in docente_vinculado%}
-                <p>{{docente.doce_perfil_pk.per_pessoa_fk.first_name}}</p>
-                {%endfor%}
-                {%endif%}
+
             </div>
         </div>
 
@@ -323,6 +337,10 @@
 
 
 {% if  perfilPessoa.tipo == 'I' %}
+{%for docente in docente_vinculado%}
+                <p>{{docente.doce_perfil_pk.per_pessoa_fk.first_name}}</p>
+                {%endfor%}
+                {%endif%}
 
 <form  method="POST" enctype="multipart/form-data">
     {% csrf_token %}

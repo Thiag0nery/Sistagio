@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from . import models
 from post_vagas.models import Vaga_cadastradas
 from django.contrib import messages
+from perfil.models import Docente_curso
 from django.http import JsonResponse
 import csv
 
@@ -20,12 +21,18 @@ class Perfil(View):
             per_pessoa_fk=self.request.user
         ).first()
 
+
+
+
         # Essa variavel permite pegar as vagas que o aluno se inscreveu
         self.vagaCadastradas = Vaga_cadastradas.objects.filter(vcad_perfil_fk=self.perfil)
         self.cursoVinculado = models.curso_instituicao.objects.filter(curs_perfil_fk=self.perfil)
         self.certificado = models.Certificados.objects.filter(cert_pessoa_fk=self.perfil)
         self.docenteVinculados = models.Docente.objects.filter(doce_instituicao_fk=self.request.user)
+        self.docente_perfil = models.Docente.objects.filter(doce_perfil_pk=self.perfil).first()
+        self.docente_curso = Docente_curso.objects.filter(doce_docente_pk=self.docente_perfil)
         self.curso_aluno = models.curso_aluno.objects.filter(curs_perfil_fk=self.perfil)
+
 
         self.informacoes = {
             'perfil': forms.PerfilForms(
@@ -48,7 +55,9 @@ class Perfil(View):
             'curso_vinculado': self.cursoVinculado,
             'docente_vinculado': self.docenteVinculados,
             'curso_oferecer':models.curso_instituicao.objects.all(),
+            'docente_curso': self.docente_curso,
             'perfilPessoa': self.perfil,
+            'alunos_inscritos':models.curso_aluno.objects.all(),
             'curso_aluno_vinculado': self.curso_aluno,
             'vaga_cadastradas':self.vagaCadastradas,
             'aluno_csv': forms.Tabela_csv(data=self.request.POST or None),
@@ -167,19 +176,17 @@ class AtualizacaoPerfil(Perfil):
             cpf_docente = self.request.POST.get('cpf_docente')
 
 
-            docente = []
-            objeto = User(
-                username= email_docente,
-                password=senha_docente,
+            docente = User(
+                username= email_docente.lower(),
                 first_name = nome_docente,
                 email= email_docente
             )
-            docente.append(objeto)
-            User.objects.bulk_create(docente)
+            docente.set_password(senha_docente)
+            docente.save()
 
 
             perfil = models.PerfilUser(
-                per_pessoa_fk=objeto,
+                per_pessoa_fk=docente,
                 tipo='D',
                 cpf_cnpj= cpf_docente,
 
@@ -190,6 +197,19 @@ class AtualizacaoPerfil(Perfil):
 
             instituicao_docente = models.Docente(doce_perfil_pk=perfil, doce_instituicao_fk=usuario)
             instituicao_docente.save()
+
+
+            curso_docente = self.request.POST.getlist('curso_docente')
+
+            for value in curso_docente:
+                curso_instituicao = get_object_or_404(models.curso_instituicao, curs_codigo=int(value))
+
+                docente_curso = Docente_curso(doce_docente_pk=instituicao_docente,
+                                              doce_curso_instituicao_fk=curso_instituicao)
+                docente_curso.save()
+
+
+            return redirect('perfil:perfil')
 
         if 'botao-curso-instituicao' in self.request.POST:
             curso = self.cursoform.save(commit=False)

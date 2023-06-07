@@ -45,7 +45,7 @@ class Login(View):
     # Pegara a requisição post vindo do formulario
     def post(self, *args, **kwargs):
         #Email que o usuario digitou
-        email = self.request.POST.get('username')
+        email = self.request.POST.get('username').lower()
 
         # Senha que o usuario digitou
         senha = self.request.POST.get('password')
@@ -94,7 +94,7 @@ class Cadastro(View):
     def post(self, *args, **kwargs):
 
         # Email que o usuario digitou
-        email_requisicao = self.request.POST.get('email')
+        email_requisicao = self.request.POST.get('email').lower()
 
         # O Tipo de Usuario escolheu
         tipo_requisicao = self.request.POST.get('tipo_usuario')
