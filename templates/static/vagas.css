@@ -30,12 +30,17 @@
     display: flex;
     padding: 2%;
     height: 65vh;
+    width: 80%;
 }
 
 .img-box-carrossel{
 
 }
 
+.infoInicio{
+    padding: 2% 5% 0 5%;
+    font-size: 14pt;
+}
 
 
 .itens-carrossel{
@@ -55,6 +60,7 @@
 
   .carousel-container {
     display: flex;
+    
   }
 
   .carousel-slide {

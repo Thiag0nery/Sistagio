@@ -214,38 +214,3 @@ section.sessao1{
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     margin-top: 2%;
 }
-footer{
-
-    margin-top: 5%;
-    width: 100%;
-    background-color: rgba(0,0,0,0.1);
-
-}
-
-.containerFooter{
-    display: flex;
-    align-items: center;
-
-}
-.direitos{
-    margin: 0 auto;
-    padding: 8%;
-}
-#links{
-    display: block;
-    list-style: none;
-    margin-top: 5%;
-    text-decoration: none;
-    color: black;
-    font-size: 20px;
-    font-weight: bold;
-
-}
-.informacoes{
-    padding: 5%;
-    text-align: left;
-}
-.redesSociais{
-    padding: 5%;
-    text-align: right
-}
