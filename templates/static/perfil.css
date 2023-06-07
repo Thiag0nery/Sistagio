@@ -164,9 +164,7 @@ body {
     cursor: pointer;
 
 }
-.box-vagas{
 
-}
 
 .container-vagas-cadastradas {
     overflow-x: scroll;
@@ -244,6 +242,19 @@ body {
 .text-docente{
     font-size: 2.5vh;
 }
+
+.itens-post-vagas{
+
+}
+#id_senha_docente2{
+
+}
+.input-dados-vaga{
+    border: solid 3px #0000CD;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
 /*A partir daqui é o CSS das estrelas*/
 .rating {
   display: inline-block;
@@ -288,4 +299,27 @@ input[type="file"]{
     background-color: #0000CD;
     color: white;
     cursor: pointer;
+}
+
+hr{
+    background-color: #0000CD;
+    background: #0000CD;
+    height: 3px;
+    width: 2%;
+    margin-top: 10%;
+
+}
+/*Animação da linha pra ela extender pra direita*/
+hr:hover{
+    width: 100%;
+    transition: 0.5s;
+    transform: translateX(2.2);
+}
+
+.style-certificado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
