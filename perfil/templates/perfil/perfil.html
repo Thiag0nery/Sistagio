@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}<title>Perfil usuario</title> {% endblock %}
+{% block title %}<title>Perfil</title> {% endblock %}
 {% load static %}
 {% block conteudo %}
 {% include 'parcias/_header.html' %}
@@ -289,28 +289,33 @@
 
                 {% if  perfilPessoa.tipo == 'I' %}
 
-                <form  method="POST"  name="form-docente">
+                <form  method="POST"  name="form-docente" class="container-post-vagas">
                     {% csrf_token %}
 
+                    <div class="box-vagas">
+                        <label for="id_nome_docente" class="text-dados">Nome docente</label>
+                        <input type="text" name="{{docente_formulario.nome_docente.name}}" class="input-itens" id="id_nome_docente">
+                    </div>
 
-                    <label for="id_nome_docente" class="text-dados">Nome docente</label>
-                    <input type="text" name="{{docente_formulario.nome_docente.name}}" class="input-dados" id="id_nome_docente">
+                    <div class="box-vagas">
+                        <label for="id_email_docente" class="text-dados">Email docentee</label>
+                        <input type="text" name="{{docente_formulario.email_docente.name}}" class="input-itens" id="id_email_docente">
+                    </div>
 
+                    <div class="box-vagas">
+                        <label for="id_cpf_docente" class="text-dados">CPF</label>
+                        <input type="text" name="{{docente_formulario.cpf_docente.name}}" class="input-itens-vaga" id="id_cpf_docente">
+                    </div>
 
-                    <label for="id_email_docente" class="text-dados">Email docentee</label>
-                    <input type="text" name="{{docente_formulario.email_docente.name}}" class="input-dados" id="id_email_docente">
+                    <div class="box-vagas">
+                        <label for="id_senha_docente" class="text-dados">Senha</label>
+                        <input type="text" name="{{docente_formulario.senha_docente.name}}" class="input-dados-vaga" id="id_senha_docente">
+                    </div>
 
-
-                    <label for="id_cpf_docente" class="text-dados">CPF</label>
-                    <input type="text" name="{{docente_formulario.cpf_docente.name}}" class="input-dados" id="id_cpf_docente">
-
-
-                    <label for="id_senha_docente" class="text-dados">Senha</label>
-                    <input type="text" name="{{docente_formulario.senha_docente.name}}" class="input-dados" id="id_senha_docente">
-
-
-                    <label for="id_senha_docente2" class="text-dados">Confirmação de Senha</label>
-                    <input type="text" name="{{docente_formulario.senha_docente2.name}}" class="input-dados" id="id_senha_docente2">
+                    <div class="box-vagas">
+                        <label for="id_senha_docente2" class="text-dados">Confirmação de Senha</label>
+                        <input type="text" name="{{docente_formulario.senha_docente2.name}}" class="input-dados-vaga" id="id_senha_docente2">
+                    </div>
 
 
                         {% for opcao in curso_vinculado %}

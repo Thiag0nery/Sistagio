@@ -148,9 +148,7 @@ body {
     cursor: pointer;
 
 }
-.box-vagas{
 
-}
 
 .container-vagas-cadastradas {
     overflow-x: scroll;
@@ -227,6 +225,19 @@ body {
 
 .text-docente{
     font-size: 2.5vh;
+}
+
+.itens-post-vagas{
+
+}
+#id_senha_docente2{
+
+}
+.input-dados-vaga{
+    border: solid 3px #0000CD;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 /*A partir daqui é o CSS das estrelas*/
 .rating {
