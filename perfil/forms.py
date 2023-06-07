@@ -90,6 +90,12 @@ class DocenteForm(forms.ModelForm):
         if cpf_docente:
             cpf_docente = cpf_docente.replace('.', '').replace(',', '').replace('-', '').replace('/', '')
 
+            cpf = CPF()
+            is_valid = cpf.validate(cpf_docente)
+
+            if not is_valid:
+                validation_error_msgs['cpf_cnpj'] = error_cpf_invalid
+
         cpf_cnpj_banco = PerfilUser.objects.filter(cpf_cnpj=cpf_docente).first()
 
         # Verificação se o usuario preenceu todos os dados
@@ -110,11 +116,9 @@ class DocenteForm(forms.ModelForm):
 
         if cpf_cnpj_banco:
             validation_error_msgs['cpf_docente'] = error_msg_cpf_cnpj_exists
-        cpf = CPF()
-        is_valid = cpf.validate(cpf_docente)
 
-        if not is_valid:
-            validation_error_msgs['cpf_cnpj'] = error_cpf_invalid
+
+
 
         # Verificação das senhas
         if senha_docente2 != senha_docente:
