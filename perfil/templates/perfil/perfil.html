@@ -264,31 +264,49 @@
 
                 {% if  perfilPessoa.tipo == 'E' %}
                 <h3 class="title-meio-h3">Postar vaga</h3>
-                <form method="POST" action="">
+                <form method="POST" action="" class="container-post-vagas">
                 {% csrf_token %}
+                    <div class="box-post-vagas">
+                      
+                        <div class="itens-post-vagas">
+                            
+                            <label for="id_vag_nome" class="text-dados">Nome da vaga</label>
+                           <input type="text" name="{{post.vag_nome.name}}" class="input-dados-vaga" id="id_vag_nome">
+                        </div>
+                        <div class="itens-post-vagas">
 
-                     <label for="id_vag_nome" class="text-dados">Nome da vaga</label>
-                    <input type="text" name="{{post.vag_nome.name}}" class="input-dados" id="id_vag_nome">
+                            <label for="id_vag_tell" class="text-dados">Telefone</label>
+                            <input type="text" name="{{post.vag_tell.name}}" class="input-dados-vaga" id="id_vag_tell" value="
+                                {% if perfilPessoa.per_tell%} {{perfilPessoa.per_tell}} {%endif%}">
+                        </div>
+                        <div class="itens-post-vagas">
 
-                    <label for="id_vag_tell" class="text-dados">Telefone</label>
-                    <input type="text" name="{{post.vag_tell.name}}" class="input-dados" id="id_vag_tell" value="
-                        {% if perfilPessoa.per_tell%} {{perfilPessoa.per_tell}} {%endif%}">
+                            <label for="id_vag_email" class="text-dados">Email</label>
+                            <input type="email" name="{{post.vag_email.name}}" class="input-dados-vaga" id="id_vag_email">
+                        </div>
+                        <div class="itens-post-vagas">
 
-                    <label for="id_vag_email" class="text-dados">Email</label>
-                    <input type="email" name="{{post.vag_email.name}}" class="input-dados" id="id_vag_email">
+                            <label for="id_vag_endereco" class="text-dados">Endereço</label>
+                            <input type="text" name="{{post.vag_endereco.name}}" class="input-dados-vaga" id="id_vag_endereco">
+                        </div>
+                        
+                        <div class="itens-post-vagas">
 
-                    <label for="id_vag_endereco" class="text-dados">Endereço</label>
-                    <input type="text" name="{{post.vag_endereco.name}}" class="input-dados" id="id_vag_endereco">
+                            <label for="id_vag_descricao" class="text-dados">Descrição</label>
+                            <input type="text" name="{{post.vag_descricao.name}}" class="input-dados-vaga" id="id_vag_descricao">
+                        </div>
+   
+                        <div class="itens-post-vagas">
 
-                    <label for="id_vag_descricao" class="text-dados">Descrição</label>
-                    <input type="text" name="{{post.vag_descricao.name}}" class="input-dados" id="id_vag_descricao">
+                            <label for="id_vag_funcao" class="text-dados">Função</label>
+                            <input type="text" name="{{post.vag_funcao.name}}" class="input-dados-vaga" id="id_vag_funcao">
+                        </div>
+                        <div class="itens-post-vagas">
 
-
-                    <label for="id_vag_funcao" class="text-dados">Função</label>
-                    <input type="text" name="{{post.vag_funcao.name}}" class="input-dados" id="id_vag_funcao">
-
-                    <label for="id_vag_beneficio" class="text-dados">Beneficio</label>
-                    <input type="text" name="{{post.vag_beneficio.name}}" class="input-dados" id="id_vag_beneficio">
+                            <label for="id_vag_beneficio" class="text-dados">Beneficio</label>
+                            <input type="text" name="{{post.vag_beneficio.name}}" class="input-dados-vaga" id="id_vag_beneficio">
+                        </div>
+                    </div>
 
                 <button type="submit" name="botao-vag" class="btn-alterar-sobre">Enviar</button>
                 </form>

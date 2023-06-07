@@ -249,12 +249,30 @@ body {
 #id_senha_docente2{
 
 }
+/* PARA POST VAGAS EMPRESA */
+.container-post-vagas{
+padding: 5%;
+text-align: center;
+}
+.itens-post-vagas{
+    display: block;
+    text-align: left;
+}
 .input-dados-vaga{
-    border: solid 3px #0000CD;
+    border: #0000CD solid 2px;
     border-top: none;
     border-left: none;
     border-right: none;
+    width: 100%;
 }
+.input-dados-vaga :hover{
+    border: none;
+}
+.box-post-vagas{
+    display: block;
+    width: 100%;
+}
+
 /*A partir daqui é o CSS das estrelas*/
 .rating {
   display: inline-block;
