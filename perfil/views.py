@@ -7,6 +7,8 @@ from post_vagas.models import Vaga_cadastradas
 from django.contrib import messages
 from perfil.models import Docente_curso
 from django.http import JsonResponse
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 import csv
 
 
@@ -58,11 +60,14 @@ class Perfil(View):
             'docente_curso': self.docente_curso,
             'perfilPessoa': self.perfil,
             'alunos_inscritos':models.curso_aluno.objects.all(),
+            'alunos_avaliados': models.Aluno_avaliado.objects.filter(alu_docente_fk=self.docente_perfil),
             'curso_aluno_vinculado': self.curso_aluno,
             'vaga_cadastradas':self.vagaCadastradas,
             'aluno_csv': forms.Tabela_csv(data=self.request.POST or None),
             'docente_formulario':forms.DocenteForm(data=self.request.POST or None)
         }
+        print(json.dumps(list(models.curso_aluno.objects.all().values()), cls=DjangoJSONEncoder))
+
 
         self.usuarioForm = self.informacoes['usuario']
         self.cursoform = self.informacoes['curso_instituicao']
@@ -232,5 +237,8 @@ class AtualizacaoPerfil(Perfil):
             return redirect('perfil:perfil')
 
         return redirect('home:inicial')
-
+class perfilDetalheAluno(View):
+    def setup(self, *args, **kwargs):
+        super().setup( *args, **kwargs)
+        print(self.request.per_cod)
 

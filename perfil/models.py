@@ -39,7 +39,6 @@ class curso_aluno(models.Model):
     curs_codigo  = models.BigAutoField(primary_key=True)
     curs_insituicao = models.ForeignKey(curso_instituicao, on_delete=models.CASCADE)
     curs_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)
-    curs_avaliacao = models.BooleanField(default=False)
 
 class Docente(models.Model):
     doce_codigo = models.BigAutoField(primary_key=True)
@@ -52,3 +51,9 @@ class Docente_curso(models.Model):
 class Perguntas(models.Model):
     per_codigo = models.BigAutoField(primary_key=True)
     per_pergunta = models.CharField(max_length=155, null=True, blank=True)
+
+class Aluno_avaliado(models.Model):
+    alu_codigo = models.BigAutoField(primary_key=True)
+    alu_docente_fk = models.ForeignKey(Docente, on_delete=models.CASCADE,null=True)
+    alu_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)
+    alu_curso_aluno_fk = models.ForeignKey(curso_aluno, on_delete=models.CASCADE, null=True)
