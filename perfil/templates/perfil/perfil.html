@@ -133,7 +133,13 @@
                         </div>
                         {%endfor%}
 
+                    {% if perfilPessoa.tipo == 'D' %}
 
+                        {% for alunos in alunos_inscritos %}
+                            <h1>{{alunos.curs_perfil_fk.per_pessoa_fk.first_name}}</h1>
+                        {%endfor%}
+
+                    {%endif%}
 
 
                     </div>
