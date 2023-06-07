@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}<title>Perfil usuario</title> {% endblock %}
+{% block title %}<title>Perfil</title> {% endblock %}
 {% load static %}
 {% block conteudo %}
 {% include 'parcias/_header.html' %}
@@ -30,8 +30,9 @@
                 {%endif%}
             <form class="container-foto-form" method="POST" enctype="multipart/form-data">
                  {% csrf_token %}
-                <input type="file" class="btn-foto-alterar" name="perfil_foto_usuario"  accept=".jpg, .jpeg, .png">
-                 <button class="btn-alterar-sobre" name="mudar-foto">Salvar foto</button>
+                 <label for="btn-foto-alterar" id="label-file">Enviar Arquivo</label>
+                <input type="file" id="btn-foto-alterar" name="perfil_foto_usuario"  accept=".jpg, .jpeg, .png">
+                 <button class="btn-alterar-sobre1" name="mudar-foto">Salvar foto</button>
             </form>
 
             </div>
@@ -261,11 +262,12 @@
                 <div class="campo-certificados" style="margin-top: 28px;">
 
                      {% for certificado in certificados_usuario%}
-                    <div class="style-certificado" style="display: flex;justify-content: center;align-items: center;margin-top: 20px;">
+                    <div class="style-certificado">
 
                         <div class="certificado-informacao" style="width:50%;">
                         <p>Nome do curso: {{certificado.cert_nome_curso}}</p>
                     <p>Nome da instituição: {{certificado.cert_instituicao}}</p>
+                    <hr>
                     </div>
                     <img src="{{certificado.cert_arquivo.url}}" style="width:25%;">
 
@@ -279,31 +281,49 @@
 
                 {% if  perfilPessoa.tipo == 'E' %}
                 <h3 class="title-meio-h3">Postar vaga</h3>
-                <form method="POST" action="">
+                <form method="POST" action="" class="container-post-vagas">
                 {% csrf_token %}
+                    <div class="box-post-vagas">
+                      
+                        <div class="itens-post-vagas">
+                            
+                            <label for="id_vag_nome" class="text-dados">Nome da vaga</label>
+                           <input type="text" name="{{post.vag_nome.name}}" class="input-dados-vaga" id="id_vag_nome">
+                        </div>
+                        <div class="itens-post-vagas">
 
-                     <label for="id_vag_nome" class="text-dados">Nome da vaga</label>
-                    <input type="text" name="{{post.vag_nome.name}}" class="input-dados" id="id_vag_nome">
+                            <label for="id_vag_tell" class="text-dados">Telefone</label>
+                            <input type="text" name="{{post.vag_tell.name}}" class="input-dados-vaga" id="id_vag_tell" value="
+                                {% if perfilPessoa.per_tell%} {{perfilPessoa.per_tell}} {%endif%}">
+                        </div>
+                        <div class="itens-post-vagas">
 
-                    <label for="id_vag_tell" class="text-dados">Telefone</label>
-                    <input type="text" name="{{post.vag_tell.name}}" class="input-dados" id="id_vag_tell" value="
-                        {% if perfilPessoa.per_tell%} {{perfilPessoa.per_tell}} {%endif%}">
+                            <label for="id_vag_email" class="text-dados">Email</label>
+                            <input type="email" name="{{post.vag_email.name}}" class="input-dados-vaga" id="id_vag_email">
+                        </div>
+                        <div class="itens-post-vagas">
 
-                    <label for="id_vag_email" class="text-dados">Email</label>
-                    <input type="email" name="{{post.vag_email.name}}" class="input-dados" id="id_vag_email">
+                            <label for="id_vag_endereco" class="text-dados">Endereço</label>
+                            <input type="text" name="{{post.vag_endereco.name}}" class="input-dados-vaga" id="id_vag_endereco">
+                        </div>
+                        
+                        <div class="itens-post-vagas">
 
-                    <label for="id_vag_endereco" class="text-dados">Endereço</label>
-                    <input type="text" name="{{post.vag_endereco.name}}" class="input-dados" id="id_vag_endereco">
+                            <label for="id_vag_descricao" class="text-dados">Descrição</label>
+                            <input type="text" name="{{post.vag_descricao.name}}" class="input-dados-vaga" id="id_vag_descricao">
+                        </div>
+   
+                        <div class="itens-post-vagas">
 
-                    <label for="id_vag_descricao" class="text-dados">Descrição</label>
-                    <input type="text" name="{{post.vag_descricao.name}}" class="input-dados" id="id_vag_descricao">
+                            <label for="id_vag_funcao" class="text-dados">Função</label>
+                            <input type="text" name="{{post.vag_funcao.name}}" class="input-dados-vaga" id="id_vag_funcao">
+                        </div>
+                        <div class="itens-post-vagas">
 
-
-                    <label for="id_vag_funcao" class="text-dados">Função</label>
-                    <input type="text" name="{{post.vag_funcao.name}}" class="input-dados" id="id_vag_funcao">
-
-                    <label for="id_vag_beneficio" class="text-dados">Beneficio</label>
-                    <input type="text" name="{{post.vag_beneficio.name}}" class="input-dados" id="id_vag_beneficio">
+                            <label for="id_vag_beneficio" class="text-dados">Beneficio</label>
+                            <input type="text" name="{{post.vag_beneficio.name}}" class="input-dados-vaga" id="id_vag_beneficio">
+                        </div>
+                    </div>
 
                 <button type="submit" name="botao-vag" class="btn-alterar-sobre">Enviar</button>
                 </form>
@@ -311,28 +331,33 @@
 
                 {% if  perfilPessoa.tipo == 'I' %}
 
-                <form  method="POST"  name="form-docente">
+                <form  method="POST"  name="form-docente" class="container-post-vagas">
                     {% csrf_token %}
 
+                    <div class="box-vagas">
+                        <label for="id_nome_docente" class="text-dados">Nome docente</label>
+                        <input type="text" name="{{docente_formulario.nome_docente.name}}" class="input-itens" id="id_nome_docente">
+                    </div>
 
-                    <label for="id_nome_docente" class="text-dados">Nome docente</label>
-                    <input type="text" name="{{docente_formulario.nome_docente.name}}" class="input-dados" id="id_nome_docente">
+                    <div class="box-vagas">
+                        <label for="id_email_docente" class="text-dados">Email docentee</label>
+                        <input type="text" name="{{docente_formulario.email_docente.name}}" class="input-itens" id="id_email_docente">
+                    </div>
 
+                    <div class="box-vagas">
+                        <label for="id_cpf_docente" class="text-dados">CPF</label>
+                        <input type="text" name="{{docente_formulario.cpf_docente.name}}" class="input-itens-vaga" id="id_cpf_docente">
+                    </div>
 
-                    <label for="id_email_docente" class="text-dados">Email docentee</label>
-                    <input type="text" name="{{docente_formulario.email_docente.name}}" class="input-dados" id="id_email_docente">
+                    <div class="box-vagas">
+                        <label for="id_senha_docente" class="text-dados">Senha</label>
+                        <input type="text" name="{{docente_formulario.senha_docente.name}}" class="input-dados-vaga" id="id_senha_docente">
+                    </div>
 
-
-                    <label for="id_cpf_docente" class="text-dados">CPF</label>
-                    <input type="text" name="{{docente_formulario.cpf_docente.name}}" class="input-dados" id="id_cpf_docente">
-
-
-                    <label for="id_senha_docente" class="text-dados">Senha</label>
-                    <input type="text" name="{{docente_formulario.senha_docente.name}}" class="input-dados" id="id_senha_docente">
-
-
-                    <label for="id_senha_docente2" class="text-dados">Confirmação de Senha</label>
-                    <input type="text" name="{{docente_formulario.senha_docente2.name}}" class="input-dados" id="id_senha_docente2">
+                    <div class="box-vagas">
+                        <label for="id_senha_docente2" class="text-dados">Confirmação de Senha</label>
+                        <input type="text" name="{{docente_formulario.senha_docente2.name}}" class="input-dados-vaga" id="id_senha_docente2">
+                    </div>
 
 
                         {% for opcao in curso_vinculado %}
