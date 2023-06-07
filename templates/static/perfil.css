@@ -45,13 +45,14 @@ body {
 
 .img-perfil {
     border-radius: 50%;
-    width: 74%;
+    width: 80%;
+    height: 31vh;
 }
 .container-foto-form{
     display:flex;
     justify-content: center;
     align-content: center;
-    flex-wrap: wrap;
+    
 }
 .container-meio {
     padding: 5% 5% 0 5%;
@@ -94,6 +95,9 @@ body {
 .descricao {
     margin-top: 5%;
 }
+.btn-foto-alterar{
+    margin-top: 7%;
+}
 
 .btn-alterar-sobre {
     margin: 0 auto;
@@ -108,7 +112,19 @@ body {
     color: white;
     cursor: pointer;
 }
-
+.btn-alterar-sobre1{
+    margin: 0 auto;
+    margin-top: 6%;
+    text-align: center;
+    border-radius: 25px;
+    font-size: 15px;
+    width: 40%;
+    height: 25px;
+    border: none;
+    background-color: #0000CD;
+    color: white;
+    cursor: pointer;
+}
 .textarea-descricao {
     border: solid 2px #0000CD;
     border-radius: 0 25px 0 25px;
@@ -267,3 +283,20 @@ body {
   color: #0000CD;
 }
 
+input[type="file"]{
+    display: none;
+}
+
+#label-file{
+    margin: 0 auto;
+    margin-top: 6%;
+    text-align: center;
+    border-radius: 25px;
+    font-size: 15px;
+    width: 40%;
+    height: 25px;
+    border: none;
+    background-color: #0000CD;
+    color: white;
+    cursor: pointer;
+}

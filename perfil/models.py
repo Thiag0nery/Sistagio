@@ -39,6 +39,7 @@ class curso_aluno(models.Model):
     curs_codigo  = models.BigAutoField(primary_key=True)
     curs_insituicao = models.ForeignKey(curso_instituicao, on_delete=models.CASCADE)
     curs_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)
+    curs_avaliacao = models.BooleanField(default=False)
 
 class Docente(models.Model):
     doce_codigo = models.BigAutoField(primary_key=True)
