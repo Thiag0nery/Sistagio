@@ -33,7 +33,7 @@ class UserForms(forms.ModelForm):
         error_msg_password_short = 'Sua senha precisa de pelo menos 6 caracteres'
         error_msg_required_field = 'Este campo é obrigatório.'
 
-        email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email').lower()
         password =self.cleaned_data.get('password')
         password2 = self.cleaned_data.get('password2')
         nome = self.cleaned_data.get('first_name')

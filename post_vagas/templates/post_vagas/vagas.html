@@ -6,13 +6,13 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'vagas.css'%}">{% endblock %}
 {% block conteudo %}
-{% include 'parcias/_header.html' %}
+{% include 'parcias/_header.html' %} 
 <main class="main">
         <div class="infoInicio">
-            <h2 title="carrossel">Olá {{user.first_name}}, Bem vindo ao Sistagio</h2>
-            <h5 class="subtitulo-carrosel">No sistagio você encontra tudo que você mais deseja</h5>
+            <h2 title="carrossel">Olá <span class="nome-pessoa">{{user.first_name}}</span>,<br> É uma honra ter você em nossa companhia!</h2>
+            <h5 class="subtitulo-carrosel">No sistagio você encontra as oportunidades certas para sua carreira profissional.</h5>
         </div>
-    <section class="container-carrossel">
+    <!-- <section class="container-carrossel">
            
             <div class="box-carrosel">
                 <div class="itens-carrossel">
@@ -32,7 +32,7 @@
                     <img src="/static/imagens/atronautaa-removebg-preview.png" alt="" class="img-carrossel">
                 </div>
             </div>
-        </section>
+        </section> -->
 
     {% if perfilUsuario.tipo == 'A' %}
     <form class="busca" method="GET" action="{% url 'post_vagas:busca' %}">
@@ -166,8 +166,9 @@
 </section>
 
 
-{% include 'parcias/_footer.html'%}
 {%endif%}
+{% include 'parcias/_footer.html'%}
+
 <script>
     const getElement = (...queries) => document.querySelector(...queries);
 

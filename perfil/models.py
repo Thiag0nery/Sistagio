@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 from PIL import Image
 from Sistagio import settings
 class PerfilUser(models.Model):
@@ -29,7 +30,6 @@ class Aluno_Csv(models.Model):
     alu_vinculado = models.BooleanField(default=False)
     def __str__(self):
         return self.alu_nome
-
 class curso_instituicao(models.Model):
     curs_codigo  = models.BigAutoField(primary_key=True)
     curs_nome = models.CharField(max_length=45, null=True)
@@ -41,6 +41,13 @@ class curso_aluno(models.Model):
     curs_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)
 
 class Docente(models.Model):
+    doce_codigo = models.BigAutoField(primary_key=True)
+    doce_perfil_pk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE, null=True)
+    doce_instituicao_fk = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+class Docente_curso(models.Model):
     doce_codigo  = models.BigAutoField(primary_key=True)
-    doce_perfil_pk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE,null=True)
-    doce_instituicao_fk  = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    doce_docente_pk = models.ForeignKey(Docente, on_delete=models.CASCADE,null=True)
+    doce_curso_instituicao_fk = models.ForeignKey(curso_instituicao, on_delete=models.CASCADE, null=True)
+class Perguntas(models.Model):
+    per_codigo = models.BigAutoField(primary_key=True)
+    per_pergunta = models.CharField(max_length=155, null=True, blank=True)

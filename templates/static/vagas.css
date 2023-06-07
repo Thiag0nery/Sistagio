@@ -36,12 +36,16 @@
 .img-box-carrossel{
 
 }
-
+.nome-pessoa{
+    font-weight: 600;
+}
 .infoInicio{
-    padding: 2% 5% 0 5%;
+    padding: 2% 10% 0 5%;
     font-size: 14pt;
 }
-
+.infoInicio h2{
+    font-weight: 300;
+}
 
 .itens-carrossel{
     background-color: black;
