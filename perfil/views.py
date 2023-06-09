@@ -245,9 +245,13 @@ class perfilDetalheAluno(View):
 
 
         self.user_filter = User.objects.filter(id=int(primary_key)).first()
-
         self.perfil_filter = models.PerfilUser.objects.filter(per_pessoa_fk=self.user_filter).first()
         self.curso_aluno = models.curso_aluno.objects.filter(curs_perfil_fk=self.perfil_filter)
+
+        self.perfil = models.PerfilUser.objects.filter(
+            per_pessoa_fk=self.request.user
+        ).first()
+        self.docente_perfil = models.Docente.objects.filter(doce_perfil_pk=self.perfil).first()
 
         self.contexto = {
             'perfil':self.perfil_filter,
@@ -262,8 +266,10 @@ class perfilDetalheAluno(View):
 
     def post(self, *args, **kwargs):
         if 'curso_avaliacao' in self.request.POST:
-            avaliacao = self.request.POST.get('pergunta1')
+            avaliacao = self.request.POST.getlist('valor_aluno')
             print(avaliacao)
+            for value in avaliacao:
+                print(value)
             return redirect('perfil:perfil')
 
 

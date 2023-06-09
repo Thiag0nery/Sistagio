@@ -71,10 +71,12 @@
                         <h5 class="text-docente">Professor Felipe</h5>
                     </div>
                     <div class="rating">
+
                         <form action="" method="POST">
                             {% csrf_token %}
                             {% for pergunta in perguntas %}
                             <div class="question">
+
                                     <p>{{usuario.first_name}} {{pergunta.per_pergunta}}</p>
                                     <span class="star" data-value="1"></span>
                                     <span class="star" data-value="2"></span>
@@ -82,7 +84,7 @@
                                     <span class="star" data-value="4"></span>
                                     <span class="star" data-value="5"></span>
 
-                                 <input type="hidden" name="pergunta{{pergunta.per_codigo}}" id="rating1_input" value="">
+                                 <input type="hidden" name="valor_aluno" id="rating{{ forloop.counter }}_input" value="" required >
                                 </div>
 
 
@@ -155,10 +157,13 @@ const questions = document.querySelectorAll('.question');
 
 questions.forEach((question, index) => {
   const stars = question.querySelectorAll('.star');
-  const ratingInput = question.querySelector(`#rating${index + 1}_input`);
+
+
 
   stars.forEach(star => {
     star.addEventListener('click', () => {
+   ratingInput = question.querySelector(`#rating${index + 1}_input`);
+    console.log(ratingInput)
       const value = star.getAttribute('data-value');
 
       stars.forEach(s => s.classList.remove('active'));
