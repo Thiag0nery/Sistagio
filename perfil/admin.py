@@ -8,4 +8,8 @@ admin.site.register(models.Docente)
 admin.site.register(models.Aluno_Csv, AlunoCsvAdmin)
 admin.site.register(models.curso_instituicao)
 admin.site.register(models.curso_aluno)
-# Register your models here.
+admin.site.register(models.Aluno_avaliado)
+admin.site.register(models.Docente_curso)
+admin.site.register(models.Perguntas)
+admin.site.register(models.Avaliacao)
+

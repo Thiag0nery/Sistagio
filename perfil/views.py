@@ -8,7 +8,7 @@ from django.contrib import messages
 from perfil.models import Docente_curso
 from django.http import JsonResponse
 import json
-from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
 import csv
 
 
@@ -36,6 +36,7 @@ class Perfil(View):
         self.curso_aluno = models.curso_aluno.objects.filter(curs_perfil_fk=self.perfil)
 
 
+
         self.informacoes = {
             'perfil': forms.PerfilForms(
                 data=self.request.POST or None,
@@ -60,13 +61,12 @@ class Perfil(View):
             'docente_curso': self.docente_curso,
             'perfilPessoa': self.perfil,
             'alunos_inscritos':models.curso_aluno.objects.all(),
-            'alunos_avaliados': models.Aluno_avaliado.objects.filter(alu_docente_fk=self.docente_perfil),
+            'alunos_avaliados': list(models.Aluno_avaliado.objects.filter(alu_docente_fk=self.docente_perfil)),
             'curso_aluno_vinculado': self.curso_aluno,
             'vaga_cadastradas':self.vagaCadastradas,
             'aluno_csv': forms.Tabela_csv(data=self.request.POST or None),
             'docente_formulario':forms.DocenteForm(data=self.request.POST or None)
         }
-        print(json.dumps(list(models.curso_aluno.objects.all().values()), cls=DjangoJSONEncoder))
 
 
         self.usuarioForm = self.informacoes['usuario']
@@ -238,7 +238,34 @@ class AtualizacaoPerfil(Perfil):
 
         return redirect('home:inicial')
 class perfilDetalheAluno(View):
+    templates_name = 'perfil/perfil_detalhe.html'
     def setup(self, *args, **kwargs):
         super().setup( *args, **kwargs)
-        print(self.request.per_cod)
+        primary_key = self.kwargs.get('per_cod')
+
+
+        self.user_filter = User.objects.filter(id=int(primary_key)).first()
+
+        self.perfil_filter = models.PerfilUser.objects.filter(per_pessoa_fk=self.user_filter).first()
+        self.curso_aluno = models.curso_aluno.objects.filter(curs_perfil_fk=self.perfil_filter)
+
+        self.contexto = {
+            'perfil':self.perfil_filter,
+            'usuario':self.user_filter,
+            'curso_aluno_vinculado': self.curso_aluno,
+            'perguntas': models.Perguntas.objects.all(),
+        }
+        self.page = render(self.request, self.templates_name, self.contexto)
+
+    def get(self, *args, **kwargs):
+        return self.page
+
+    def post(self, *args, **kwargs):
+        if 'curso_avaliacao' in self.request.POST:
+            avaliacao = self.request.POST.get('pergunta1')
+            print(avaliacao)
+            return redirect('perfil:perfil')
+
+
+
 

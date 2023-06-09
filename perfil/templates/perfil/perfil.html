@@ -136,7 +136,8 @@
 
                     {% if perfilPessoa.tipo == 'D' %}
 
-                        {{alunos_avaliados}}
+
+
 
                          {% for curso in docente_curso%}
                             <h1>{{curso.doce_curso_instituicao_fk.curs_nome}}</h1>
@@ -147,12 +148,13 @@
 
                                 {% if curso.doce_curso_instituicao_fk == alunos.curs_insituicao and curso.doce_curso_instituicao_fk.curs_nome == curso.doce_curso_instituicao_fk.curs_nome%}
 
+                                    <a href="{% url 'perfil:detalhe' alunos.curs_perfil_fk.per_pessoa_fk.id %}"> <h1>{{alunos.curs_perfil_fk.per_pessoa_fk.first_name}}</h1></a>
 
-                                 <a href="{% url 'perfil:detalhe' alunos.curs_perfil_fk.per_cod %}"> <h1>{{alunos.curs_perfil_fk.per_pessoa_fk.first_name}}</h1></a>
                                 {%endif%}
 
                             {%endfor%}
                         {%endfor%}
+
 
 
 
@@ -179,6 +181,8 @@
                         <input type="radio" id="star1" name="rating" value="1">
                         <label for="star1"></label>
                     </div>
+
+
                 </div>
 
                  <h4 class="title-meio-h3">Cursos</h4>
@@ -256,7 +260,7 @@
                     <input type="text" name="{{certificados.cert_instituicao.name}}" id="id_cert_instituicao" class="input-dados">
                     <input type="file" name="{{certificados.cert_arquivo.name}}" >
 
-               
+
                 <button type="submit" class="btn-alterar-sobre" name="botao-certificado">Enviar</button>
                 </form>
                 <div class="campo-certificados" style="margin-top: 28px;">
@@ -284,9 +288,9 @@
                 <form method="POST" action="" class="container-post-vagas">
                 {% csrf_token %}
                     <div class="box-post-vagas">
-                      
+
                         <div class="itens-post-vagas">
-                            
+
                             <label for="id_vag_nome" class="text-dados">Nome da vaga</label>
                            <input type="text" name="{{post.vag_nome.name}}" class="input-dados-vaga" id="id_vag_nome">
                         </div>
@@ -306,13 +310,13 @@
                             <label for="id_vag_endereco" class="text-dados">Endereço</label>
                             <input type="text" name="{{post.vag_endereco.name}}" class="input-dados-vaga" id="id_vag_endereco">
                         </div>
-                        
+
                         <div class="itens-post-vagas">
 
                             <label for="id_vag_descricao" class="text-dados">Descrição</label>
                             <input type="text" name="{{post.vag_descricao.name}}" class="input-dados-vaga" id="id_vag_descricao">
                         </div>
-   
+
                         <div class="itens-post-vagas">
 
                             <label for="id_vag_funcao" class="text-dados">Função</label>

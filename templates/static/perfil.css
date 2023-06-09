@@ -277,7 +277,17 @@ text-align: center;
 .rating {
   display: inline-block;
 }
+.star {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  content: '\2605';
+  background-color: #777777;
+}
 
+.star.active {
+  background-color: #0000CD;
+}
 .rating input {
   display: none;
 }

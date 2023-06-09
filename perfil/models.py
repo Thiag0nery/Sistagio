@@ -57,3 +57,10 @@ class Aluno_avaliado(models.Model):
     alu_docente_fk = models.ForeignKey(Docente, on_delete=models.CASCADE,null=True)
     alu_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)
     alu_curso_aluno_fk = models.ForeignKey(curso_aluno, on_delete=models.CASCADE, null=True)
+
+class Avaliacao(models.Model):
+    ava_codigo = models.BigAutoField(primary_key=True)
+    ava_docente_fk = models.ForeignKey(Docente, on_delete=models.CASCADE, null=True)
+    ava_perfil_fk = models.ForeignKey(PerfilUser, on_delete=models.CASCADE)
+    ava_curso_aluno_fk = models.ForeignKey(curso_aluno, on_delete=models.CASCADE, null=True)
+    ava_nota = models.IntegerField(null=True,blank=True)
