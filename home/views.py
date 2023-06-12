@@ -80,7 +80,7 @@ class Cadastro(View):
             'usuario': forms.UserForms(
                 data=self.request.POST or None
             ),
-            'curso_oferecer': curso_instituicao.objects.all(),
+            'curso_oferecer': PerfilUser.objects.filter(tipo="I"),
             'perfil': forms.PerfilForms(
                 data=self.request.POST or None,
             )
@@ -157,9 +157,11 @@ class Cadastro(View):
 
 
         if tipo_requisicao == "A":
-            # matricula_banco = Aluno_Csv.objects.filter(alu_matricula=matricula).first()
-            # matricula_banco.alu_vinculado = True
-            # matricula_banco.save()
+            matricula = str(int(matricula.replace('.', '').replace(',', '').replace('-', '')))
+
+            matricula_banco = Aluno_Csv.objects.filter(alu_matricula=matricula).first()
+            matricula_banco.alu_vinculado = True
+            matricula_banco.save()
             nome_instituicao = self.request.POST.get('instituicao')
             nome_curso = self.request.POST.get('curso')
             usuario_instituicao = get_object_or_404(User, first_name=nome_instituicao)
