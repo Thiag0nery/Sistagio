@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<title>{{usuario.first_name}}</title> {% endblock %}
+{% block style %}<link rel="stylesheet" href="{% static 'perfil.css'%}">{% endblock %}
+{% block conteudo %}
+{% include 'parcias/_header.html' %}
+
+ <main class="main">
+        <div class="container-inicio">
+            <div class="foto-perfi">
+
+
+                {% if not perfilPessoa.per_foto %}
+                 <img src="/static/imagens/perfil-sem-foto.png" alt="" class="img-perfil">
+                {%endif%}
+                {% if perfilPessoa.per_foto %}
+
+                 <img src="{{perfil.per_foto.url}}" alt="" class="img-perfil">
+                {%endif%}
+
+            </div>
+
+            <div class="titulo">
+                <h3 class="text-titulo">{{usuario.first_name}}</h3>
+            </div>
+        </div>
+
+        <div class="container-meio">
+            <div class="container-sobre" >
+
+
+                <div class="form-dados-sobre" id="form-dados-banco">
+                    <div class="titulo-sobre">
+                        <h3 class="title-meio-h3">MEUS DADOS</h3>
+
+                    </div>
+
+                    <div class="descricao">
+                        <h4 class="text-descricao">Conte um pouco sobre você:</h4>
+                        <p></p>
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados">Nome completo:</label>
+                        <p>{{usuario.first_name}}</p>
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados">E-mail:</label>
+                        <p>{{usuario.email}}</p>
+                    </div>
+                    <div class="dados-pessoais">
+                        <label for="" class="text-dados ">Telefone:</label>
+                        <p class="{% if not perfilPessoa.per_tell%}null-tell{%endif%}">{% if not perfil.per_tell%}(00) 00000-0000{%endif%}
+                        {% if perfil.per_tell%} {{perfil.per_tell}} {%endif%}
+                        </p>
+                    </div>
+                      {% if perfil.tipo == 'A' %}
+                    <div class="descricao">
+                        <h4 class="text-descricao">Habilidades:</h4>
+                        <p>{{perfilPessoa.per_detalhe}}</p>
+                    </div>
+                    {%endif%}
+
+                </div>
+            </div>
+            <div class="box-vagas">
+                {% if perfilPessoa.tipo == 'A' %}
+                     <h4 class="title-meio-h3">Cursos</h4>
+                    {% for curso in  curso_aluno_vinculado%}
+                        <p>Instituição: {{curso.curs_insituicao.curs_perfil_fk.per_pessoa_fk.first_name}}</p>
+                        <p>Curso: {{curso.curs_insituicao.curs_nome}}</p>
+                    {%endfor%}
+                {%endif%}
+            </div>
+        </div>
+        <div class="container-certificados">
+            <div class="titulo-certificados">
+                {% if perfilPessoa.tipo == 'A' %}
+                <h3 class="title-meio-h3">Certificados</h3>
+                <div class="campo-certificados" style="margin-top: 28px;">
+
+                     {% for certificado in certificados_usuario%}
+                    <div class="style-certificado">
+
+                        <div class="certificado-informacao" style="width:50%;">
+                        <p>Nome do curso: {{certificado.cert_nome_curso}}</p>
+                    <p>Nome da instituição: {{certificado.cert_instituicao}}</p>
+                    <hr>
+                    </div>
+                    <img src="{{certificado.cert_arquivo.url}}" style="width:25%;">
+
+                    </div>
+
+                {%endfor%}
+
+                </div>
+
+                {%endif%}
+
+
+
+
+
+<script src="{% static 'Scripts/perfil_script.js' %}"></script>
+{%endblock%}

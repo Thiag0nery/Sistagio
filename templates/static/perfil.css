@@ -351,3 +351,96 @@ hr:hover{
     margin-top: 20px;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* MODAL CSS */
+.modal-container {
+    background: rgba(0, 0, 0, 0.2);
+
+    width: 100%;
+    height: 100vh;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    display: grid;
+    place-items: center;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.15s;
+  }
+  .title-vaga{
+    display: flex;
+    justify-content: center;
+
+  }
+  .sair{
+    margin-left: 15%;
+  }
+  .modal {
+    background: #fff;
+    width: 100%;
+    height: 0;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #00000070;
+    overflow: hidden;
+    transition: width 0.15s, height 0.15s;
+  }
+  .button-candidatar{
+    cursor: pointer;
+    background-color: #0000CD;
+    color: white;
+    /* margin: 0 auto; */
+    width: 20%;
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    bottom: 15px;
+        right: 39.8%;
+    left: 39.8%;
+    border-radius: 25px;
+  }
+  .button-candidatar p{
+    text-align: center;
+    padding: 8%;
+  }
+  #vaga-nome{
+    font-size: 40px;
+    }
+    #empresa-nome{
+        font-size: 30px;
+    }
+    .modal-texts{
+        padding:5%;
+        text-align: left;
+        overflow: auto ;
+        font-size: 14pt;
+        height: 30vh;
+        overflow-x: hidden;
+    }
+    .itens-vaga{
+        margin-top: 2%;
+    }
+    .title-texts{
+        font-size: 14pt;
+        font-weight: 600;
+    }
+    #vaga-descricao{
+        font-size: 12pt;
+    }
+  .modal-show > .modal {
+    width: 50%;
+    height: 65vh;
+    position: absolute;
+
+}
+
+
+  .modal-show {
+    opacity: 1;
+    pointer-events: auto;
+  }

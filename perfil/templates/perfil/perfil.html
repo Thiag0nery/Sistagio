@@ -122,6 +122,7 @@
                     {% if perfilPessoa.tipo == 'E' %}VAGAS LANÇADAS{%endif%}
                     </h3>
                     <div class="card-vagas">
+                        {% if perfilPessoa.tipo == 'A' %}
                         {% for Vaga in vaga_cadastradas%}
                         <div class="itens-card-vagas">
                             <h4 class="title-card-vagas">{{Vaga.vcad_postVaga_fk.vag_nome}}</h4>
@@ -132,7 +133,68 @@
                                 </a>
                             </div>
                         </div>
-                        {%endfor%}
+                         {%endfor%}
+                         {%endif%}
+                        {% if perfilPessoa.tipo == 'E'  %}
+                        {% for vaga in vagas_lancadas%}
+                        <div class="itens-card-vagas" id="urlRequisicao" data-url="{% url 'post_vagas:candidatos' %}">
+                              <h2 class="vaga_name">{{ vaga.vag_nome}}</h2>
+                        <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
+                        <!-- <h5 class="subtitulo-empresa">Uma empresa de micro-serviços</h5> -->
+                        <h5 class="endereco">{{ vaga.vag_endereco}}</h5>
+                        <vaga_descricao style="display:none;" id="vaga_descricao">{{vaga.vag_descricao}}
+                        </vaga_descricao>
+                        <vaga_funcao style="display:none;" id="vaga_funcao">{{vaga.vag_funcao}}</vaga_funcao>
+                        <vaga_beneficio style="display:none;" id="vaga_beneficio">{{vaga.vag_beneficio}}
+                        </vaga_beneficio>
+                        <p>Codico: <vaga_codigo id="vaga_codigo">{{vaga.vag_cod}}</vaga_codigo></p>
+                               <a class=" btn-ver-mais {{vaga.vag_nome}}">Ver Mais</a>
+                        </div>
+
+
+
+                           {%endfor%}
+
+ <div class="modal-container">
+        <div class="modal">
+            <h3 id="vaga-nome"></h3>
+            <h3 id="empresa-nome"></h3>
+            <div class="modal-texts">
+                <div class="itens-vaga">
+                    <h3 class="title-texts">Requisitos: </h3>
+                    <h2 id="vaga-descricao"></h2>
+                </div>
+                <div class="itens_vaga">
+                    <h5 class="requisitos_vaga"></h5>
+                </div>
+                <div class="itens-vaga">
+                    <h3 class="title-texts">Descrição: </h3>
+                    <h5 id="vaga-funcao"></h5>
+                </div>
+                <div class="itens-vaga">
+                    <h3 class="title-texts">Endereço: </h3>
+                    <h5 id="empresa_endereco"></h5>
+                </div>
+                <div class="itens-vaga">
+                    <p class="title-texts">Benefícios:</p>
+                    <h5 id="vaga-beneficio"></h5>
+                </div>
+                <div class="itens-vaga">
+                    <p class="title-texts">Codigo da vaga: <h2 id="id-vaga"></h2></p>
+                </div>
+
+                <div id="candidatos">
+                    <h3>Candidatos</h3>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+                        {%endif%}
+
 
                     {% if perfilPessoa.tipo == 'D' %}
 
@@ -148,7 +210,7 @@
 
                                 {% if curso.doce_curso_instituicao_fk == alunos.curs_insituicao and curso.doce_curso_instituicao_fk.curs_nome == curso.doce_curso_instituicao_fk.curs_nome%}
 
-                                    <a href="{% url 'perfil:detalhe' alunos.curs_perfil_fk.per_pessoa_fk.id %}"> <h1>{{alunos.curs_perfil_fk.per_pessoa_fk.first_name}}</h1></a>
+                                    <a href="{% url 'perfil:detalhe' alunos.curs_perfil_fk.per_pessoa_fk.id alunos.curs_codigo%}"> <h1>{{alunos.curs_perfil_fk.per_pessoa_fk.first_name}}</h1></a>
 
                                 {%endif%}
 
@@ -182,6 +244,16 @@
                         <label for="star1"></label>
                     </div>
 
+                {% for ava in  aluno_verificado %}
+                    <h2>{{ava.alu_curso_aluno_fk.curs_insituicao.curs_nome}}</h2>
+                    <h2></h2>
+                 {% for avalicao in  avaliacao %}
+                    {% if ava.alu_docente_fk == avalicao.ava_docente_fk and ava.alu_curso_aluno_fk.curs_insituicao.curs_nome == avalicao.ava_curso_aluno_fk.curs_insituicao.curs_nome%}
+                    <p> Nota: {{avalicao.ava_nota}}</p>
+                      <div class="rating" data-stars="{{avalicao.ava_nota}}"></div>
+                {%endif%}
+                {%endfor%}
+                    {%endfor%}
 
                 </div>
 
@@ -191,6 +263,7 @@
                 {% for curso in  curso_aluno_vinculado%}
                     <h1>Nome: {{curso.curs_insituicao.curs_nome}}</h1>
                 {%endfor%}
+
 
                 <form action="" method="POST" name="curso_escolhido">
           {% csrf_token %}
@@ -408,5 +481,20 @@
 
 
 <script src="{% static 'Scripts/perfil_script.js' %}"></script>
+<script src="{% static 'Scripts/model_empresa_ajax.js' %}"></script>
 <script src="{% static 'Scripts/ajax_curso.js' %}"></script>
+<script>
+
+    const ratingContainers = document.querySelectorAll('.rating');
+
+ratingContainers.forEach(container => {
+  const stars = parseInt(container.getAttribute('data-stars'));
+
+  for (let i = 0; i < stars; i++) {
+    const star = document.createElement('span');
+    star.classList.add('star');
+    container.appendChild(star);
+  }
+});
+</script>
 {%endblock%}

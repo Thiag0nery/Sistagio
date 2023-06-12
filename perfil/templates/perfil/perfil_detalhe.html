@@ -10,10 +10,10 @@
             <div class="foto-perfi">
 
 
-                {% if not perfilPessoa.per_foto %}
+                {% if not perfil.per_foto %}
                  <img src="/static/imagens/perfil-sem-foto.png" alt="" class="img-perfil">
                 {%endif%}
-                {% if perfilPessoa.per_foto %}
+                {% if perfil.per_foto %}
 
                  <img src="{{perfil.per_foto.url}}" alt="" class="img-perfil">
                 {%endif%}
@@ -41,7 +41,7 @@
                     </div>
                     <div class="dados-pessoais">
                         <label for="" class="text-dados">Nome completo:</label>
-                        <p>{{usuario.first_name}}</p>
+                        <p>{{usuario}}</p>
                     </div>
                     <div class="dados-pessoais">
                         <label for="" class="text-dados">E-mail:</label>
@@ -64,14 +64,13 @@
             </div>
             <div class="box-vagas">
 
-                {% if perfil.tipo == 'A' %}
+
+
                 <div class="container-avaliacao">
                     <h4 class="title-meio-h3">Avaliações do Docente</h4>
-                    <div class="box-avaliacao">
-                        <h5 class="text-docente">Professor Felipe</h5>
-                    </div>
                     <div class="rating">
-
+                        {% if perfil_visitante.tipo == 'D' %}
+                        {% if not verificao %}
                         <form action="" method="POST">
                             {% csrf_token %}
                             {% for pergunta in perguntas %}
@@ -85,20 +84,38 @@
                                     <span class="star" data-value="5"></span>
 
                                  <input type="hidden" name="valor_aluno" id="rating{{ forloop.counter }}_input" value="" required >
+                                 <input type="hidden" name="pergunta_id"  value="{{pergunta.per_codigo}}" required >
                                 </div>
 
 
 
                             {%endfor%}
 
-
-
-
                              <button type="submit" name="curso_avaliacao" class="btn-alterar-sobre">Enviar</button>
                         </form>
+                        {% else %}
+                            <p>Aluno ja avaliado!</p>
+                        {%endif%}
 
+
+                    {%endif%}
+                        {% if perfil_visitante.tipo != 'D' %}
+                            {% if not avaliacao_verificado%} <p>Aluno ainda não avaliado</p>{%endif%}
+                            {% for ava in avaliacao_verificado %}
+                            <h2>{{ava.alu_curso_aluno_fk.curs_insituicao.curs_nome}}</h2>
+
+                                {% for avalicao in  avaliacao %}
+                                    {% if ava.alu_docente_fk == avalicao.ava_docente_fk and ava.alu_curso_aluno_fk.curs_insituicao.curs_nome == avalicao.ava_curso_aluno_fk.curs_insituicao.curs_nome%}
+                                        <p> Nota: {{avalicao.ava_nota}}</p>
+                                         <div class="rating" data-stars="{{avalicao.ava_nota}}"></div>
+                                    {%endif%}
+                                {%endfor%}
+                            {%endfor%}
+                        {%endif%}
                     </div>
                 </div>
+
+
 
                  <h4 class="title-meio-h3">Cursos</h4>
                 {% for curso in  curso_aluno_vinculado%}
@@ -108,28 +125,16 @@
 
 
 
-                {%endif%}
 
-
-
-                {% if perfilPessoa.tipo == 'D' %}
-                <h4 class="title-meio-h3">Curso vinculados</h4>
-
-                    {% for curso in docente_curso%}
-                        <h1>{{curso.doce_curso_instituicao_fk.curs_nome}}</h1>
-                        {%endfor%}
-
-                {%endif%}
 
             </div>
         </div>
         <div class="container-certificados">
-            <div class="titulo-certificados">
-                {% if perfilPessoa.tipo == 'A' %}
+            <div class="titulo-certificados"></div>
                 <h3 class="title-meio-h3">Certificados</h3>
                 <div class="campo-certificados" style="margin-top: 28px;">
 
-                     {% for certificado in certificados_usuario%}
+                     {% for certificado in certificados %}
                     <div class="style-certificado">
 
                         <div class="certificado-informacao" style="width:50%;">
@@ -145,7 +150,7 @@
 
                 </div>
 
-                {%endif%}
+
 
 
 

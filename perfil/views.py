@@ -4,8 +4,10 @@ from . import forms
 from django.contrib.auth.models import User
 from . import models
 from post_vagas.models import Vaga_cadastradas
+from post_vagas.models import PostVagas
 from django.contrib import messages
 from perfil.models import Docente_curso
+from django.db.models import Q
 from django.http import JsonResponse
 import json
 from django.core import serializers
@@ -23,9 +25,6 @@ class Perfil(View):
             per_pessoa_fk=self.request.user
         ).first()
 
-
-
-
         # Essa variavel permite pegar as vagas que o aluno se inscreveu
         self.vagaCadastradas = Vaga_cadastradas.objects.filter(vcad_perfil_fk=self.perfil)
         self.cursoVinculado = models.curso_instituicao.objects.filter(curs_perfil_fk=self.perfil)
@@ -36,6 +35,8 @@ class Perfil(View):
         self.curso_aluno = models.curso_aluno.objects.filter(curs_perfil_fk=self.perfil)
 
 
+        self.avaliacao = models.Avaliacao.objects.filter(ava_perfil_fk=self.perfil)
+        self.avaliacao_verificado = models.Aluno_avaliado.objects.filter(alu_perfil_fk=self.perfil)
 
         self.informacoes = {
             'perfil': forms.PerfilForms(
@@ -65,8 +66,13 @@ class Perfil(View):
             'curso_aluno_vinculado': self.curso_aluno,
             'vaga_cadastradas':self.vagaCadastradas,
             'aluno_csv': forms.Tabela_csv(data=self.request.POST or None),
-            'docente_formulario':forms.DocenteForm(data=self.request.POST or None)
+            'docente_formulario':forms.DocenteForm(data=self.request.POST or None),
+            'avaliacao': self.avaliacao,
+            'aluno_verificado': self.avaliacao_verificado
         }
+        if self.perfil.tipo == 'E':
+            self.informacoes['vagas_lancadas'] = PostVagas.objects.filter(vag_usuario_fk=self.request.user)
+
 
 
         self.usuarioForm = self.informacoes['usuario']
@@ -240,25 +246,41 @@ class AtualizacaoPerfil(Perfil):
 class perfilDetalheAluno(View):
     templates_name = 'perfil/perfil_detalhe.html'
     def setup(self, *args, **kwargs):
-        super().setup( *args, **kwargs)
-        primary_key = self.kwargs.get('per_cod')
-
-
-        self.user_filter = User.objects.filter(id=int(primary_key)).first()
-        self.perfil_filter = models.PerfilUser.objects.filter(per_pessoa_fk=self.user_filter).first()
-        self.curso_aluno = models.curso_aluno.objects.filter(curs_perfil_fk=self.perfil_filter)
-
+        super().setup(*args, **kwargs)
         self.perfil = models.PerfilUser.objects.filter(
             per_pessoa_fk=self.request.user
         ).first()
-        self.docente_perfil = models.Docente.objects.filter(doce_perfil_pk=self.perfil).first()
+        primary_key = self.kwargs.get('per_cod')
 
+        self.user_filter = User.objects.filter(id=int(primary_key)).first()
+
+        self.perfil_filter = models.PerfilUser.objects.filter(per_pessoa_fk=self.user_filter).first()
+        self.curso_aluno = models.curso_aluno.objects.filter(curs_perfil_fk=self.perfil_filter)
         self.contexto = {
-            'perfil':self.perfil_filter,
-            'usuario':self.user_filter,
+            'perfil': self.perfil_filter,
+            'perfil_visitante': self.perfil,
+            'usuario': self.user_filter,
             'curso_aluno_vinculado': self.curso_aluno,
-            'perguntas': models.Perguntas.objects.all(),
+            'cursos_vinculados': models.curso_instituicao.objects.filter(curs_perfil_fk=self.perfil_filter),
+            'certificados':models.Certificados.objects.filter(cert_pessoa_fk=self.perfil_filter)
         }
+        if self.perfil.tipo == 'D':
+            curso_codigo = self.kwargs.get('curs_codigo')
+            self.docente_perfil = models.Docente.objects.filter(doce_perfil_pk=self.perfil).first()
+            self.curso_selecionado = models.curso_aluno.objects.filter(
+                curs_codigo=int(curso_codigo)).first()
+            print(self.curso_selecionado.curs_codigo)
+            verificacao_avaliado = models.Aluno_avaliado.objects.filter(
+                alu_docente_fk=self.docente_perfil, alu_perfil_fk=self.perfil_filter
+                ,alu_curso_aluno_fk=self.curso_selecionado).exists()
+            self.contexto['perguntas'] = models.Perguntas.objects.all()
+            self.contexto['verificao'] = verificacao_avaliado
+        else:
+            print( models.Aluno_avaliado.objects.filter(
+                alu_perfil_fk=self.perfil_filter))
+            self.contexto['avaliacao'] = models.Avaliacao.objects.filter(ava_perfil_fk=self.perfil_filter)
+            self.contexto['avaliacao_verificado'] = models.Aluno_avaliado.objects.filter(
+                alu_perfil_fk=self.perfil_filter)
         self.page = render(self.request, self.templates_name, self.contexto)
 
     def get(self, *args, **kwargs):
@@ -267,9 +289,25 @@ class perfilDetalheAluno(View):
     def post(self, *args, **kwargs):
         if 'curso_avaliacao' in self.request.POST:
             avaliacao = self.request.POST.getlist('valor_aluno')
+            id_pergunta = self.request.POST.getlist('pergunta_id')
+            list_object = []
             print(avaliacao)
-            for value in avaliacao:
-                print(value)
+            for numero,valor in enumerate(avaliacao):
+                pergunta = get_object_or_404(models.Perguntas, per_codigo=int(id_pergunta[numero]))
+                avaliacao_object = models.Avaliacao(
+                    ava_docente_fk=self.docente_perfil,
+                    ava_perfil_fk=self.perfil_filter,
+                    ava_curso_aluno_fk=self.curso_selecionado,
+                    ava_pergunta_fk=pergunta,
+                    ava_nota=int(valor)
+                )
+                list_object.append(avaliacao_object)
+
+            models.Avaliacao.objects.bulk_create(list_object)
+            models.Aluno_avaliado(alu_docente_fk=self.docente_perfil,alu_perfil_fk=self.perfil_filter
+                                  ,alu_curso_aluno_fk=self.curso_selecionado).save()
+
+
             return redirect('perfil:perfil')
 
 
