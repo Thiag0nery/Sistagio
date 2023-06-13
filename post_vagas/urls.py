@@ -6,5 +6,6 @@ urlpatterns = [
     path('cadastro/', views.cadastro, name='cadastro'),
     path('verificacao/', views.vareficacao, name='verificacao'),
     path('candidatos/', views.candidatos, name='candidatos'),
-    path('busca/', views.Busca.as_view(), name='busca')
+    path('excluir/', views.excluirVaga, name='excluirVaga'),
+    path('busca/', views.Busca.as_view(), name='busca'),
 ]

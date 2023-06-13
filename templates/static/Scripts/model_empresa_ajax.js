@@ -1,7 +1,7 @@
 const getElement = (...queries) => document.querySelector(...queries);
 
     elemento = document.querySelectorAll('.itens-card-vagas');
-
+    var btn_exlcuir_vaga = document.querySelectorAll('.btn-exlcuir-vaga');
 
     var modal = getElement(".modal-container");
 
@@ -15,8 +15,9 @@ const getElement = (...queries) => document.querySelector(...queries);
             var paragrafo = document.createElement("p") // Criar elemento
             var paragrafo_existentes = candidatos.querySelectorAll("p"); // Selecionar todos os paragrafos
             for (var i = 0; i < paragrafo_existentes.length; i++) {
-      candidatos.removeChild(paragrafo_existentes[i]);
-    }
+              candidatos.removeChild(paragrafo_existentes[i]);
+            }
+            excluirvaga(elements)
              $(document).ready(function() {
   var urlRequisicao = $('#urlRequisicao').data('url');
        $.ajax({
@@ -43,6 +44,7 @@ const getElement = (...queries) => document.querySelector(...queries);
                 });
 
 });//fim ajax
+
     })
     })
 
@@ -71,3 +73,44 @@ const getElement = (...queries) => document.querySelector(...queries);
     modal.addEventListener('click', (event) => {
         modal.classList.remove(activeModalClass)
     })
+containerVagas = document.getElementById('card-vagas')
+function excluirvaga(div){
+     btn_exlcuir_vaga.forEach(function (elements) {
+        elements.addEventListener('click', function () {
+        var saida = confirm('Dejesa excluir vaga?')
+
+        if (saida == true) {
+               var vaga_codigo =  document.getElementById("id-vaga").innerHTML;
+
+
+
+             $(document).ready(function() {
+  var urlExcluirvaga = $('#urlExcluirvaga').data('url');
+       $.ajax({
+                    url: urlExcluirvaga,
+                    type: 'POST',
+                    data: {
+                        'vaga_codigo': document.getElementById('id-vaga').innerHTML
+                    },
+                    success: function(data) {
+                    //Verificação se tem algum candidato na vaga, ele gera um erro quando não e tratado
+
+                     containerVagas.removeChild(div)
+                     console.log(data.certo)
+
+
+
+
+                    }
+                });
+
+});//fim ajax
+        }
+
+
+
+        })
+
+    })
+}
+

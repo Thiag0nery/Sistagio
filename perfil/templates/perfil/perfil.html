@@ -121,7 +121,7 @@
                     <h3 class="title-meio-h3">{% if perfilPessoa.tipo == 'A' %}VAGAS CADASTRADAS{%endif%}
                     {% if perfilPessoa.tipo == 'E' %}VAGAS LANÇADAS{%endif%}
                     </h3>
-                    <div class="card-vagas">
+                    <div class="card-vagas" id="card-vagas">
                         {% if perfilPessoa.tipo == 'A' %}
                         {% for Vaga in vaga_cadastradas%}
                         <div class="itens-card-vagas">
@@ -182,7 +182,11 @@
                 <div class="itens-vaga">
                     <p class="title-texts">Codigo da vaga: <h2 id="id-vaga"></h2></p>
                 </div>
-
+                    {% if perfilPessoa.tipo == 'E' %}
+                 <div class="button-candidatar">
+                          <p id="urlExcluirvaga" data-url="{% url 'post_vagas:excluirVaga' %}" class="btn-exlcuir-vaga">Excluir vaga</p>
+                 </div>
+                     {%endif%}
                 <div id="candidatos">
                     <h3>Candidatos</h3>
                 </div>

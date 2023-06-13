@@ -444,3 +444,17 @@ hr:hover{
     opacity: 1;
     pointer-events: auto;
   }
+  .button-candidatar{
+    cursor: pointer;
+    background-color: #0000CD;
+    color: white;
+    /* margin: 0 auto; */
+    width: 20%;
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    bottom: 15px;
+        right: 39.8%;
+    left: 39.8%;
+    border-radius: 25px;
+  }

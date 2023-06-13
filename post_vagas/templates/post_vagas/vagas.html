@@ -33,23 +33,28 @@
                 </div>
             </div>
         </section> -->
-
-    {% if perfilUsuario.tipo == 'A' %}
-    <form class="busca" method="GET" action="{% url 'post_vagas:busca' %}">
-
+<form class="busca" method="POST" action="{% url 'post_vagas:homepage' %}">
+        {% csrf_token %}
         <div class="divBusca">
-            <h1 class="titleBusca">Busque pela vaga tão sonhada! </h1>
+            <h1 class="titleBusca">{% if perfilUsuario.tipo == 'A' %}Busque pela vaga tão sonhada! {%else%}
+                Busque por alunos!{%endif%} </h1>
             <div class="itensBusca">
-                <input type="text" id="txtBusca" placeholder="Buscar..." name="busca" />
+                <input type="text" id="txtBusca" placeholder="Buscar..." value="{{busca}}" name="busca" />
                 <button id="btnBusca">Buscar</button>
             </div>
         </div>
     </form>
 
+
+    {% if perfilUsuario.tipo == 'A' %}
+
+
     <section class="vagas">
         <h1 class="title-container-vagas">Vagas Disponíveis</h1>
         <div class="containerVagas">
-
+        {% if not vagas%}
+            <h1>Infelizmente não encontramos nenhum resultado para sua busca</h1>
+        {%endif%}
             {% for vaga in vagas %}
             <div class="box-vagas" id="urlRequisicao" data-url="{% url 'post_vagas:verificacao' %}">
 
@@ -128,21 +133,13 @@
 {%endif%}
 
 {% if perfilUsuario.tipo == 'E' %}
-<form class="busca" method="GET" action="{% url 'post_vagas:busca' %}">
-
-    <div class="divBusca">
-        <h1 class="titleBusca">Busque por Estagiários competentes! </h1>
-        <div class="itensBusca">
-            <input type="text" id="txtBusca" placeholder="Buscar..." name="busca" />
-            <button id="btnBusca">Buscar</button>
-        </div>
-    </div>
-</form>
 
 <section class="vagas">
     <h1 class="title-container-vagas">Alunos Disponíveis</h1>
     <div class="containerVagas">
-
+        {% if not alunos_perfil%}
+            <h1>Infelizmente não encontramos nenhum resultado para sua busca</h1>
+        {%endif%}
         {% for aluno in alunos_perfil %}
         <div class="box-vagas">
 
@@ -164,14 +161,10 @@
 
             </div>
 
-
-
-
-
-
         </div>
 
         {% endfor %}
+
 
 
     </div>

@@ -1,5 +1,6 @@
 from typing import Any
 from django import http
+from django.core.paginator import Paginator
 from django.shortcuts import render,get_object_or_404
 from django.views import View
 from django.contrib.auth.models import User
@@ -27,10 +28,42 @@ class ListaVagas(View):
             alunos_perfil = PerfilUser.objects.filter(tipo="A")
             self.contexto['alunos_perfil'] = alunos_perfil
 
+
         self.page = render(self.request, self.template_name, self.contexto)
 
     def get(self, *args, **kwargs):
         return self.page
+    def post(self, request,*args, **kwargs):
+        busca = self.request.POST.get('busca')
+
+        if not busca:
+            return self.page
+
+        # Seção de pesquisa da empresa
+        if self.perfil.tipo == "E":
+            usuario = User.objects.filter(first_name__icontains = busca)
+            lista_busca = []
+            lista_alunos = []
+            numero = 0
+            # Tentar novamente amanaha com enumerate
+            for usuario_for in usuario:
+                variavel = PerfilUser.objects.filter(per_pessoa_fk=usuario_for, tipo="A")
+                if variavel:
+                    lista_busca.append(variavel)
+                    #Essa da erro se colocar enumerate por cause que vai tentar pegar a posição apartir do numero
+                    lista_alunos.append(lista_busca[numero][0])
+                    numero += 1
+            self.contexto['alunos_perfil'] = lista_alunos
+            self.contexto['busca'] = busca
+            self.page = render(self.request, self.template_name, self.contexto)
+            return self.page
+
+        # Seção de pesquisa do aluno
+        if self.perfil.tipo == "A":
+            self.contexto['vagas'] = models.PostVagas.objects.filter(vag_nome__icontains = busca)
+            self.page = render(self.request, self.template_name, self.contexto)
+            return self.page
+
 @csrf_exempt
 def candidatos(request):
     id_post = request.POST.get('vaga_codigo')
@@ -72,17 +105,16 @@ def vareficacao(request):
     }
     print(vaga_cadastrada)
     return JsonResponse(data)
-class Busca(ListaVagas):
-    model = models.PostVagas
-    template_name = 'post_vagas/vagas.html'
-    context_object_name = 'vagas'
+@csrf_exempt
+def excluirVaga(request):
+    codigo_vaga = request.POST.get('vaga_codigo')
+    vaga = models.PostVagas.objects.filter(vag_cod=int(codigo_vaga)).delete()
+    print(codigo_vaga)
+    data = {
+        'certo':'vaga_cadastrada'
+    }
 
-    def get_queryset(self, *args, **kwargs):
-        busca = self.request.GET.get('busca')
-        qs = super().get_queryset(*args, **kwargs)
-        if not busca:
-            return qs
-        qs = qs.filter(
-            Q(vag_nome__icontains=busca)
-        )
-        return qs
+    return JsonResponse(data)
+class Busca(ListaVagas):
+    template_name = 'post_vagas/vagas.html'
+
