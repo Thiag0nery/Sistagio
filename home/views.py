@@ -95,7 +95,7 @@ class Cadastro(View):
 
         # Email que o usuario digitou
         email_requisicao = self.request.POST.get('email').lower()
-
+        print(email_requisicao)
         # O Tipo de Usuario escolheu
         tipo_requisicao = self.request.POST.get('tipo_usuario')
 

@@ -13,7 +13,7 @@
                          try {
                           for (var i = 0; i <= Object.keys(data).length; i++) {
                             console.log(data.options[i].name)
-                            options += `<option value=${data.options[i].name }>${data.options[i].name}</option>`;
+                            options += '<option value="' + data.options[i].name +'">' + data.options[i].name + '</option>';
 
                         }
                         }
