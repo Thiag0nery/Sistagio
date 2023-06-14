@@ -1,42 +1,83 @@
-footer{
+:root {
+    --color-neutral-0: #0e0c0c;
+    --color-neutral-10: #171717;
+    --color-neutral-0: #0e0c0c;
 
+}
+
+footer {
     margin-top: 15%;
+    color: var(--color-neutral-0);
     width: 100%;
-    background-color: black;
+}
+
+p,
+h2 {
+    margin-bottom: 0.75rem;
     color: white;
+}
+
+a {
+    color: white;
+}
+
+.copy {
+    background-color: white;
+    color: white;
+}
+
+#footer_container {
+    background-color: var(--color-neutral-10);
+    display: flex;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 2rem 2.5rem;
+}
+
+.midia_sociais {
+
+    display: block;
+    column-gap: 10px;
+    margin: 0 auto;
 
 }
 
-a{
-    list-style: none;
-}
 
-.containerFooter{
+.midia_sociais .footer_link {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    border-radius: 50%;
 
 }
-.direitos{
-    margin: 0 auto;
-    padding: 8%;
+
+#email {
+    margin-top: 10px;
+    background-color: blue;
 }
-#links{
-    display: block;
-    list-style: none;
-    margin-top: 5%;
+
+#instagram {
+    background: linear-gradient(#7f37c9, #ff2992, #ff9807);
+}
+
+#github {
+    margin-top: 10px;
+    background-color: purple;
+}
+
+.footer_link {
     text-decoration: none;
-    font-size: 20px;
-    font-weight: bold;
-
-}
-.informacoes{
-    padding: 5%;
-    text-align: left;
-    
-
-}
-.redesSociais{
-    padding: 5%;
-    text-align: right
 }
 
+#footer_copyright {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: white;
+    justify-content: center;
+    display: flex;
+    background-color: var(--color-neutral-0);
+    padding: 0.5rem;
+}
