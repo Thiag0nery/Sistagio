@@ -18,12 +18,16 @@ footer {
     color: white;
 }
 
+.contatos{
+    margin-bottom: 15%;
+}
+
 #footer_container {
     background-color: var(--color-neutral-10);
     display: flex;
     grid-template-columns: repeat(4, 1fr);
     padding: 2rem 2.5rem;
-    justify-content: space-between;
+    gap: 55%;
     color: white;
 }
 
@@ -50,15 +54,17 @@ footer {
 #email {
     margin-top: 10px;
     background-color: blue;
+    color: white;
 }
 
 #instagram {
     background: linear-gradient(#7f37c9, #ff2992, #ff9807);
+    color: white;
 }
 
 #github {
     margin-top: 10px;
-    background-color: purple;
+    background-color: white;
 }
 
 .footer_link {
