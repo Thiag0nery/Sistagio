@@ -6,34 +6,24 @@
 {% block style %}
 <link rel="stylesheet" href="{% static 'vagas.css'%}">{% endblock %}
 {% block conteudo %}
-{% include 'parcias/_header.html' %} 
+{% include 'parcias/_header.html' %}
 <main class="main">
-        <div class="infoInicio">
-            <h2 title="carrossel">Olá <span class="nome-pessoa">{{user.first_name}}</span>,<br> É uma honra ter você em nossa companhia!</h2>
-            <h5 class="subtitulo-carrosel">No sistagio você encontra as oportunidades certas para sua carreira profissional.</h5>
-        </div>
-    <!-- <section class="container-carrossel">
-           
-            <div class="box-carrosel">
-                <div class="itens-carrossel">
-                    <div class="carousel">
-                        <div class="carousel-container">
-                          <div class="carousel-slide">
-                            <img src="/static/imagens/carrosel1.jpg" alt="Imagem 1">
-                            <img src="/static/imagens/carrosel2.jpg" alt="Imagem 2">
-                            <img src="/static/imagens/carrosel3.jpg" alt="Imagem 3">
-                              <img src="/static/imagens/estudantes.jpg" alt="Imagem 4">
-
-                          </div>
-                        </div>
-                      </div>
-                </div>
-                <div class="img-box-carrossel">
-                    <img src="/static/imagens/atronautaa-removebg-preview.png" alt="" class="img-carrossel">
-                </div>
+    <div class="container-apresentacao-main">
+        <div class="itens-info">
+            <div class="infoInicio">
+                <div class="roda"></div>
+                <h3 title="carrossel">Olá <span class="nome-pessoa">{{user.first_name}}</span>, É uma honra ter você em
+                    nossa companhia!</h3>
+                <h5 class="subtitulo-carrosel">No sistagio você encontra as oportunidades certas para sua carreira
+                    profissional.</h5>
             </div>
-        </section> -->
-<form class="busca" method="POST" action="{% url 'post_vagas:homepage' %}">
+        </div>
+        <div class="itens-img-main">
+            <img src="/static/imagens/img-inicio-mainn.png" alt="computador" id="img-computador-main">
+        </div>
+    </div>
+
+    <form class="busca" method="POST" action="{% url 'post_vagas:homepage' %}">
         {% csrf_token %}
         <div class="divBusca">
             <h1 class="titleBusca">{% if perfilUsuario.tipo == 'A' %}Busque pela vaga tão sonhada! {%else%}
@@ -52,15 +42,15 @@
     <section class="vagas">
         <h1 class="title-container-vagas">Vagas Disponíveis</h1>
         <div class="containerVagas">
-        {% if not vagas%}
+            {% if not vagas%}
             <h1>Infelizmente não encontramos nenhum resultado para sua busca</h1>
-        {%endif%}
+            {%endif%}
             {% for vaga in vagas %}
             <div class="box-vagas" id="urlRequisicao" data-url="{% url 'post_vagas:verificacao' %}">
 
 
                 <div class="card-vagas">
-
+                  
                     <div class="itens-vagas">
                         <h2 class="vaga_name">{{ vaga.vag_nome}}</h2>
                         <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
@@ -71,14 +61,15 @@
                         <vaga_funcao style="display:none;" id="vaga_funcao">{{vaga.vag_funcao}}</vaga_funcao>
                         <vaga_beneficio style="display:none;" id="vaga_beneficio">{{vaga.vag_beneficio}}
                         </vaga_beneficio>
-                        <p>Codico: <vaga_codigo id="vaga_codigo">{{vaga.vag_cod}}</vaga_codigo></p>
+                        <p>Codico: <vaga_codigo id="vaga_codigo">{{vaga.vag_cod}}</vaga_codigo>
+                        </p>
                     </div>
+                  
                     <div class="itens-btn">
                         <a class=" btn-ver-mais {{vaga.vag_nome}}">Ver Mais</a>
                     </div>
-
                 </div>
-
+                
 
 
 
@@ -118,14 +109,15 @@
                     <h5 id="vaga-beneficio"></h5>
                 </div>
                 <div class="itens-vaga">
-                    <p class="title-texts">Codigo da vaga: <h2 id="id-vaga"></h2></p>
+                    <p class="title-texts">Codigo da vaga: <h2 id="id-vaga"></h2>
+                    </p>
                 </div>
             </div>
-                <div class="button-candidatar">
-                     <p  id="candidatar"></p>
-                </div>
+            <div class="button-candidatar">
+                <p id="candidatar"></p>
+            </div>
 
-                <span id="registration-url" data-url="{% url 'post_vagas:cadastro' %}"></span>
+            <span id="registration-url" data-url="{% url 'post_vagas:cadastro' %}"></span>
 
         </div>
     </div>
@@ -138,7 +130,7 @@
     <h1 class="title-container-vagas">Alunos Disponíveis</h1>
     <div class="containerVagas">
         {% if not alunos_perfil%}
-            <h1>Infelizmente não encontramos nenhum resultado para sua busca</h1>
+        <h1>Infelizmente não encontramos nenhum resultado para sua busca</h1>
         {%endif%}
         {% for aluno in alunos_perfil %}
         <div class="box-vagas">
@@ -146,22 +138,23 @@
 
             <div class="card-vagas">
                 {% if not aluno.per_foto %}
-                     <img src="/static/imagens/perfil-sem-foto.png" alt="" class="img-perfil">
-                    {%endif%}
-                    {% if aluno.per_foto %}
+                <img src="/static/imagens/perfil-sem-foto.png" alt="" class="img-perfil">
+                {%endif%}
+                {% if aluno.per_foto %}
 
-                     <img src="{{aluno.per_foto.url}}" alt="" class="img-perfil">
-                    {%endif%}
+                <img src="{{aluno.per_foto.url}}" alt="" class="img-perfil">
+                {%endif%}
                 <div class="itens-vagas">
                     <h2 class="vaga_name">{{aluno.per_pessoa_fk.first_name}}</h2>
                 </div>
                 <div class="itens-btn">
                     <a class=" btn-ver-mais " href="{% url 'perfil:detalheperfil' aluno.per_pessoa_fk.id %}">Ver Perfil</a>
                 </div>
-
             </div>
+            
 
         </div>
+     
 
         {% endfor %}
 
@@ -192,25 +185,24 @@
 
             showModal(elements);
 
-  $(document).ready(function() {
-  var urlRequisicao = $('#urlRequisicao').data('url');
-       $.ajax({
+            $(document).ready(function () {
+                var urlRequisicao = $('#urlRequisicao').data('url');
+                $.ajax({
                     url: urlRequisicao,
                     type: 'POST',
                     data: {
                         'vaga_codigo': document.getElementById('id-vaga').innerHTML
                     },
-                    success: function(data) {
-                       if (data.certo){
-                       btncandidatar.innerHTML = 'Inscrito'
-                       }
-                       else{
-                       btncandidatar.innerHTML = 'Inscreva-se'
-                       }
+                    success: function (data) {
+                        if (data.certo) {
+                            btncandidatar.innerHTML = 'Inscrito'
+                        } else {
+                            btncandidatar.innerHTML = 'Inscreva-se'
+                        }
                     }
                 });
 
-});//fim ajax
+            }); //fim ajax
 
         });
     })
@@ -287,24 +279,23 @@
     });
 </script>
 <script>
-var btncandidatar = document.getElementById('candidatar')
-btncandidatar.addEventListener('click', function() {
-  $(document).ready(function() {
-  var registrationUrl = $('#registration-url').data('url');
-       $.ajax({
-                    url: registrationUrl,
-                    type: 'POST',
-                    data: {
-                        'vaga_codigo': document.getElementById('id-vaga').innerHTML
-                    },
-                    success: function(data) {
-                       if(data.certo){
+    var btncandidatar = document.getElementById('candidatar')
+    btncandidatar.addEventListener('click', function () {
+        $(document).ready(function () {
+            var registrationUrl = $('#registration-url').data('url');
+            $.ajax({
+                url: registrationUrl,
+                type: 'POST',
+                data: {
+                    'vaga_codigo': document.getElementById('id-vaga').innerHTML
+                },
+                success: function (data) {
+                    if (data.certo) {
                         btncandidatar.innerHTML = 'Inscrito'
-                       }
                     }
-                });
+                }
+            });
+        });
     });
-});
-
 </script>
 {% endblock %}

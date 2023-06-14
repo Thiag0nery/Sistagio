@@ -67,11 +67,38 @@ section.sessao1{
 .bola{
 
   width: calc(100% + 5.9vw);
-  height:500px;
+  height:70vh;
   background-color: #0000CD;
   border-radius: 50% 50% 0 50% ;
 }
-
+#foguete-home{
+    width:50%;
+    transform: translateY(0px);
+    
+    animation: float 10s ease-in-out infinite;
+  
+  }
+  @keyframes float{
+      0%{
+         
+          transform: translateY(0);
+          transform: translateX(0px);
+          
+      }
+      25%{
+        transform: translateX(200px);
+      }
+      50%{
+          transform: translateY(-50px);
+          
+          /* transform: translateX(-5px); */
+          
+      }
+     
+      100%{
+        transform: translateY(0px);
+      }
+  }
 
 
 .ladoEsquerdo h1{

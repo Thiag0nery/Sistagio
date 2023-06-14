@@ -11,15 +11,7 @@ footer {
     width: 100%;
 }
 
-p,
-h2 {
-    margin-bottom: 0.75rem;
-    color: white;
-}
 
-a {
-    color: white;
-}
 
 .copy {
     background-color: white;
@@ -31,13 +23,15 @@ a {
     display: flex;
     grid-template-columns: repeat(4, 1fr);
     padding: 2rem 2.5rem;
+    justify-content: space-between;
+    color: white;
 }
 
 .midia_sociais {
 
-    display: block;
+    
     column-gap: 10px;
-    margin: 0 auto;
+   
 
 }
 
