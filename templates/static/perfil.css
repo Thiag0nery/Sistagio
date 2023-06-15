@@ -86,9 +86,12 @@ body {
 }
 
 .title-meio-h3 {
-
-    font-size: 21pt;
+    font-size: 35px;
     font-weight: bold;
+    text-align: center;
+}
+.nome-curso{
+    font-size: 15px;
     text-align: center;
 }
 
@@ -147,9 +150,11 @@ body {
     width: 98%;
     height: 40px;
     border: solid 2px #0000CD;
-    border-radius: 25px;
     font-size: 15px;
     padding:0px 8px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
 }
 
 .btn-atualizar-dados {
@@ -184,6 +189,15 @@ body {
     width: 24%;
     background-color: white;
     
+    padding: 2%;
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.itens-card-vagas2 {
+    width: 24%;
+    background-color: white;
+    height: 80%;
     padding: 2%;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.05);
     text-align: center;

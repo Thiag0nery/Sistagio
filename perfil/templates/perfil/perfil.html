@@ -269,19 +269,24 @@
                 {%endfor%}
 
             </div>
+            <div class="container-avaliacao">
 
-            <h4 class="title-meio-h3">Cursos</h4>
-
-
-            {% for curso in  curso_aluno_vinculado%}
-            <h1>Nome: {{curso.curs_insituicao.curs_nome}}</h1>
-            {%endfor%}
-
-
+                <div class="itens-card-vagas2">
+                    {% for curso in  curso_aluno_vinculado%}
+                    <h1 class="nome-curso">Nome: {{curso.curs_insituicao.curs_nome}}</h1>
+                    {%endfor%}
+                    
+                </div>
+            </div>
+            
+            
+            
+            
             <form action="" method="POST" name="curso_escolhido">
                 {% csrf_token %}
                 <div class="container-avaliacao">
-
+                    
+                    <h4 class="title-meio-h3">Cursos</h4>
                     <select id="firstOption" name="instituicao">
                         <option value="">Selecione o Curso</option>
                         {% for opcao in curso_oferecer %}
