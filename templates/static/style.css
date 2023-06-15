@@ -130,8 +130,10 @@ section.sessao1{
     width: 60%;
 }
 .titleSessao3 h1{
-    font-size: 50px;
+    font-size: 35px;
     text-align: center;
+    width: 82%;
+    margin: 0 auto;
     margin-top: 5%;
 }
 .containerCards{
@@ -163,6 +165,7 @@ section.sessao1{
 }
 .card h4{
     padding:2% 10% 10% 10% ;
+    font-size: 15px;
 }
 
 
@@ -212,7 +215,9 @@ section.sessao1{
 }
 .ladoDireito4{
     width: 60%;
-    margin: 0 0% 0 10%;
+    margin: 0 0% 0% 10%;
+    padding-left: 5%;
+    
 }
 #conexoes{
     width: 90%;
@@ -228,6 +233,8 @@ section.sessao1{
     font-size: 35px;
     padding-top: 2%;
     padding-bottom: 2%;
+    width: 94%;
+   
 }
 .ladoDireito4 h4{
     font-size: 15px;
