@@ -9,6 +9,7 @@ def load_second_options(request):
     usuario = get_object_or_404(User, first_name=id)
     perfil = PerfilUser.objects.filter(per_pessoa_fk=usuario).first()
     produto = curso_instituicao.objects.filter(curs_perfil_fk=perfil)
+    print(produto)
     opcao = [{'id': produs.curs_codigo, 'name':produs.curs_nome} for produs in produto]
     return JsonResponse({'options':opcao})
 

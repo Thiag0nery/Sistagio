@@ -29,8 +29,12 @@
             <h1 class="titleBusca">{% if perfilUsuario.tipo == 'A' %}Busque pela vaga tão sonhada! {%else%}
                 Busque por alunos!{%endif%} </h1>
             <div class="itensBusca">
-                <input type="text" id="txtBusca" placeholder="Buscar..." value="{{busca}}" name="busca" />
-                <button id="btnBusca">Buscar</button>
+                
+                    <input type="text" id="txtBusca" placeholder="Buscar..." value="{{busca}}" name="busca" />
+                    <button id="btnBusca">Buscar</button> 
+                
+                <!--<input type="text" id="txtBusca" placeholder="Buscar..." value="{{busca}}" name="busca" />
+                <button id="btnBusca">Buscar</button>-->
             </div>
         </div>
     </form>
@@ -52,6 +56,7 @@
                 <div class="card-vagas">
                   
                     <div class="itens-vagas">
+                        <div class="roda"></div>
                         <h2 class="vaga_name">{{ vaga.vag_nome}}</h2>
                         <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
                         <!-- <h5 class="subtitulo-empresa">Uma empresa de micro-serviços</h5> -->

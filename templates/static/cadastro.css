@@ -95,7 +95,7 @@ a:hover {
 
     height: 45px;
     width: 100%;
-    border-radius: 20px;
+    border-radius: 30px;
     padding: 2%;
     text-align: left;
 
@@ -116,7 +116,7 @@ a:hover {
     background-color: #0000CD;
     width: 50%;
     padding: 3%;
-    border-radius: 25px;
+    border-radius: 30px;
     color: white;
     font-size: 20px;
     font-weight: 600;
