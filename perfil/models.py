@@ -11,7 +11,8 @@ class PerfilUser(models.Model):
     per_tell = models.CharField(max_length=14, blank=True)
     tipo = models.CharField(max_length=1, blank=True)
     per_foto = models.FileField(upload_to='fotos_usuario/%Y/%m/', null=True, blank=True)
-    per_detalhe = models.CharField(max_length=255, blank=True )
+    per_detalhe = models.TextField( blank=True )
+    per_habilidade = models.TextField( blank=True)
 
 
 class Certificados(models.Model):

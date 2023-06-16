@@ -100,15 +100,15 @@ class AtualizacaoPerfil(Perfil):
             return redirect('perfil:perfil')
         """ PRECISSA REPARO - DATA  """
         if 'dados-usuario' in self.request.POST:
-            print('Entrou')
+            print('Entrou aqio')
             #password = self.usuarioForm.cleaned_data.get('password')
             #email = self.usuarioForm.data.get('email')
             first_name = self.usuarioForm.data.get('first_name')
-            if self.usuarioPerfil.is_valid():
 
-                perfilUsuario = self.usuarioPerfil.save(commit=False)
-                perfilUsuario.per_pessoa_pk = usuario
-                perfilUsuario.save()
+            testa = self.usuarioPerfil.save()
+            print(testa)
+
+
 
             if first_name:
                 usuario.first_name = first_name
@@ -312,4 +312,4 @@ class perfilDetalheAluno(View):
 
 
 
-
+# Reciqurimento ajax

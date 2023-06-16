@@ -46,17 +46,17 @@
     <div class="container-meio">
         <div class="container-sobre">
 
-            <form class="form-dados-sobre" id="form-alterar" style="display: none;" method="POST">
+            <form class="form-dados-sobre" id="form-alterar" style="display: none;" method="POST" >
                 {% csrf_token %}
                 <div class="titulo-sobre">
                     <h3 class="title-meio-h3">MEUS DADOS</h3>
-                    <button class="btn-alterar-sobre" id="btn-salvar" name="dados-usuario">Salvar</button>
+                    <button class="btn-alterar-sobre" id="btn-salvar" name="dados-usuario" >Salvar</button>
                 </div>
 
                 <div class="descricao">
                     <h4 class="text-descricao">Conte um pouco sobre você:</h4>
-                    <textarea name="{{perfil.per_datlhe.name}}" class="textarea-descricao"
-                        placeholder="O melhor aluno do Sistagio!"></textarea>
+                    <textarea name="{{perfil.per_detalhe.name}}" class="textarea-descricao"
+                        placeholder="O melhor aluno do Sistagio!">{{perfilPessoa.per_detalhe.value}}</textarea>
                 </div>
                 <div class="dados-pessoais">
                     <label for="" class="text-dados">Nome completo:</label>
@@ -80,8 +80,8 @@
                 {%if perfilPessoa.tipo == 'A'%}
                 <div class="descricao">
                     <h4 class="text-descricao">Insira algumas de suas habilidades:</h4>
-                    <textarea name="{{perfil.per_detalhe.name}}" class="textarea-descricao"
-                        placeholder="O melhor aluno do Sistagio!">{{perfil.per_detalhe.value}}</textarea>
+                    <textarea name="{{perfil.per_habilidade.name}}" class="textarea-descricao"
+                        placeholder="O melhor aluno do Sistagio!">{{perfil.per_habilidade.value}}</textarea>
                 </div>
                 {%endif%}
 
@@ -94,7 +94,7 @@
 
                 <div class="descricao">
                     <h4 class="text-descricao">Conte um pouco sobre você:</h4>
-                    <p></p>
+                    <p>{{perfilPessoa.per_detalhe}}</p>
                 </div>
                 <div class="dados-pessoais">
                     <label for="" class="text-dados">Nome completo:</label>
@@ -114,7 +114,7 @@
                 {% if perfilPessoa.tipo == 'A' %}
                 <div class="descricao">
                     <h4 class="text-descricao">Habilidades:</h4>
-                    <p>{{perfilPessoa.per_detalhe}}</p>
+                    <p>{{perfilPessoa.per_habilidade}}</p>
                 </div>
                 {%endif%}
 

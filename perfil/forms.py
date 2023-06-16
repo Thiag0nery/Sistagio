@@ -7,7 +7,7 @@ from validate_docbr import CPF
 class PerfilForms(forms.ModelForm):
     class Meta:
         model = models.PerfilUser
-        fields = ('cpf_cnpj','per_tell','per_detalhe',)
+        fields = ('cpf_cnpj','per_tell','per_detalhe','per_habilidade',)
     def __init__(self, per_cod=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
