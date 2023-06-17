@@ -474,3 +474,9 @@ hr:hover{
     left: 39.8%;
     border-radius: 25px;
   }
+.tabela_alunos{
+width:100%
+}
+.tabela_nome_th{width:35%}
+.tabela_curso_th{width:50%}
+.tabela_instituicao_th{width:15%}

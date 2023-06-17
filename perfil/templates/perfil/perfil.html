@@ -56,7 +56,7 @@
                 <div class="descricao">
                     <h4 class="text-descricao">Conte um pouco sobre você:</h4>
                     <textarea name="{{perfil.per_detalhe.name}}" class="textarea-descricao"
-                        placeholder="O melhor aluno do Sistagio!">{{perfilPessoa.per_detalhe.value}}</textarea>
+                        placeholder="O melhor aluno do Sistagio!">{{perfilPessoa.per_detalhe}}</textarea>
                 </div>
                 <div class="dados-pessoais">
                     <label for="" class="text-dados">Nome completo:</label>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="dados-pessoais">
                     <label for="" class="text-dados">E-mail:</label>
-                    <input type="email" class="input-dados" value="{{user.email}}" name="{{usuario.email.name}}">
+                    <input type="text" class="input-dados"  name="{{usuario.email.name}}">
                 </div>
                 <div class="dados-pessoais">
                     <label for="" class="text-dados">Telefone:</label>
@@ -74,7 +74,10 @@
                 </div>
                 <div class="dados-pessoais">
                     <label for="" class="text-dados">Senha:</label>
-                    <input type="password" class="input-dados" placeholder="Atualize sua senha">
+                    <input type="password" class="input-dados" name="{{usuario.password.name}}" placeholder="Atualize sua senha">
+
+                    <label for="" class="text-dados">Confirmação de senha:</label>
+                    <input type="password" class="input-dados" name="{{usuario.password2.name}}" placeholder="Atualize sua senha">
                 </div>
 
                 {%if perfilPessoa.tipo == 'A'%}
@@ -211,23 +214,41 @@
 
 
 
-
                     {% for curso in docente_curso%}
-                    <h1>{{curso.doce_curso_instituicao_fk.curs_nome}}</h1>
 
+<table class="tabela_alunos">
+     <thead>
+    <tr>
+      <th class="tabela_nome_th">Nome</th>
+        <th class="tabela_curso_th">Curso</th>
+        <th class="tabela_instituicao_th">Instituição</th>
+    </tr>
+  </thead>
+     <tbody>
                     {% for alunos in alunos_inscritos %}
 
 
 
-                    {% if curso.doce_curso_instituicao_fk == alunos.curs_insituicao and curso.doce_curso_instituicao_fk.curs_nome == curso.doce_curso_instituicao_fk.curs_nome%}
 
-                    <a href="{% url 'perfil:detalhe' alunos.curs_perfil_fk.per_pessoa_fk.id alunos.curs_codigo%}">
-                        <h1>{{alunos.curs_perfil_fk.per_pessoa_fk.first_name}}</h1>
-                    </a>
+
+
+
+                    {% if curso.doce_curso_instituicao_fk == alunos.curs_insituicao and curso.doce_curso_instituicao_fk.curs_nome == curso.doce_curso_instituicao_fk.curs_nome%}
+<tr>
+      <td ><a href="{% url 'perfil:detalhe' alunos.curs_perfil_fk.per_pessoa_fk.id alunos.curs_codigo%}">
+{{alunos.curs_perfil_fk.per_pessoa_fk.first_name}}</a></td>
+    <td>{{curso.doce_curso_instituicao_fk.curs_nome}}</td>
+ <td>{{curso.doce_curso_instituicao_fk.curs_perfil_fk.per_pessoa_fk.first_name.upper}}</td>
+    </tr>
+
+
+
 
                     {%endif%}
 
                     {%endfor%}
+    </tbody>
+</table>
                     {%endfor%}
 
 

@@ -4,10 +4,12 @@ from post_vagas.models import PostVagas
 from django.contrib.auth.models import User
 from perfil.models import PerfilUser
 from validate_docbr import CPF
+from validate_email_address import validate_email
+
 class PerfilForms(forms.ModelForm):
     class Meta:
         model = models.PerfilUser
-        fields = ('cpf_cnpj','per_tell','per_detalhe','per_habilidade',)
+        fields = ('per_tell','per_detalhe','per_habilidade',)
     def __init__(self, per_cod=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -30,6 +32,42 @@ class UsuarioAtualizar(forms.ModelForm):
     def __init__(self, usuario=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.usuario = usuario
+    def clean(self, *args, **kwargs):
+        validation_error_msgs = {}
+
+        error_msg_email_exists = 'E-mail já existe'
+        error_msg_email_incorrect = 'E-mail incoreto'
+        error_msg_password_match = 'As duas senhas não conferem'
+        error_msg_password_short = 'Sua senha precisa de pelo menos 6 caracteres'
+
+
+        email = self.cleaned_data.get('email')
+        password =self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password2')
+
+
+
+        if email:
+            if validate_email(email):
+                email_bool = User.objects.filter(username=email).first()
+
+                # Verificação se existe email ja existente no sistema
+                if email_bool:
+                    validation_error_msgs['email'] = error_msg_email_exists
+            else:
+                validation_error_msgs['email'] = error_msg_email_incorrect
+
+        if password and password2:
+            # Verificação das senhas
+            if password != password2:
+                validation_error_msgs['password'] = error_msg_password_match
+                validation_error_msgs['password2'] = error_msg_password_match
+            if len(password) < 6:
+                validation_error_msgs['password'] = error_msg_password_short
+
+        if validation_error_msgs:
+            raise(forms.ValidationError(validation_error_msgs))
+
 
 
 

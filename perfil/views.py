@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from django.views import View
 from . import forms
+from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
 from . import models
 from post_vagas.models import Vaga_cadastradas
@@ -83,7 +84,23 @@ class Perfil(View):
         self.postvaga = self.informacoes['post']
         self.docenteFormulario = self.informacoes['docente_formulario']
     def get(self, *args, **kwargs):
+
         return render(self.request, self.templates_name, self.informacoes)
+from PIL import Image
+import io
+from django.core.files.uploadedfile import SimpleUploadedFile
+def compactar_imagem(imagem, qualidade=80):
+    # Abre a imagem usando o Pillow
+    img = Image.open(imagem)
+
+    # Cria um objeto BytesIO para armazenar a imagem compactada
+    output = io.BytesIO()
+
+    # Compacta a imagem com a qualidade desejada
+    img.save(output, format='JPEG', quality=qualidade)
+
+    # Retorna o conteúdo compactado da imagem
+    return output.getvalue()
 class AtualizacaoPerfil(Perfil):
 
 
@@ -94,16 +111,37 @@ class AtualizacaoPerfil(Perfil):
 
         if 'mudar-foto' in self.request.POST:
             foto_pessoa =  self.request.FILES.get('perfil_foto_usuario')
-
-            self.perfil.per_foto = foto_pessoa
+            print(foto_pessoa)
+            imagem_compactada = compactar_imagem(foto_pessoa)
+            arquivo = SimpleUploadedFile('imagem.jpg', imagem_compactada)
+            self.perfil.per_foto = arquivo
             self.perfil.save()
             return redirect('perfil:perfil')
         """ PRECISSA REPARO - DATA  """
         if 'dados-usuario' in self.request.POST:
             print('Entrou aqio')
             #password = self.usuarioForm.cleaned_data.get('password')
-            #email = self.usuarioForm.data.get('email')
+
+
             first_name = self.usuarioForm.data.get('first_name')
+
+            if not self.usuarioForm.is_valid():
+                messages.error(
+                    self.request,
+                    self.usuarioForm.errors
+                )
+                return redirect('perfil:perfil')
+            email = self.usuarioForm.data.get('email').lower()
+            senha = self.usuarioForm.data.get('password')
+
+            if email:
+                usuario.email = email
+                usuario.username = email
+            if senha:
+                usuario.set_password(senha)
+
+
+
 
             testa = self.usuarioPerfil.save()
             print(testa)
@@ -113,6 +151,9 @@ class AtualizacaoPerfil(Perfil):
             if first_name:
                 usuario.first_name = first_name
             usuario.save()
+            if senha:
+                return redirect('home:logout')
+
             return redirect('perfil:perfil')
 
         if 'botao-certificado' in self.request.POST:
@@ -243,6 +284,9 @@ class AtualizacaoPerfil(Perfil):
             return redirect('perfil:perfil')
 
         return redirect('home:inicial')
+class atualizarPerfil(Perfil):
+
+    pass
 class perfilDetalheAluno(View):
     templates_name = 'perfil/perfil_detalhe.html'
     def setup(self, *args, **kwargs):
