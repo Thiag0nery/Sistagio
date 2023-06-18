@@ -88,7 +88,9 @@ class Perfil(View):
         self.docenteFormulario = self.informacoes['docente_formulario']
         # Saber a media do aluno
         if  self.perfil.tipo == "A":
-            self.informacoes['lista_pergunta_media'] = media_aluno(self.avaliacao_verificado,self.avaliacao)
+            verificacao = models.Aluno_avaliado.objects.filter(alu_perfil_fk=self.perfil).exists()
+            if verificacao:
+                self.informacoes['lista_pergunta_media'] = media_aluno(self.avaliacao_verificado,self.avaliacao)
 
     def get(self, *args, **kwargs):
 
@@ -331,7 +333,9 @@ class perfilDetalheAluno(View):
             avaliacao = models.Avaliacao.objects.filter(ava_perfil_fk=self.perfil_filter)
             self.contexto['avaliacao_verificado'] = models.Aluno_avaliado.objects.filter(
                 alu_perfil_fk=self.perfil_filter)
-            self.contexto['lista_pergunta_media'] = media_aluno(avaliacao_verificado, avaliacao)
+            verificacao = models.Aluno_avaliado.objects.filter(alu_perfil_fk=self.perfil).exists()
+            if verificacao:
+                self.contexto['lista_pergunta_media'] = media_aluno(avaliacao_verificado, avaliacao)
         self.page = render(self.request, self.templates_name, self.contexto)
 
     def get(self, *args, **kwargs):

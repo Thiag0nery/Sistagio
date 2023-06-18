@@ -483,3 +483,13 @@ width:100%
 .avaliacao{
     width:100%;
 }
+#aluno_tabela{
+    width:100%
+}
+.celula_tabela{
+display: flex;
+    justify-content: space-between;
+    }
+#botao-csv{
+display: none;
+}

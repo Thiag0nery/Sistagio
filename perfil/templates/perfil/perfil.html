@@ -163,6 +163,7 @@
 
                     {%endfor%}
 
+
                     <div class="modal-container">
                         <div class="modal">
                             <h3 id="vaga-nome"></h3>
@@ -208,6 +209,20 @@
                     </div>
 
                     {%endif%}
+                      {% if perfilPessoa.tipo == 'I' %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="arquivo_nome_turma">Nome da turma: </label>
+    <input type="text" name="arquivo_nome_turma">
+
+                     <label for="csvFileInput" >Escolher arquivo</label>
+                        <input type="file" id="csvFileInput"  name="arquivo" accept=".csv">
+                        <button  type="button" onclick="handleFile()">Ler tabela</button>
+    <button type="submit" name="botao-csv" id="botao-csv">Enviar</button>
+</form>
+                        <p id="aluno_tabela"></p>
+                      {%endif%}
 
 
                     {% if perfilPessoa.tipo == 'D' %}
@@ -507,8 +522,6 @@
     <label for="arquivo_nome_turma">Nome da turma: </label>
     <input type="text" name="arquivo_nome_turma">
 
-    <!--<label for="arquivo_curso">Nome do curso: </label>
-    <input type="text" name="arquivo_curso"> -->
 
     <input type="file" name="arquivo">
     <button type="submit" name="botao-csv">Enviar</button>
@@ -543,5 +556,46 @@ soma = 0
     media_aluno.innerHTML = teste / contador
     console.log(media_aluno)
 
+</script>
+<script>
+   function handleFile() {
+    var botao_csv = document.getElementById('botao-csv')
+   var tabela = '';
+   var aluno_tabela = document.getElementById('aluno_tabela')
+  const fileInput = document.getElementById('csvFileInput');
+  const file = fileInput.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+  const csvData = event.target.result;
+
+  // Specify the desired encoding
+  const textDecoder = new TextDecoder('iso-8859-1');
+  const decodedData = textDecoder.decode(csvData);
+
+  const rows = decodedData.split('\n');
+      const table = rows.map(row => row.split(';'));
+
+      // Your code to process the data goes here
+      for (i = 0; i < table.length; i++){
+      if( table[i][1] != undefined){
+      aluno_tabela.innerHTML += '<div class="' + "celula_tabela" +'">' + '<p>' + table[i][1] + '</p>' + '<p>' + table[i][0] + '</p>'  + '</div >'
+      }
+
+
+       botao_csv.style.display = 'block'
+      }
+
+
+};
+
+reader.readAsArrayBuffer(file);
+
+
+  }
+
+}
 </script>
 {%endblock%}
