@@ -29,9 +29,10 @@ const getElement = (...queries) => document.querySelector(...queries);
                     success: function(data) {
                     //Verificação se tem algum candidato na vaga, ele gera um erro quando não e tratado
                     try {
-                        for (var i = 0; i < Object.keys(data).length; i++) {
-                        paragrafo.textContent = data.data[i].nome;
-                        candidatos.appendChild(paragrafo)
+                        console.log(data.data)
+                        for (var i = 0; i < Object.keys(data.data).length; i++) {
+
+                        candidatos.innerHTML += '<p>' + data.data[i].nome + '</p>'
                         }
                     }
                     catch (e) {

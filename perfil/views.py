@@ -176,11 +176,7 @@ class AtualizacaoPerfil(Perfil):
             post.vag_usuario_fk =  usuario
             post.save()
 
-            objeto = Vaga_cadastradas(
-                vcad_perfil_fk=self.perfil,
-                vcad_postVaga_fk=post
-            )
-            objeto.save()
+
 
             return redirect('perfil:perfil')
 
