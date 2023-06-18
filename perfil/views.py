@@ -86,46 +86,14 @@ class Perfil(View):
         self.aluno = self.informacoes['aluno_csv']
         self.postvaga = self.informacoes['post']
         self.docenteFormulario = self.informacoes['docente_formulario']
+        # Saber a media do aluno
+        if  self.perfil.tipo == "A":
+            self.informacoes['lista_pergunta_media'] = media_aluno(self.avaliacao_verificado,self.avaliacao)
 
-        # Teste
-        pergunta = models.Perguntas.objects.all()
-        contador = []
-        docentes_soma = 0
-        for ava in self.avaliacao_verificado:
-            docentes_soma += 1
-            lista = []
-            soma = 0
-            for avalicao in self.avaliacao:
-                if ava.alu_docente_fk == avalicao.ava_docente_fk\
-                    and ava.alu_curso_aluno_fk.curs_insituicao.curs_nome ==\
-                    avalicao.ava_curso_aluno_fk.curs_insituicao.curs_nome:
-                    lista.append(avalicao.ava_nota)
-                    soma += avalicao.ava_nota
-            contador.append(lista)
-        print(contador)
-        media_perguntas = None
-        for numero, soma_lista in enumerate(contador):
-            if numero > 0:
-                print(media_perguntas, 'aqui')
-                for numero, lista in enumerate(media_perguntas):
-                    media_perguntas[numero] += soma_lista[numero]
-            else:
-                media_perguntas = soma_lista
-        print(media_perguntas)
-        print(docentes_soma)
-        for numero,lista in enumerate(media_perguntas):
-            print(lista)
-            media_perguntas[numero] = lista /docentes_soma
-        print(media_perguntas)
-        lista_pergunta_media = []
-        for numero,pergunta in enumerate(pergunta):
-            lista_pergunta_media.append((pergunta.per_pergunta, media_perguntas[numero]))
-
-        print(lista_pergunta_media[0])
-        self.informacoes['lista_pergunta_media'] = lista_pergunta_media
     def get(self, *args, **kwargs):
 
         return render(self.request, self.templates_name, self.informacoes)
+
 
 def compactar_imagem(imagem, qualidade=80):
     # Abre a imagem usando o Pillow
@@ -358,11 +326,12 @@ class perfilDetalheAluno(View):
             self.contexto['perguntas'] = models.Perguntas.objects.all()
             self.contexto['verificao'] = verificacao_avaliado
         else:
-            print( models.Aluno_avaliado.objects.filter(
-                alu_perfil_fk=self.perfil_filter))
-            self.contexto['avaliacao'] = models.Avaliacao.objects.filter(ava_perfil_fk=self.perfil_filter)
+            avaliacao_verificado = models.Aluno_avaliado.objects.filter(
+                alu_perfil_fk=self.perfil_filter)
+            avaliacao = models.Avaliacao.objects.filter(ava_perfil_fk=self.perfil_filter)
             self.contexto['avaliacao_verificado'] = models.Aluno_avaliado.objects.filter(
                 alu_perfil_fk=self.perfil_filter)
+            self.contexto['lista_pergunta_media'] = media_aluno(avaliacao_verificado, avaliacao)
         self.page = render(self.request, self.templates_name, self.contexto)
 
     def get(self, *args, **kwargs):
@@ -392,6 +361,40 @@ class perfilDetalheAluno(View):
 
             return redirect('perfil:perfil')
 
+def media_aluno(avaliacao_verificado,avaliacao):
+    pergunta = models.Perguntas.objects.all()
+    contador = []
+    docentes_soma = 0
+    for ava in avaliacao_verificado:
+        docentes_soma += 1
+        lista = []
+        soma = 0
+        for avalicao in avaliacao:
+            if ava.alu_docente_fk == avalicao.ava_docente_fk \
+                    and ava.alu_curso_aluno_fk.curs_insituicao.curs_nome == \
+                    avalicao.ava_curso_aluno_fk.curs_insituicao.curs_nome:
+                lista.append(avalicao.ava_nota)
+                soma += avalicao.ava_nota
+        contador.append(lista)
+    print(contador)
+    media_perguntas = None
+    for numero, soma_lista in enumerate(contador):
+        if numero > 0:
+            print(media_perguntas, 'aqui')
+            for numero, lista in enumerate(media_perguntas):
+                media_perguntas[numero] += soma_lista[numero]
+        else:
+            media_perguntas = soma_lista
+    print(media_perguntas)
+    print(docentes_soma)
+    for numero, lista in enumerate(media_perguntas):
+        print(lista)
+        media_perguntas[numero] = lista / docentes_soma
+    print(media_perguntas)
+    lista_pergunta_media = []
+    for numero, pergunta in enumerate(pergunta):
+        lista_pergunta_media.append((pergunta.per_pergunta, media_perguntas[numero]))
 
+    return lista_pergunta_media
 
 # Reciqurimento ajax

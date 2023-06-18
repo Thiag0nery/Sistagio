@@ -262,15 +262,9 @@
             {% if perfilPessoa.tipo == 'A' %}
             <div class="container-avaliacao">
                 <h4 class="title-meio-h3">Avaliações do Docente</h4>
-
-
-
-
-
                 {% for pergunta, nota in lista_pergunta_media%}
                     <h4> <span class="star">★</span>{{nota}} {{user.first_name}} {{pergunta}} </h4>
                 {%endfor%}
-                
                  <h4 class="title-meio-h3">Avaliadores</h4>
                  {% for ava in  aluno_verificado %}
 

@@ -37,7 +37,7 @@
 
                     <div class="descricao">
                         <h4 class="text-descricao">Conte um pouco sobre você:</h4>
-                        <p></p>
+                        <p>{{perfil.per_detalhe}}</p>
                     </div>
                     <div class="dados-pessoais">
                         <label for="" class="text-dados">Nome completo:</label>
@@ -56,7 +56,7 @@
                       {% if perfil.tipo == 'A' %}
                     <div class="descricao">
                         <h4 class="text-descricao">Habilidades:</h4>
-                        <p>{{perfilPessoa.per_detalhe}}</p>
+                        <p>{{perfil.per_habilidade}}</p>
                     </div>
                     {%endif%}
 
@@ -101,16 +101,17 @@
                     {%endif%}
                         {% if perfil_visitante.tipo != 'D' %}
                             {% if not avaliacao_verificado%} <p>Aluno ainda não avaliado</p>{%endif%}
-                            {% for ava in avaliacao_verificado %}
-                            <h2>{{ava.alu_curso_aluno_fk.curs_insituicao.curs_nome}}</h2>
-
-                                {% for avalicao in  avaliacao %}
-                                    {% if ava.alu_docente_fk == avalicao.ava_docente_fk and ava.alu_curso_aluno_fk.curs_insituicao.curs_nome == avalicao.ava_curso_aluno_fk.curs_insituicao.curs_nome%}
-                                        <p> Nota: {{avalicao.ava_nota}}</p>
-                                         <div class="rating" data-stars="{{avalicao.ava_nota}}"></div>
-                                    {%endif%}
-                                {%endfor%}
+                             {% for pergunta, nota in lista_pergunta_media%}
+                                <h4> <span class="star">★</span>{{nota}} {{usuario.first_name}} {{pergunta}} </h4>
                             {%endfor%}
+                             <h4 class="title-meio-h3">Avaliadores</h4>
+                             {% for ava in  avaliacao_verificado %}
+
+                                    <h4>Docente: {{ava.alu_docente_fk.doce_perfil_pk.per_pessoa_fk.first_name}}</h4>
+                                    <h4 >Instuiçao: {{ava.alu_docente_fk.doce_instituicao_fk.first_name.upper}}</h4>
+                                    <h4 >Curso: {{ava.alu_curso_aluno_fk.curs_insituicao.curs_nome}}</h4>
+                                    <br>
+                             {%endfor%}
                         {%endif%}
                     </div>
                 </div>
