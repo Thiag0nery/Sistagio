@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.views import View
 from . import forms
 from django.contrib.auth import authenticate,login
+from PIL import Image
+import io
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import User
 from . import models
 from post_vagas.models import Vaga_cadastradas
@@ -59,7 +62,7 @@ class Perfil(View):
             'curso_instituicao':forms.Curso_instituicao(data=self.request.POST or None),
             'curso_vinculado': self.cursoVinculado,
             'docente_vinculado': self.docenteVinculados,
-            'curso_oferecer':models.curso_instituicao.objects.all(),
+            'curso_oferecer': models.PerfilUser.objects.filter(tipo="I"),
             'docente_curso': self.docente_curso,
             'perfilPessoa': self.perfil,
             'alunos_inscritos':models.curso_aluno.objects.all(),
@@ -83,12 +86,47 @@ class Perfil(View):
         self.aluno = self.informacoes['aluno_csv']
         self.postvaga = self.informacoes['post']
         self.docenteFormulario = self.informacoes['docente_formulario']
+
+        # Teste
+        pergunta = models.Perguntas.objects.all()
+        contador = []
+        docentes_soma = 0
+        for ava in self.avaliacao_verificado:
+            docentes_soma += 1
+            lista = []
+            soma = 0
+            for avalicao in self.avaliacao:
+                if ava.alu_docente_fk == avalicao.ava_docente_fk\
+                    and ava.alu_curso_aluno_fk.curs_insituicao.curs_nome ==\
+                    avalicao.ava_curso_aluno_fk.curs_insituicao.curs_nome:
+                    lista.append(avalicao.ava_nota)
+                    soma += avalicao.ava_nota
+            contador.append(lista)
+        print(contador)
+        media_perguntas = None
+        for numero, soma_lista in enumerate(contador):
+            if numero > 0:
+                print(media_perguntas, 'aqui')
+                for numero, lista in enumerate(media_perguntas):
+                    media_perguntas[numero] += soma_lista[numero]
+            else:
+                media_perguntas = soma_lista
+        print(media_perguntas)
+        print(docentes_soma)
+        for numero,lista in enumerate(media_perguntas):
+            print(lista)
+            media_perguntas[numero] = lista /docentes_soma
+        print(media_perguntas)
+        lista_pergunta_media = []
+        for numero,pergunta in enumerate(pergunta):
+            lista_pergunta_media.append((pergunta.per_pergunta, media_perguntas[numero]))
+
+        print(lista_pergunta_media[0])
+        self.informacoes['lista_pergunta_media'] = lista_pergunta_media
     def get(self, *args, **kwargs):
 
         return render(self.request, self.templates_name, self.informacoes)
-from PIL import Image
-import io
-from django.core.files.uploadedfile import SimpleUploadedFile
+
 def compactar_imagem(imagem, qualidade=80):
     # Abre a imagem usando o Pillow
     img = Image.open(imagem)

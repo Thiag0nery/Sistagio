@@ -262,33 +262,23 @@
             {% if perfilPessoa.tipo == 'A' %}
             <div class="container-avaliacao">
                 <h4 class="title-meio-h3">Avaliações do Docente</h4>
-                <div class="box-avaliacao">
-                    <h5 class="text-docente">Professor Felipe</h5>
-                </div>
-                <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5">
-                    <label for="star5"></label>
-                    <input type="radio" id="star4" name="rating" value="4">
-                    <label for="star4"></label>
-                    <input type="radio" id="star3" name="rating" value="3">
-                    <label for="star3"></label>
-                    <input type="radio" id="star2" name="rating" value="2">
-                    <label for="star2"></label>
-                    <input type="radio" id="star1" name="rating" value="1">
-                    <label for="star1"></label>
-                </div>
 
-                {% for ava in  aluno_verificado %}
-                <h2>{{ava.alu_curso_aluno_fk.curs_insituicao.curs_nome}}</h2>
-                <h2></h2>
-                {% for avalicao in  avaliacao %}
-                {% if ava.alu_docente_fk == avalicao.ava_docente_fk and ava.alu_curso_aluno_fk.curs_insituicao.curs_nome == avalicao.ava_curso_aluno_fk.curs_insituicao.curs_nome%}
-                <p> Nota: {{avalicao.ava_nota}}</p>
-                <div class="rating" data-stars="{{avalicao.ava_nota}}"></div>
-                {%endif%}
-                {%endfor%}
-                {%endfor%}
 
+
+
+
+                {% for pergunta, nota in lista_pergunta_media%}
+                    <h4> <span class="star">★</span>{{nota}} {{user.first_name}} {{pergunta}} </h4>
+                {%endfor%}
+                
+                 <h4 class="title-meio-h3">Avaliadores</h4>
+                 {% for ava in  aluno_verificado %}
+
+                        <h4>Docente: {{ava.alu_docente_fk.doce_perfil_pk.per_pessoa_fk.first_name}}</h4>
+                        <h4 >Instuiçao: {{ava.alu_docente_fk.doce_instituicao_fk.first_name.upper}}</h4>
+                        <h4 >Curso: {{ava.alu_curso_aluno_fk.curs_insituicao.curs_nome}}</h4>
+                        <br>
+                {%endfor%}
             </div>
             <div class="container-avaliacao">
 
@@ -311,8 +301,8 @@
                     <select id="firstOption" name="instituicao">
                         <option value="">Selecione o Curso</option>
                         {% for opcao in curso_oferecer %}
-                        <option value="{{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}">
-                            {{ opcao.curs_perfil_fk.per_pessoa_fk.first_name }}</option>
+                        <option value="{{ opcao.per_pessoa_fk.first_name}}">
+                            {{ opcao.per_pessoa_fk.first_name }}</option>
                         {% endfor %}
 
 
@@ -537,15 +527,27 @@
 <script src="{% static 'Scripts/ajax_curso.js' %}"></script>
 <script>
     const ratingContainers = document.querySelectorAll('.rating');
-
+teste = 0
+contador = 0
+soma = 0
+    media_aluno = document.getElementById('media_aluno')
     ratingContainers.forEach(container => {
-        const stars = parseInt(container.getAttribute('data-stars'));
 
+        const stars = parseInt(container.getAttribute('data-stars'));
+        teste += stars
+        contador += 1
+        soma += stars / 5
+        console.log(stars / 5 + "media" + contador)
         for (let i = 0; i < stars; i++) {
             const star = document.createElement('span');
+            star.innerHTML = '★'
             star.classList.add('star');
             container.appendChild(star);
         }
+
     });
+    media_aluno.innerHTML = teste / contador
+    console.log(media_aluno)
+
 </script>
 {%endblock%}

@@ -229,7 +229,7 @@ body {
     background-color: white;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.05);
     overflow-x: scroll;
-    height: 250px;
+    height: 70vh;
     margin-top: 5%;
     padding: 5%;
 }
@@ -295,10 +295,9 @@ padding: 5%;
 }
 .star {
   display: inline-block;
-  width: 30px;
-  height: 30px;
-  content: '\2605';
-  background-color: #777777;
+
+  color:#0000CD;
+      font-size: 29pt;
 }
 
 .star.active {
@@ -480,3 +479,7 @@ width:100%
 .tabela_nome_th{width:35%}
 .tabela_curso_th{width:50%}
 .tabela_instituicao_th{width:15%}
+
+.avaliacao{
+    width:100%;
+}
