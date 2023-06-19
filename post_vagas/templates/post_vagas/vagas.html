@@ -4,7 +4,9 @@
 
 {% load static %}
 {% block style %}
-<link rel="stylesheet" href="{% static 'vagas.css'%}">{% endblock %}
+<link rel="stylesheet" href="{% static 'vagas.css'%}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
 {% block conteudo %}
 {% include 'parcias/_header.html' %}
 <main class="main">
@@ -32,13 +34,13 @@
             <h1 class="titleBusca">{% if perfilUsuario.tipo == 'A' %}Busque pela vaga tão sonhada! {%else%}
                 Busque por alunos!{%endif%} </h1>
             <div class="itensBusca">
-                
-                    <input type="text" id="txtBusca" placeholder="Buscar..." value="{{busca}}" name="busca" />
-                    <button id="btnBusca">Buscar</button> 
-                
-                <!--<input type="text" id="txtBusca" placeholder="Buscar..." value="{{busca}}" name="busca" />
-                <button id="btnBusca">Buscar</button>-->
+                <input type="text" id="txtBusca" placeholder="Buscar..." value="{{busca}}" name="busca" />
+                <button id="btnBusca">Buscar</button>
+
             </div>
+
+        </div>
+
         </div>
     </form>
 
@@ -47,6 +49,7 @@
 
 
     <section class="vagas">
+        
         <h1 class="title-container-vagas">Vagas Disponíveis</h1>
         <div class="containerVagas">
             {% if not vagas%}
@@ -57,27 +60,25 @@
 
 
                 <div class="card-vagas">
-                  
+
                     <div class="itens-vagas">
-                        <div class="roda"></div>
-                        <h2 class="vaga_name">{{ vaga.vag_nome}}</h2>
-                        <h3 class="title-empresa">{{ vaga.vag_usuario_fk.first_name}}</h3>
+                        <h2 class="vaga_name">
+                            {{ vaga.vag_nome}}</h2>
+                        <h3 class="title-empresa"><i class="fa-sharp fa-solid fa-building" id="icons"></i>{{ vaga.vag_usuario_fk.first_name}}</h3>
                         <!-- <h5 class="subtitulo-empresa">Uma empresa de micro-serviços</h5> -->
-                        <h5 class="endereco">{{ vaga.vag_endereco}}</h5>
-                        <vaga_descricao style="display:none;" id="vaga_descricao">{{vaga.vag_descricao}}
+                        <h5 class="endereco"><i class="fa-solid fa-location-dot" id="icons"></i>{{ vaga.vag_endereco}}</h5>
+                        <vaga_descricao style="display:none;" id="vaga_descricao"><i class="fa-solid fa-paperclip" id="icons"></i>{{vaga.vag_descricao}}
                         </vaga_descricao>
-                        <vaga_funcao style="display:none;" id="vaga_funcao">{{vaga.vag_funcao}}</vaga_funcao>
-                        <vaga_beneficio style="display:none;" id="vaga_beneficio">{{vaga.vag_beneficio}}
+                        <vaga_funcao style="display:none;" id="vaga_funcao"><i class="fa-solid fa-scroll" id="icons"></i>{{vaga.vag_funcao}} </vaga_funcao>
+                        <vaga_beneficio id="vaga_beneficio"><i class="fa-solid fa-money-check-dollar" id="icons"></i>{{vaga.vag_beneficio}}
                         </vaga_beneficio>
-                        <p>Codico: <vaga_codigo id="vaga_codigo">{{vaga.vag_cod}}</vaga_codigo>
-                        </p>
+                        <vaga_codigo id="vaga_codigo" style="display: none;">{{vaga.vag_cod}}</vaga_codigo>
+                    
                     </div>
-                  
-                    <div class="itens-btn">
-                        <a class=" btn-ver-mais {{vaga.vag_nome}}">Ver Mais</a>
-                    </div>
+
+                   
                 </div>
-                
+
 
 
 
@@ -94,30 +95,35 @@
     <div class="modal-container">
 
         <div class="modal">
-            <h3 id="vaga-nome"></h3>
-            <h3 id="empresa-nome"></h3>
+            <h5 id="vaga-nome"></h5>
+           
+            
             <div class="modal-texts">
                 <div class="itens-vaga">
-                    <h3 class="title-texts">Requisitos: </h3>
-                    <h2 id="vaga-descricao"></h2>
+                    <h3 class="title-texts">Empresa </h3>
+                    <h5 id="empresa-nome"></h5>
+                </div>
+                <div class="itens-vaga">
+                    <h3 class="title-texts">Requisitos </h3>
+                    <h5 id="vaga-descricao"></h5>
                 </div>
                 <div class="itens_vaga">
                     <h5 class="requisitos_vaga"></h5>
                 </div>
                 <div class="itens-vaga">
-                    <h3 class="title-texts">Descrição: </h3>
+                    <h3 class="title-texts">Descrição </h3>
                     <h5 id="vaga-funcao"></h5>
                 </div>
                 <div class="itens-vaga">
-                    <h3 class="title-texts">Endereço: </h3>
+                    <h3 class="title-texts">Endereço </h3>
                     <h5 id="empresa_endereco"></h5>
                 </div>
                 <div class="itens-vaga">
-                    <p class="title-texts">Benefícios:</p>
+                    <p class="title-texts">Benefícios</p>
                     <h5 id="vaga-beneficio"></h5>
                 </div>
                 <div class="itens-vaga">
-                    <p class="title-texts">Codigo da vaga: <h2 id="id-vaga"></h2>
+                    <p class="title-texts">Código da vaga <h2 id="id-vaga"></h2>
                     </p>
                 </div>
             </div>
@@ -144,7 +150,7 @@
         <div class="box-vagas">
 
 
-            <div class="card-vagas">
+            <div class="card-vagas" style="text-align: center;">
                 {% if not aluno.per_foto %}
                 <img src="/static/imagens/perfil-sem-foto.png" alt="" class="img-perfil">
                 {%endif%}
@@ -155,14 +161,16 @@
                 <div class="itens-vagas">
                     <h2 class="vaga_name">{{aluno.per_pessoa_fk.first_name}}</h2>
                 </div>
+                
                 <div class="itens-btn">
-                    <a class=" btn-ver-mais " href="{% url 'perfil:detalheperfil' aluno.per_pessoa_fk.id %}">Ver Perfil</a>
+                    <a class=" btn-ver-mais " href="{% url 'perfil:detalheperfil' aluno.per_pessoa_fk.id %}">Ver
+                        Perfil</a>
                 </div>
             </div>
-            
+
 
         </div>
-     
+
 
         {% endfor %}
 

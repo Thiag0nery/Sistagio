@@ -148,48 +148,21 @@
     }
 }
 
-.itens-carrossel {
-    background-color: black;
-    width: 100%;
-    height: 60vh;
-    border-radius: 25px;
-}
 
-.carousel {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    height: 60vh;
-    border-radius: 25px;
 
-}
 
-.carousel-container {
-    display: flex;
-
-}
-
-.carousel-slide {
-    display: flex;
-    transition: transform 0.3s ease-in-out;
-}
-
-.carousel-slide img {
-    width: 100%;
-    height: auto;
-
-}
 
 form.busca {
     width: 100%;
     text-align: center;
     margin-top: 5%;
-
+    display: flex;
 }
 
 .divBusca {
     text-align: center;
     height: 10vh;
+    width: 100%;
 
 }
 
@@ -205,6 +178,7 @@ form.busca {
     display: flex;
     border-radius: 30px;
     margin: 0 auto;
+
 }
 
 .itensBusca input {
@@ -236,26 +210,59 @@ form.busca {
     border: solid 2px #0000CD;
 
 }
+.itens-vaga h3{
 
+}
+.itens-vaga h5{
+    font-weight: 300;
+    margin-bottom: 5%;
+}
 .vagas {
     display: block;
     padding: 10%;
     text-align: center;
     padding: 10% 5% 10% 5%;
-
 }
-
+.vaga_name{
+  color: #0000CD;
+  font-size: 20px;
+  
+}
+#vaga_codigo{
+    color: white;
+}
 .title-container-vagas {
-    font-size: 50px;
+    font-size: 35px;
+    margin-top: 3%;
 }
 
 .card-vagas {
-    box-shadow: 0px 6px 10px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 10px 12px 4px 0px rgb(0 0 0 / 20%);
     padding: 9%;
-    width: 57%;
-    border-radius: 30px;
+    width: 65%;
+    border-radius: 10px;
+    text-align: left;
+    border: solid #0000CD 1px;
 }
-
+#icons{
+    color: black;
+    margin-right: 5%;
+}
+.title-empresa{
+    font-size: 15px;
+    font-weight: 500;
+}
+.endereco{
+    font-size: 15px;
+    font-weight: 500;
+}
+.card-vagas:hover{
+    border:#0000CD solid 3px ;
+    transition: .2s;
+    cursor: pointer;
+    background-color: rgba(0, 89, 255, 0.048);
+    
+}
 .containerVagas {
     display: flex;
     width: 100%;
@@ -286,8 +293,9 @@ form.busca {
 
 .btn-ver-mais {
     text-decoration: none;
-    color: #0000CD;
-    font-size: 20px;
+    color: black;
+    font-size: 15px;
+    font-weight: 300;
 }
 
 .link-vaga {
@@ -358,15 +366,16 @@ form.busca {
 }
 
 #vaga-nome {
-    font-size: 40px;
+    font-size: 30px;
+    color: #0000CD;
 }
 
 #empresa-nome {
-    font-size: 30px;
+   
 }
 
 .modal-texts {
-    padding: 5%;
+    padding: 2% 10% 15% 10%;
     text-align: left;
     overflow: auto;
     font-size: 14pt;
@@ -379,7 +388,7 @@ form.busca {
 }
 
 .title-texts {
-    font-size: 14pt;
+    font-size: 12pt;
     font-weight: 600;
 }
 
