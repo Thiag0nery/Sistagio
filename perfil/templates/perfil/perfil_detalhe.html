@@ -77,11 +77,11 @@
                             <div class="question">
 
                                     <p>{{usuario.first_name}} {{pergunta.per_pergunta}}</p>
-                                    <span class="star" data-value="1"></span>
-                                    <span class="star" data-value="2"></span>
-                                    <span class="star" data-value="3"></span>
-                                    <span class="star" data-value="4"></span>
-                                    <span class="star" data-value="5"></span>
+                                    <span class="estrela_docente" data-value="1"></span>
+                                    <span class="estrela_docente" data-value="2"></span>
+                                    <span class="estrela_docente" data-value="3"></span>
+                                    <span class="estrela_docente" data-value="4"></span>
+                                    <span class="estrela_docente" data-value="5"></span>
 
                                  <input type="hidden" name="valor_aluno" id="rating{{ forloop.counter }}_input" value="" required >
                                  <input type="hidden" name="pergunta_id"  value="{{pergunta.per_codigo}}" required >
@@ -162,7 +162,7 @@
 const questions = document.querySelectorAll('.question');
 
 questions.forEach((question, index) => {
-  const stars = question.querySelectorAll('.star');
+  const stars = question.querySelectorAll('.estrela_docente');
 
 
 

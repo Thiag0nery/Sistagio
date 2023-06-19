@@ -276,56 +276,31 @@
             </div>
             {% if perfilPessoa.tipo == 'A' %}
             <div class="container-avaliacao">
-                <h4 class="title-meio-h3">Avaliações do Docente</h4>
+                <h4 class="title-meio-h3">Avaliações dos Docentes</h4>
                 {% for pergunta, nota in lista_pergunta_media%}
-                    <h4> <span class="star">★</span>{{nota}} {{user.first_name}} {{pergunta}} </h4>
+                <div class="itens-nota">
+                    <div class="estrela">
+                        <p class="nota">{{nota}}</p>
+                        <span class="star">★</span>
+                    </div>
+                    <h4 class="texts-soft-skills">  {{user.first_name}} {{pergunta}} </h4>
+                </div>
                 {%endfor%}
                  <h4 class="title-meio-h3">Avaliadores</h4>
-                 {% for ava in  aluno_verificado %}
-
-                        <h4>Docente: {{ava.alu_docente_fk.doce_perfil_pk.per_pessoa_fk.first_name}}</h4>
-                        <h4 >Instuiçao: {{ava.alu_docente_fk.doce_instituicao_fk.first_name.upper}}</h4>
-                        <h4 >Curso: {{ava.alu_curso_aluno_fk.curs_insituicao.curs_nome}}</h4>
-                        <br>
-                {%endfor%}
+                 <div class="box-professores">
+                    {% for ava in  aluno_verificado %}
+                 
+                    <div class="itens-card-vagas">
+                           <h4 class="name-prof">Docente: {{ava.alu_docente_fk.doce_perfil_pk.per_pessoa_fk.first_name}}</h4>
+                           <h4 class="name-prof">Instuiçao: {{ava.alu_docente_fk.doce_instituicao_fk.first_name.upper}}</h4>
+                           <h4 class="name-prof">Curso: {{ava.alu_curso_aluno_fk.curs_insituicao.curs_nome}}</h4>
+                           <br>
+                       </div>
+                   {%endfor%}
+                 </div>
+               
             </div>
-            <div class="container-avaliacao">
-
-                <div class="itens-card-vagas2">
-                    {% for curso in  curso_aluno_vinculado%}
-                    <h1 class="nome-curso">Nome: {{curso.curs_insituicao.curs_nome}}</h1>
-                    {%endfor%}
-                    
-                </div>
-            </div>
-            
-            
-            
-            
-            <form action="" method="POST" name="curso_escolhido">
-                {% csrf_token %}
-                <div class="container-avaliacao">
-                    
-                    <h4 class="title-meio-h3">Cursos</h4>
-                    <select id="firstOption" name="instituicao">
-                        <option value="">Selecione o Curso</option>
-                        {% for opcao in curso_oferecer %}
-                        <option value="{{ opcao.per_pessoa_fk.first_name}}">
-                            {{ opcao.per_pessoa_fk.first_name }}</option>
-                        {% endfor %}
-
-
-                    </select>
-
-                    <select id="secondOption" name="curso">
-                        <option value="">Selecione a opção</option>
-                    </select>
-                    <button type="submit" name="curso_escolhido" class="btn-alterar-sobre">Enviar</button>
-                </div>
-
-            </form>
-
-            {%endif%}
+        
 
             {% if perfilPessoa.tipo == 'I' %}
             <h4 class="title-meio-h3">Cadastrar Curso</h4>
@@ -361,6 +336,45 @@
 
         </div>
     </div>
+    <form action="" method="POST" name="curso_escolhido">
+        {% csrf_token %}
+        <div class="container-cursos">
+            
+            <h4 class="title-meio-h3">Adicione cursos vinculados </h4>
+            <div class="escolha-curso">
+            <select id="firstOption" name="instituicao">
+                <option value="">Selecione o Curso</option>
+                {% for opcao in curso_oferecer %}
+                <option value="{{ opcao.per_pessoa_fk.first_name}}">
+                    {{ opcao.per_pessoa_fk.first_name }}</option>
+                {% endfor %}
+
+
+            </select>
+            <select id="secondOption" name="curso">
+                <option value="">Selecione a opção</option>
+            </select>
+            <button type="submit" name="curso_escolhido" class="btn-alterar-sobre">Enviar</button>
+
+           
+        </div>
+            <div class="box-curso-selecao">
+
+           
+            {% for curso in  curso_aluno_vinculado%}
+            <div class="itens-card-vagas2">
+                <h1 class="nome-curso">Nome: {{curso.curs_insituicao.curs_nome}}</h1>
+                <h1 class="nome-instituicao">Instituição {{curso.curs_insituicao.curs_perfil_fk.per_pessoa_fk.first_name.upper}} </h1>
+            </div>
+           
+            {%endfor%}
+        </div>
+        
+        </div>
+
+    </form>
+
+    {%endif%}
     <div class="container-certificados">
         <div class="titulo-certificados">
             {% if perfilPessoa.tipo == 'A' %}
