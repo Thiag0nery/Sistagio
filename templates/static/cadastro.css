@@ -28,6 +28,9 @@ main {
     display: flex;
     color: white;
 }
+#firstOption{
+    margin-bottom: 5%;
+}
 
 .ladoEsquerdo h1 {
     width: 90%;

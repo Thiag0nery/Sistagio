@@ -68,14 +68,20 @@
                     </div>
                     <div class="itens">
                        <div id="container_curso">
-                           <select id="firstOption" name="instituicao" required class="inputs-default">
-                    <option value="">Selecione o Curso</option>
+                        <label for="matricula" id="inst-vin">Instituição Vinculada</label>
+                           <select id="firstOption" 
+                           name="instituicao" required class="inputs-default">
+                          
+                          
+                    <option value="" class="cur-vinn">Selecione o Curso</option>
+                    
                         {% for opcao in curso_oferecer %}
                             <option class="inputs-default"  value="{{ opcao.per_pessoa_fk.first_name }}">{{ opcao.per_pessoa_fk.first_name }}</option>
                         {% endfor %}
                     </select>
-
-                     <select id="secondOption" name="curso" class="inputs-default" required>
+                    <label for="matricula" id="curso-vin">Curso Vinculado</label>
+                     <select id="secondOption" name="curso" class="inputs-default"  required>
+                     
                         <option value="">Selecione a opção</option>
                      </select>
                        </div>
