@@ -8,10 +8,10 @@ class PostVagas(models.Model):
     vag_nome = models.CharField(max_length=50,null=True,blank=True)
     vag_tell = models.CharField(max_length=50,null=True,blank=True)
     vag_email = models.EmailField(max_length=80,null=True,blank=True)
-    vag_endereco = models.CharField(max_length=20,null=True,blank=True)
-    vag_descricao = models.CharField(max_length=100,null=True,blank=True)
-    vag_funcao = models.CharField(max_length=50,null=True,blank=True)
-    vag_beneficio = models.CharField(max_length=100,null=True,blank=True)
+    vag_endereco = models.CharField(max_length=40,null=True,blank=True)
+    vag_descricao = models.TextField(null=True,blank=True)
+    vag_funcao = models.TextField(null=True,blank=True)
+    vag_beneficio = models.TextField(max_length=100,null=True,blank=True)
 
     def __repr__(self):
         return self.vag_nome

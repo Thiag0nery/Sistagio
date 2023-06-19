@@ -368,12 +368,13 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="id_cert_nome_curso" class="text-dados">Nome do certificado</label>
-                <input type="text" name="{{certificados.cert_nome_curso.name}}" class="input-dados"
+                <input required type="text" name="{{certificados.cert_nome_curso.name}}" class="input-dados"
                     id="id_cert_nome_curso">
-                <label for="id_cert_instituicao" class="text-dados">Nome da instituição</label>
-                <input type="text" name="{{certificados.cert_instituicao.name}}" id="id_cert_instituicao"
+                <label  for="id_cert_instituicao" class="text-dados">Nome da instituição</label>
+                <input required type="text" name="{{certificados.cert_instituicao.name}}" id="id_cert_instituicao"
                     class="input-dados">
-                <input type="file" name="{{certificados.cert_arquivo.name}}">
+                <label for="certificado_aluno"> Escolher arquivo</label>
+                <input required id="certificado_aluno" type="file" name="{{certificados.cert_arquivo.name}}" accept=".jpeg , .pdf">
 
 
                 <button type="submit" class="btn-alterar-sobre" name="botao-certificado">Enviar</button>
@@ -407,43 +408,43 @@
                     <div class="itens-post-vagas">
 
                         <label for="id_vag_nome" class="text-dados">Nome da vaga</label>
-                        <input type="text" name="{{post.vag_nome.name}}" class="input-dados-vaga" id="id_vag_nome">
+                        <input required  type="text" name="{{post.vag_nome.name}}" class="input-dados-vaga" id="id_vag_nome">
                     </div>
                     <div class="itens-post-vagas">
 
                         <label for="id_vag_tell" class="text-dados">Telefone</label>
-                        <input type="text" name="{{post.vag_tell.name}}" class="input-dados-vaga" id="id_vag_tell"
+                        <input required  type="text" name="{{post.vag_tell.name}}" class="input-dados-vaga" id="id_vag_tell"
                             value="
                                 {% if perfilPessoa.per_tell%} {{perfilPessoa.per_tell}} {%endif%}">
                     </div>
                     <div class="itens-post-vagas">
 
                         <label for="id_vag_email" class="text-dados">Email</label>
-                        <input type="email" name="{{post.vag_email.name}}" class="input-dados-vaga" id="id_vag_email">
+                        <input required  type="email" name="{{post.vag_email.name}}" class="input-dados-vaga" id="id_vag_email">
                     </div>
                     <div class="itens-post-vagas">
 
                         <label for="id_vag_endereco" class="text-dados">Endereço</label>
-                        <input type="text" name="{{post.vag_endereco.name}}" class="input-dados-vaga"
+                        <input required type="text" name="{{post.vag_endereco.name}}" class="input-dados-vaga"
                             id="id_vag_endereco">
                     </div>
 
                     <div class="itens-post-vagas">
 
                         <label for="id_vag_descricao" class="text-dados">Descrição</label>
-                        <input type="text" name="{{post.vag_descricao.name}}" class="input-dados-vaga"
+                        <input required  type="text" name="{{post.vag_descricao.name}}" class="input-dados-vaga"
                             id="id_vag_descricao">
                     </div>
 
                     <div class="itens-post-vagas">
 
                         <label for="id_vag_funcao" class="text-dados">Função</label>
-                        <input type="text" name="{{post.vag_funcao.name}}" class="input-dados-vaga" id="id_vag_funcao">
+                        <input required  type="text" name="{{post.vag_funcao.name}}" class="input-dados-vaga" id="id_vag_funcao">
                     </div>
                     <div class="itens-post-vagas">
 
                         <label for="id_vag_beneficio" class="text-dados">Beneficio</label>
-                        <input type="text" name="{{post.vag_beneficio.name}}" class="input-dados-vaga"
+                        <input required  type="text" name="{{post.vag_beneficio.name}}" class="input-dados-vaga"
                             id="id_vag_beneficio">
                     </div>
                 </div>
