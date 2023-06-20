@@ -354,7 +354,7 @@
             <select id="secondOption" name="curso">
                 <option value="">Selecione a opção</option>
             </select>
-            <button type="submit" name="curso_escolhido" class="btn-alterar-sobre">Enviar</button>
+            <button type="submit" name="curso_escolhido" class="btn-alterar-sobre2">Enviar</button>
 
            
         </div>
@@ -363,8 +363,8 @@
            
             {% for curso in  curso_aluno_vinculado%}
             <div class="itens-card-vagas2">
-                <h1 class="nome-curso">Nome: {{curso.curs_insituicao.curs_nome}}</h1>
-                <h1 class="nome-instituicao">Instituição {{curso.curs_insituicao.curs_perfil_fk.per_pessoa_fk.first_name.upper}} </h1>
+                <h1 class="texts-curso-selecao" id="text-nome">Nome: {{curso.curs_insituicao.curs_nome}}  </h1>
+                <h1 class="texts-curso-selecao" id="text-instituicao">Instituição:   {{curso.curs_insituicao.curs_perfil_fk.per_pessoa_fk.first_name.upper}} </h1>
             </div>
            
             {%endfor%}
