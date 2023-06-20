@@ -299,13 +299,56 @@ font-weight: 600;
     border: solid 1px #0000CD;
     box-shadow: 10px 12px 4px 0px rgb(0 0 0 / 20%);
     background-color:white;
-    height: 100%;
-    margin: 2% 5% 2% 5% ;
+    padding: 2%;
+    margin: 5% 0% 2% 0% ;
 
+}
+.btn-certificados{
+    text-align: center;
+    margin-top: 2%;
+}
+.container-certificados-aluno{
+    border-radius: 15px;
+    border: solid 1px #0000CD;
+    box-shadow: 10px 12px 4px 0px rgb(0 0 0 / 20%);
+    background-color:white;
+    padding: 2%;
+    margin: 5% 5% 2% 5% ;
+    height: 100vh;
+    overflow-x: scroll;
+
+
+}
+.container-vagas{
+    margin: 5% 0% 2% 0%;
 }
 .titulo-certificados{
     padding: 50px;
 
+}
+.file-certificados-aluno{
+    margin: 0 auto;
+    
+    text-align: center;
+    border-radius: 30px;
+    font-size: 15px;
+    padding: 5px;
+    height: 25px;
+    border: none;
+    background-color: #0000CD;
+    color: white;
+    cursor: pointer;
+}
+.btn-alterar-sobre-file{
+    margin: 0 auto;
+    border-radius: 30px;
+    font-size: 15px;
+    padding: 5px;
+
+    border: none;
+    background-color: #0000CD;
+    color: white;
+    cursor: pointer;
 }
 .null-tell{
     color:red;
@@ -324,6 +367,9 @@ font-weight: 600;
 /* PARA POST VAGAS EMPRESA */
 .container-post-vagas{
 padding: 5%;
+text-align: center;
+outline: none;
+
 }
 .title-docente{
     text-align: center;
@@ -386,6 +432,26 @@ padding: 5%;
     gap: 25px;
 
 
+}
+#vagas-container{
+    border-radius: 15px;
+    border: solid 1px #0000CD;
+    box-shadow: 10px 12px 4px 0px rgb(0 0 0 / 20%);
+    background-color: white;
+    padding: 2%;
+    margin: 5% 5% 2% 5%;
+    height: 100vh;
+    overflow-x: scroll;
+}
+.box-postar-vaga{
+    border-radius: 15px;
+    border: solid 1px #0000CD;
+    box-shadow: 10px 12px 4px 0px rgb(0 0 0 / 20%);
+    background-color:white;
+    padding: 2%;
+    
+    height: 100vh;
+    overflow-x: scroll;
 }
 .escolha-curso{
     margin: 0 auto;
@@ -450,6 +516,19 @@ hr:hover{
     transition: 0.5s;
     transform: translateX(2.2);
 }
+.certificado-informacao{
+    padding: 5% 0 2% 0;
+    font-size: 25px;
+    text-align: center;
+    font-weight: 600;
+}
+.name-certificados{
+   
+}
+.img-certificados{
+    width: 50%;
+    padding: 0% 0 5% 0;
+}
 
 .style-certificado{
     display: flex;
@@ -457,6 +536,7 @@ hr:hover{
     align-items: center;
     margin-top: 20px;
     border-radius: 15px;
+    flex-direction: column;
     border: solid 1px #0000CD;
     box-shadow: 10px 12px 4px 0px rgb(0 0 0 / 20%);
 }
@@ -586,4 +666,28 @@ display: flex;
     }
 #botao-csv{
 display: none;
+}
+.d-flex{
+    display: flex;
+    align-content: space-around;
+    flex-direction: column;
+    justify-content: space-between;
+}   
+.container-instiucao{padding: 5% 5% 3% 5%;}
+.formulario_csv{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.btn-csv {
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 25px;
+    font-size: 15px;
+    width: 20%;
+    height: 25px;
+    border: none;
+    background-color: #0000CD;
+    color: white;
+    cursor: pointer;
 }

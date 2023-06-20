@@ -42,9 +42,9 @@
             <h3 class="text-titulo">{{user.first_name}}</h3>
         </div>
     </div>
-
-    <div class="container-meio">
-        <div class="container-sobre">
+ 
+    <div class="container-meio {% if  perfilPessoa.tipo == 'I' %} container-instiucao {%endif%}">
+        <div class="container-sobre  {% if  perfilPessoa.tipo == 'I' %} d-flex {%endif%}">
 
             <form class="form-dados-sobre" id="form-alterar" style="display: none;" method="POST" >
                 {% csrf_token %}
@@ -89,7 +89,7 @@
                 {%endif%}
 
             </form>
-            <div class="form-dados-sobre" id="form-dados-banco">
+            <div class="form-dados-sobre " id="form-dados-banco">
                 <div class="titulo-sobre">
                     <h3 class="title-meio-h3">MEUS DADOS</h3>
                     <button class="btn-alterar-sobre" id="btn-alterar">Alterar</button>
@@ -121,7 +121,17 @@
                 </div>
                 {%endif%}
 
+              
+
             </div>
+            {% if  perfilPessoa.tipo == 'I' %}
+            <div class="container-docentes-cadastrados">
+                <h1>Docentes cadastrados</h1>
+                {%for docente in docente_vinculado%}
+                <p>{{docente.doce_perfil_pk.per_pessoa_fk.first_name}}</p>
+                {%endfor%}
+            </div>
+            {%endif%}
         </div>
         <div class="box-vagas">
             <div class="container-vagas-cadastradas">
@@ -211,15 +221,15 @@
                     {%endif%}
                       {% if perfilPessoa.tipo == 'I' %}
 
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" class="formulario_csv">
     {% csrf_token %}
     <label for="arquivo_nome_turma">Nome da turma: </label>
     <input type="text" name="arquivo_nome_turma">
 
-                     <label for="csvFileInput" >Escolher arquivo</label>
+                     <label for="csvFileInput" class="btn-csv" >Escolher arquivo</label>
                         <input type="file" id="csvFileInput"  name="arquivo" accept=".csv">
-                        <button  type="button" onclick="handleFile()">Ler tabela</button>
-    <button type="submit" name="botao-csv" id="botao-csv">Enviar</button>
+                        <button class="btn-csv" type="button" onclick="handleFile()">Ler tabela</button>
+    <button type="submit" class="btn-csv" name="botao-csv" id="botao-csv">Enviar</button>
 </form>
                         <p id="aluno_tabela"></p>
                       {%endif%}
@@ -333,7 +343,7 @@
             {%endfor%}
 
             {%endif%}
-
+            
         </div>
     </div>
     <form action="" method="POST" name="curso_escolhido">
@@ -375,11 +385,11 @@
     </form>
 
     {%endif%}
-    <div class="container-certificados">
+    <div class="container-certificados-aluno  {% if  perfilPessoa.tipo == 'E' or perfilPessoa.tipo == 'I' %}container-vagas{%endif%}" >
         <div class="titulo-certificados">
             {% if perfilPessoa.tipo == 'A' %}
-            <h3 class="title-meio-h3">Certificados</h3>
-            <form method="POST" enctype="multipart/form-data">
+            <h3 class="title-meio-h3">Adicione Certificados</h3>
+            <form method="POST" enctype="multipart/form-data" class="info-certificados">
                 {% csrf_token %}
                 <label for="id_cert_nome_curso" class="text-dados">Nome do certificado</label>
                 <input required type="text" name="{{certificados.cert_nome_curso.name}}" class="input-dados"
@@ -387,23 +397,25 @@
                 <label  for="id_cert_instituicao" class="text-dados">Nome da instituição</label>
                 <input required type="text" name="{{certificados.cert_instituicao.name}}" id="id_cert_instituicao"
                     class="input-dados">
-                <label for="certificado_aluno"> Escolher arquivo</label>
+                
+
+                <div class="btn-certificados">
+                    <label for="certificado_aluno" class="file-certificados-aluno"> Escolher arquivo</label>
                 <input required id="certificado_aluno" type="file" name="{{certificados.cert_arquivo.name}}" accept=".jpeg , .pdf">
-
-
-                <button type="submit" class="btn-alterar-sobre" name="botao-certificado">Enviar</button>
+                    <button type="submit" class="btn-alterar-sobre-file" name="botao-certificado">Enviar</button>
+                </div>
             </form>
             <div class="campo-certificados" style="margin-top: 28px;">
 
                 {% for certificado in certificados_usuario%}
                 <div class="style-certificado">
 
-                    <div class="certificado-informacao" style="width:50%;">
-                        <p>Nome do curso: {{certificado.cert_nome_curso}}</p>
-                        <p>Nome da instituição: {{certificado.cert_instituicao}}</p>
-                        <hr>
+                    <div class="certificado-informacao">
+                        <p class="name-certificados">{{certificado.cert_nome_curso}}</p>
+                        <p class="name-certificados">{{certificado.cert_instituicao.upper}}</p>
+                        
                     </div>
-                    <img src="{{certificado.cert_arquivo.url}}" style="width:25%;">
+                    <img src="{{certificado.cert_arquivo.url}}" class="img-certificados">
 
                 </div>
 
@@ -412,60 +424,61 @@
             </div>
 
             {%endif%}
+        </div>
+    
+        {% if  perfilPessoa.tipo == 'E' %}
+        <h3 class="title-meio-h3">Postar vaga</h3>
+        <form method="POST" action="" class="container-post-vagas">
+            {% csrf_token %}
+            <div class="box-post-vagas">
 
-            {% if  perfilPessoa.tipo == 'E' %}
-            <h3 class="title-meio-h3">Postar vaga</h3>
-            <form method="POST" action="" class="container-post-vagas">
-                {% csrf_token %}
-                <div class="box-post-vagas">
+                <div class="itens-post-vagas">
 
-                    <div class="itens-post-vagas">
+                    <label for="id_vag_nome" class="text-dados">Nome da vaga</label>
+                    <input required  type="text" name="{{post.vag_nome.name}}" class="input-dados-vaga" id="id_vag_nome">
+                </div>
+                <div class="itens-post-vagas">
 
-                        <label for="id_vag_nome" class="text-dados">Nome da vaga</label>
-                        <input required  type="text" name="{{post.vag_nome.name}}" class="input-dados-vaga" id="id_vag_nome">
-                    </div>
-                    <div class="itens-post-vagas">
+                    <label for="id_vag_tell" class="text-dados">Telefone</label>
+                    <input required  type="text" name="{{post.vag_tell.name}}" class="input-dados-vaga" id="id_vag_tell"
+                        value="{% if perfilPessoa.per_tell%}{{perfilPessoa.per_tell}}{%endif%}">
+                </div>
+                <div class="itens-post-vagas">
 
-                        <label for="id_vag_tell" class="text-dados">Telefone</label>
-                        <input required  type="text" name="{{post.vag_tell.name}}" class="input-dados-vaga" id="id_vag_tell"
-                            value="
-                                {% if perfilPessoa.per_tell%} {{perfilPessoa.per_tell}} {%endif%}">
-                    </div>
-                    <div class="itens-post-vagas">
+                    <label for="id_vag_email" class="text-dados">Email</label>
+                    <input required  type="email" name="{{post.vag_email.name}}" class="input-dados-vaga" id="id_vag_email">
+                </div>
+                <div class="itens-post-vagas">
 
-                        <label for="id_vag_email" class="text-dados">Email</label>
-                        <input required  type="email" name="{{post.vag_email.name}}" class="input-dados-vaga" id="id_vag_email">
-                    </div>
-                    <div class="itens-post-vagas">
-
-                        <label for="id_vag_endereco" class="text-dados">Endereço</label>
-                        <input required type="text" name="{{post.vag_endereco.name}}" class="input-dados-vaga"
-                            id="id_vag_endereco">
-                    </div>
-
-                    <div class="itens-post-vagas">
-
-                        <label for="id_vag_descricao" class="text-dados">Descrição</label>
-                        <input required  type="text" name="{{post.vag_descricao.name}}" class="input-dados-vaga"
-                            id="id_vag_descricao">
-                    </div>
-
-                    <div class="itens-post-vagas">
-
-                        <label for="id_vag_funcao" class="text-dados">Função</label>
-                        <input required  type="text" name="{{post.vag_funcao.name}}" class="input-dados-vaga" id="id_vag_funcao">
-                    </div>
-                    <div class="itens-post-vagas">
-
-                        <label for="id_vag_beneficio" class="text-dados">Beneficio</label>
-                        <input required  type="text" name="{{post.vag_beneficio.name}}" class="input-dados-vaga"
-                            id="id_vag_beneficio">
-                    </div>
+                    <label for="id_vag_endereco" class="text-dados">Endereço</label>
+                    <input required type="text" name="{{post.vag_endereco.name}}" class="input-dados-vaga"
+                        id="id_vag_endereco">
                 </div>
 
-                <button type="submit" name="botao-vag" class="btn-alterar-sobre">Enviar</button>
-            </form>
-            {%endif%}
+                <div class="itens-post-vagas">
+
+                    <label for="id_vag_descricao" class="text-dados">Descrição</label>
+                    <input required  type="text" name="{{post.vag_descricao.name}}" class="input-dados-vaga"
+                        id="id_vag_descricao">
+                </div>
+
+                <div class="itens-post-vagas">
+
+                    <label for="id_vag_funcao" class="text-dados">Função</label>
+                    <input required  type="text" name="{{post.vag_funcao.name}}" class="input-dados-vaga" id="id_vag_funcao">
+                </div>
+                <div class="itens-post-vagas">
+
+                    <label for="id_vag_beneficio" class="text-dados">Beneficio</label>
+                    <input required  type="text" name="{{post.vag_beneficio.name}}" class="input-dados-vaga"
+                        id="id_vag_beneficio">
+                </div>
+            </div>
+
+            <button type="submit" name="botao-vag" class="btn-alterar-sobre">Enviar</button>
+        </form>
+        
+        {%endif%}
 
             {% if  perfilPessoa.tipo == 'I' %}
 
@@ -516,7 +529,7 @@
 
 
         </div>
-    </div>
+ 
 
 
 </main>
@@ -526,21 +539,7 @@
 
 
 
-{% if  perfilPessoa.tipo == 'I' %}
-{%for docente in docente_vinculado%}
-<p>{{docente.doce_perfil_pk.per_pessoa_fk.first_name}}</p>
-{%endfor%}
-{%endif%}
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="arquivo_nome_turma">Nome da turma: </label>
-    <input type="text" name="arquivo_nome_turma">
-
-
-    <input type="file" name="arquivo">
-    <button type="submit" name="botao-csv">Enviar</button>
-</form>
 {%endif%}
 
 
