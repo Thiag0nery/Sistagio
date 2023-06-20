@@ -219,67 +219,49 @@
                     </div>
 
                     {%endif%}
-                      {% if perfilPessoa.tipo == 'I' %}
+{% if perfilPessoa.tipo == 'I' %}
+ <a href="/static/imagens/Modelo_arquivo_csv.xlsx" download="Modelo_arquivo_csv.xlsx">Baixar modelo de csv</a>
+    <form method="POST" enctype="multipart/form-data" class="formulario_csv">
 
-<form method="POST" enctype="multipart/form-data" class="formulario_csv">
     {% csrf_token %}
-    <label for="arquivo_nome_turma">Nome da turma: </label>
-    <input type="text" name="arquivo_nome_turma">
+        <label for="arquivo_nome_turma">Nome da turma: </label>
+        <input type="text" name="arquivo_nome_turma">
 
-                     <label for="csvFileInput" class="btn-csv" >Escolher arquivo</label>
-                        <input type="file" id="csvFileInput"  name="arquivo" accept=".csv">
-                        <button class="btn-csv" type="button" onclick="handleFile()">Ler tabela</button>
-    <button type="submit" class="btn-csv" name="botao-csv" id="botao-csv">Enviar</button>
-</form>
-                        <p id="aluno_tabela"></p>
-                      {%endif%}
+        <label for="csvFileInput" class="btn-csv" >Escolher arquivo</label>
+        <input type="file" id="csvFileInput"  name="arquivo" accept=".csv">
 
+        <button class="btn-csv" type="button" onclick="handleFile()">Ler tabela</button>
+        <button type="submit" class="btn-csv" name="botao-csv" id="botao-csv">Enviar</button>
+    </form>
+    <p id="aluno_tabela"></p>
+{%endif%}
 
-                    {% if perfilPessoa.tipo == 'D' %}
-
-
-
-                    {% for curso in docente_curso%}
-
-<table class="tabela_alunos">
-     <thead>
-    <tr>
-      <th class="tabela_nome_th">Nome</th>
-        <th class="tabela_curso_th">Curso</th>
-        <th class="tabela_instituicao_th">Instituição</th>
-    </tr>
-  </thead>
-     <tbody>
-                    {% for alunos in alunos_inscritos %}
-
-
-
-
-
-
-
+{% if perfilPessoa.tipo == 'D' %}
+    {% for curso in docente_curso%}
+        <table class="tabela_alunos">
+                 <thead>
+                    <tr>
+                        <th class="tabela_nome_th">Nome</th>
+                        <th class="tabela_curso_th">Curso</th>
+                        <th class="tabela_instituicao_th">Instituição</th>
+                    </tr>
+                </thead>
+             <tbody>
+                 {% for alunos in alunos_inscritos %}
                     {% if curso.doce_curso_instituicao_fk == alunos.curs_insituicao and curso.doce_curso_instituicao_fk.curs_nome == curso.doce_curso_instituicao_fk.curs_nome%}
-<tr>
-      <td ><a href="{% url 'perfil:detalhe' alunos.curs_perfil_fk.per_pessoa_fk.id alunos.curs_codigo%}">
-{{alunos.curs_perfil_fk.per_pessoa_fk.first_name}}</a></td>
-    <td>{{curso.doce_curso_instituicao_fk.curs_nome}}</td>
- <td>{{curso.doce_curso_instituicao_fk.curs_perfil_fk.per_pessoa_fk.first_name.upper}}</td>
-    </tr>
-
-
-
-
+                        <tr>
+                        <td ><a href="{% url 'perfil:detalhe' alunos.curs_perfil_fk.per_pessoa_fk.id alunos.curs_codigo%}">
+                            {{alunos.curs_perfil_fk.per_pessoa_fk.first_name}}</a></td>
+                            <td>{{curso.doce_curso_instituicao_fk.curs_nome}}</td>
+                            <td>{{curso.doce_curso_instituicao_fk.curs_perfil_fk.per_pessoa_fk.first_name.upper}}</td>
+                        </tr>
                     {%endif%}
 
-                    {%endfor%}
-    </tbody>
-</table>
-                    {%endfor%}
-
-
-
-
-                    {%endif%}
+                {%endfor%}
+            </tbody>
+        </table>
+    {%endfor%}
+{%endif%}
 
 
                 </div>

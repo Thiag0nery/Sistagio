@@ -273,17 +273,17 @@ class AtualizacaoPerfil(Perfil):
             curso.save()
 
         if 'curso_escolhido' in self.request.POST:
+            print('a')
             nome_instituicao = self.request.POST.get('instituicao')
             nome_curso = self.request.POST.get('curso')
-            usuario = get_object_or_404(User, first_name=nome_instituicao)
+            if nome_curso:
+                usuario = get_object_or_404(User, first_name=nome_instituicao)
 
-            perfil = models.PerfilUser.objects.filter(per_pessoa_fk=usuario).first()
+                perfil = models.PerfilUser.objects.filter(per_pessoa_fk=usuario).first()
 
-            curso_institui = get_object_or_404(models.curso_instituicao, curs_perfil_fk=perfil, curs_nome=nome_curso)
-
-            print(curso_institui, 'Aqui')
-            aluno_curso = models.curso_aluno(curs_insituicao=curso_institui, curs_perfil_fk=self.perfil)
-            aluno_curso.save()
+                curso_institui = get_object_or_404(models.curso_instituicao, curs_perfil_fk=perfil, curs_nome=nome_curso)
+                aluno_curso = models.curso_aluno(curs_insituicao=curso_institui, curs_perfil_fk=self.perfil)
+                aluno_curso.save()
 
             return redirect('perfil:perfil')
 
@@ -376,21 +376,21 @@ def media_aluno(avaliacao_verificado,avaliacao):
                 lista.append(avalicao.ava_nota)
                 soma += avalicao.ava_nota
         contador.append(lista)
-    print(contador)
+    #print(contador)
     media_perguntas = None
     for numero, soma_lista in enumerate(contador):
         if numero > 0:
-            print(media_perguntas, 'aqui')
+            #print(media_perguntas, 'aqui')
             for numero, lista in enumerate(media_perguntas):
                 media_perguntas[numero] += soma_lista[numero]
         else:
             media_perguntas = soma_lista
-    print(media_perguntas)
-    print(docentes_soma)
+    #print(media_perguntas)
+    #print(docentes_soma)
     for numero, lista in enumerate(media_perguntas):
-        print(lista)
+        #print(lista)
         media_perguntas[numero] = lista / docentes_soma
-    print(media_perguntas)
+    #print(media_perguntas)
     lista_pergunta_media = []
     for numero, pergunta in enumerate(pergunta):
         lista_pergunta_media.append((pergunta.per_pergunta, media_perguntas[numero]))
