@@ -329,8 +329,10 @@ class perfilDetalheAluno(View):
             avaliacao = models.Avaliacao.objects.filter(ava_perfil_fk=self.perfil_filter)
             self.contexto['avaliacao_verificado'] = models.Aluno_avaliado.objects.filter(
                 alu_perfil_fk=self.perfil_filter)
-            verificacao = models.Aluno_avaliado.objects.filter(alu_perfil_fk=self.perfil).exists()
+            verificacao = models.Aluno_avaliado.objects.filter(alu_perfil_fk=self.perfil_filter).exists()
+            print(verificacao)
             if verificacao:
+
                 self.contexto['lista_pergunta_media'] = media_aluno(avaliacao_verificado, avaliacao)
         self.page = render(self.request, self.templates_name, self.contexto)
 

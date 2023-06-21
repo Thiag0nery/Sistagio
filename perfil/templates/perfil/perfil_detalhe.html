@@ -102,6 +102,7 @@
                         {% if perfil_visitante.tipo != 'D' %}
                             {% if not avaliacao_verificado%} <p>Aluno ainda não avaliado</p>{%endif%}
                              {% for pergunta, nota in lista_pergunta_media%}
+
                                 <h4> <span class="star">★</span>{{nota}} {{usuario.first_name}} {{pergunta}} </h4>
                             {%endfor%}
                              <h4 class="title-meio-h3">Avaliadores</h4>
