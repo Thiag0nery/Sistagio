@@ -132,26 +132,29 @@ class Cadastro(View):
         perfil.save()
 
         if tipo_requisicao == "I":
-            messages.success(
-                self.request,
-                "Cadastro feito com sucesso, aguarde o periodo de verifição do sistema se a instituição e validada"
-            )
+            try:
+                messages.success(
+                    self.request,
+                    "Cadastro feito com sucesso, aguarde o periodo de verifição do sistema se a instituição e validada"
+                )
 
-            subject = 'Obrigado pela sua inscrição no sistema'
-            message = 'Cadastro feito com sucesso, aguarde o periodo de verifição do sistema' \
-                      ' se a instituição e validada.'
-            from_email = 'sistagio@hotmail.com'
-            recipient_list = [email_requisicao, ]
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                subject = 'Obrigado pela sua inscrição no sistema'
+                message = 'Cadastro feito com sucesso, aguarde o periodo de verifição do sistema' \
+                          ' se a instituição e validada.'
+                from_email = 'sistagio@hotmail.com'
+                recipient_list = [email_requisicao, ]
+                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
-            subject = 'Cadastro de Instituição feita'
-            message = f'A instituição {usuario.first_name} esta na fila de verificação.'
-            from_email = 'sistagio@hotmail.com'
-            recipient_list = ['sistagio@hotmail.com', ]
+                subject = 'Cadastro de Instituição feita'
+                message = f'A instituição {usuario.first_name} esta na fila de verificação.'
+                from_email = 'sistagio@hotmail.com'
+                recipient_list = ['sistagio@hotmail.com', ]
 
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-
-            return redirect('home:inicial')
+                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            except:
+                print('erro')
+            finally:
+                return redirect('home:inicial')
 
 
 
@@ -173,15 +176,17 @@ class Cadastro(View):
 
             aluno_curso = curso_aluno(curs_insituicao=curso_institui, curs_perfil_fk=perfil)
             aluno_curso.save()
+        try:
+            subject = 'Obrigado pela sua inscrição no sistema'
+            message = 'Obrigado pela sua inscrição no sistema.'
+            from_email = 'sistagio@hotmail.com'
+            recipient_list = [email_requisicao, ]
 
-        subject = 'Obrigado pela sua inscrição no sistema'
-        message = 'Obrigado pela sua inscrição no sistema.'
-        from_email = 'sistagio@hotmail.com'
-        recipient_list = [email_requisicao, ]
-
-        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-
-        return redirect('home:login')
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+        except:
+            print('erro')
+        finally:
+            return redirect('home:login')
 
 class Logout(View):
     def get(self, *args,**kwargs):
