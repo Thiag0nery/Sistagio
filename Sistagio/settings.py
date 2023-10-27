@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from django.contrib.messages import constants
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-1&#w-2pre%e+4+20bd0cnn^zmls(eyf3ny)9!n@zw-&l!10y&&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
 # Application definition
@@ -70,8 +71,8 @@ TEMPLATES = [
         },
     },
 ]
+WSGI_APPLICATION = 'vercel_app.wsgi.app'
 
-WSGI_APPLICATION = 'Sistagio.wsgi.application'
 
 
 # Database
@@ -79,8 +80,12 @@ WSGI_APPLICATION = 'Sistagio.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'gb5FG5GCA6b--aB*CC1GcdDcA2F65Fg6',
+        'PORT': '48378',
     }
 }
 
@@ -125,6 +130,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'templates/static'
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles_build/static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

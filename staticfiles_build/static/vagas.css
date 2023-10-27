@@ -1,0 +1,416 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@font-face {
+    font-family: 'Poppins-Black';
+    src: url(fontes/Poppins-Black.ttf) format ('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+ 
+}
+
+.roda {
+    background-color: #0000CD;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 5%;
+}
+
+.container-apresentacao-main {
+    background-color: #0000CD;
+    display: flex;
+    
+}
+
+.itens-info {
+    background-color: #fff;
+    margin: 8%;
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
+    height: 10%;
+    border-radius: 30px;
+   
+
+}
+
+#img-computador-main {
+    width: 65%;
+    height: 80%;
+    transform: translateY(0px);
+
+    animation: float 5s ease-in-out infinite;
+
+}
+
+@keyframes float {
+    0% {
+
+        transform: translateY(0px);
+        transform: translateX(0px);
+
+    }
+
+    25% {
+        transform: translateY(-25px);
+        /* transform: translateX(-5px); */
+
+    }
+    75%{
+        transform: translateY(50px);
+    }
+    100% {
+        transform: translateY(0px);
+
+    }
+}
+
+.infoInicio {
+    padding: 5% 5% 10% 5%;
+    font-size: 13pt;
+    width: 80%;
+}
+
+.nome-pessoa {
+    font-weight: 600;
+}
+
+.infoInicio h2 {
+    font-weight: 300;
+}
+
+.itens-img-main {
+    display: flex;
+}
+
+.nuvem {
+    width: 150px;
+    height: 120px;
+}
+
+#nuvem1 {
+    padding-top: 15%;
+    transform: translateY(0px);
+    
+    animation: nuvem 30s ease-in-out infinite;
+
+}
+
+#nuvem2 {
+    padding-top: 50%;
+    padding-right:2%;
+    transform: translateY(0px);
+    position: relative;
+    animation: nuvem2 30s ease-in-out infinite;
+}
+
+@keyframes nuvem {
+    0% {
+
+
+        transform: translateX(0px);
+
+    }
+
+    50% {
+        transform: translateX(350%);
+        /* transform: translateX(-5px); */
+
+    }
+
+    100% {
+        transform: translateX(0px);
+
+    }
+
+}
+
+@keyframes nuvem2 {
+    0% {
+
+
+        transform: translateX(0px);
+
+    }
+
+    50% {
+        transform: translateX(-350%);
+        /* transform: translateX(-5px); */
+
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+
+
+
+
+form.busca {
+    width: 100%;
+    text-align: center;
+    margin-top: 5%;
+    display: flex;
+}
+
+.divBusca {
+    text-align: center;
+    height: 10vh;
+    width: 100%;
+
+}
+
+.divBusca h1 {
+    font-size: 35px;
+    margin-bottom: 3%;
+}
+
+.itensBusca {
+
+    border: solid 2px #0000CD;
+    width: 45%;
+    display: flex;
+    border-radius: 30px;
+    margin: 0 auto;
+
+}
+
+.itensBusca input {
+    font-size: 15px;
+    border: none;
+    width: 100%;
+    height: 7vh;
+    border-radius: 35px;
+    outline: none;
+
+}
+
+.itensBusca button {
+    font-size: 20px;
+    height: 7vh;
+    width: 20%;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: #0000CD;
+
+}
+
+.itensBusca button:hover {
+    background-color: white;
+    transition: .3s;
+    color: #0000CD;
+    border: solid 2px #0000CD;
+
+}
+.itens-vaga h3{
+
+}
+.itens-vaga h5{
+    font-weight: 300;
+    margin-bottom: 5%;
+}
+.vagas {
+    display: block;
+    padding: 10%;
+    text-align: center;
+    padding: 10% 5% 10% 5%;
+}
+.vaga_name{
+  color: #0000CD;
+  font-size: 20px;
+  
+}
+#vaga_codigo{
+    color: white;
+}
+.title-container-vagas {
+    font-size: 35px;
+    margin-top: 3%;
+}
+
+.card-vagas {
+    box-shadow: 10px 12px 4px 0px rgb(0 0 0 / 20%);
+    padding: 9%;
+    width: 65%;
+    border-radius: 10px;
+    text-align: left;
+    border: solid #0000CD 1px;
+}
+#icons{
+    color: black;
+    margin-right: 5%;
+}
+.title-empresa{
+    font-size: 15px;
+    font-weight: 500;
+}
+.endereco{
+    font-size: 15px;
+    font-weight: 500;
+}
+.card-vagas:hover{
+    border:#0000CD solid 3px ;
+    transition: .2s;
+    cursor: pointer;
+    background-color: rgba(0, 89, 255, 0.048);
+    
+}
+.containerVagas {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.box-vagas {
+    margin-top: 5%;
+    display: flex;
+    width: 33.3%;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.itens-btn {
+    margin-top: 20%;
+
+}
+
+.itens-vagas h2 {
+    margin-bottom: 5%;
+}
+
+.itens-vagas h5 {
+    margin-top: 2%;
+}
+
+.btn-ver-mais {
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.link-vaga {
+    text-decoration: none;
+    color: black;
+}
+
+/* MODAL CSS */
+.modal-container {
+    background: rgba(0, 0, 0, 0.2);
+
+    width: 100%;
+    height: 100vh;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    display: grid;
+    place-items: center;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.15s;
+}
+
+.title-vaga {
+    display: flex;
+    justify-content: center;
+
+}
+
+.sair {
+    margin-left: 15%;
+}
+
+.modal {
+    background: #fff;
+    width: 100%;
+    height: 0;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #00000070;
+    overflow: hidden;
+    transition: width 0.15s, height 0.15s;
+}
+
+.button-candidatar {
+    cursor: pointer;
+    background-color: #0000CD;
+    color: white;
+    /* margin: 0 auto; */
+    width: 20%;
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    bottom: 15px;
+    right: 39.8%;
+    left: 39.8%;
+    border-radius: 25px;
+}
+
+.button-candidatar p {
+    text-align: center;
+    padding: 8%;
+}
+
+#vaga-nome {
+    font-size: 30px;
+    color: #0000CD;
+}
+
+#empresa-nome {
+   
+}
+
+.modal-texts {
+    padding: 2% 10% 15% 10%;
+    text-align: left;
+    overflow: auto;
+    font-size: 14pt;
+    height: 30vh;
+    overflow-x: hidden;
+}
+
+.itens-vaga {
+    margin-top: 2%;
+}
+
+.title-texts {
+    font-size: 12pt;
+    font-weight: 600;
+}
+
+#vaga-descricao {
+    font-size: 12pt;
+}
+
+.modal-show>.modal {
+    width: 50%;
+    height: 65vh;
+    position: absolute;
+
+}
+
+
+.modal-show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.img-perfil {
+    border-radius: 50%;
+    width: 80%;
+    height: 27vh;
+}
